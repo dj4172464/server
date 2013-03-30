@@ -3926,6 +3926,44 @@ SpellCastResult Spell::CheckCast(bool strict)
             }
         }
 
+        if(IsDispelSpell(m_spellInfo) && !IsSpellAppliesAura(m_spellInfo) && !IsSpellHaveEffect(m_spellInfo, SPELL_EFFECT_SCHOOL_DAMAGE) && !(m_spellInfo->Attributes == (SPELL_ATTR_UNK7 | SPELL_ATTR_UNK8)))
+        {
+            // Create dispel mask by dispel type
+            for (int i = 0; i < MAX_EFFECT_INDEX; ++i)
+            {
+                if(m_spellInfo->Effect[i] == SPELL_EFFECT_DISPEL)
+                {
+                    std::list <std::pair<SpellAuraHolder* , uint32> > dispel_list;
+                    uint32 dispel_type = m_spellInfo->EffectMiscValue[i];
+                    uint32 dispelMask  = GetDispellMask(DispelType(dispel_type));
+                    Unit::SpellAuraHolderMap const& auras = target->GetSpellAuraHolderMap();
+                    for (Unit::SpellAuraHolderMap::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
+                    {
+                        SpellAuraHolder* holder = itr->second;
+                        if ((1 << holder->GetSpellProto()->Dispel) & dispelMask)
+                        {
+                            if (holder->GetSpellProto()->Dispel == DISPEL_MAGIC)
+                            {
+                                bool positive = true;
+                                if (!holder->IsPositive())
+                                    positive = false;
+                                else
+                                    positive = (holder->GetSpellProto()->AttributesEx & SPELL_ATTR_EX_NEGATIVE) == 0;
+
+                                // do not remove positive auras if friendly target
+                                //               negative auras if non-friendly target
+                                if (positive == target->IsFriendlyTo(m_caster))
+                                    continue;
+                            }
+                            dispel_list.push_back(std::pair<SpellAuraHolder* , uint32>(holder, holder->GetStackAmount()));
+                        }
+                    }
+                    if (dispel_list.empty())
+                        return SPELL_FAILED_NOTHING_TO_DISPEL;
+                }
+            }
+        }
+
         if (!m_IsTriggeredSpell && IsDeathOnlySpell(m_spellInfo) && target->isAlive())
             return SPELL_FAILED_TARGET_NOT_DEAD;
 
