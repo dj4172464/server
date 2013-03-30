@@ -1640,7 +1640,7 @@ void Spell::EffectHeal(SpellEffectIndex /*eff_idx*/)
             // Swiftmend heals 4/4 ticks of Rejuvenation and 6/7 of Regrowth
             int32 tickheal = targetAura->GetModifier()->m_amount;
             int32 tickcount = GetSpellDuration(targetAura->GetSpellProto()) / targetAura->GetSpellProto()->EffectAmplitude[idx];
-            if(targetAura->GetSpellProto()->SpellFamilyFlags & UI64LIT(0x0000000000000040))		// Regrowth tickcount -= 1
+            if (targetAura->GetSpellProto()->SpellFamilyFlags & UI64LIT(0x0000000000000040))		// Regrowth tickcount -= 1
                 tickcount -= 1;
 
             unitTarget->RemoveAurasDueToSpell(targetAura->GetId());

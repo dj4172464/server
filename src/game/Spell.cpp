@@ -3914,14 +3914,14 @@ SpellCastResult Spell::CheckCast(bool strict)
         }
 
         // give error message when applying lower hot rank to higher hot rank on target        
-        if(!IsSpellHaveEffect(m_spellInfo, SPELL_EFFECT_HEAL) && IsSpellHaveAura(m_spellInfo, SPELL_AURA_PERIODIC_HEAL)) 
+        if (!IsSpellHaveEffect(m_spellInfo, SPELL_EFFECT_HEAL) && IsSpellHaveAura(m_spellInfo, SPELL_AURA_PERIODIC_HEAL))
         {
             Unit::AuraList const& mPeriodicHeal = target->GetAurasByType(SPELL_AURA_PERIODIC_HEAL);
             for (Unit::AuraList::const_iterator i = mPeriodicHeal.begin(); i != mPeriodicHeal.end(); ++i)
             {
                 if ((*i)->GetSpellProto()->SpellFamilyName == m_spellInfo->SpellFamilyName)
-                    if(m_spellInfo->IsFitToFamilyMask((*i)->GetSpellProto()->SpellFamilyFlags))
-                        if(CompareAuraRanks(m_spellInfo->Id, (*i)->GetSpellProto()->Id) < 0)
+                    if (m_spellInfo->IsFitToFamilyMask((*i)->GetSpellProto()->SpellFamilyFlags))
+                        if (CompareAuraRanks(m_spellInfo->Id, (*i)->GetSpellProto()->Id) < 0)
                             return SPELL_FAILED_MORE_POWERFUL_SPELL_ACTIVE;
             }
         }
