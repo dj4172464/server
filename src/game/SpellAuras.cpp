@@ -3447,6 +3447,8 @@ void Aura::HandleModPowerRegenPCT(bool /*apply*/, bool Real)
 void Aura::HandleAuraModIncreaseHealth(bool apply, bool Real)
 {
     Unit* target = GetTarget();
+    if(!target)
+        return;
 
     // Special case with temporary increase max/current health
     switch (GetId())
@@ -3468,15 +3470,13 @@ void Aura::HandleAuraModIncreaseHealth(bool apply, bool Real)
                         target->ModifyHealth(-m_modifier.m_amount);
                     else
                         target->SetHealth(1);
-                    target->HandleStatModifier(UNIT_MOD_HEALTH, TOTAL_VALUE, float(m_modifier.m_amount), apply);
+                        target->HandleStatModifier(UNIT_MOD_HEALTH, TOTAL_VALUE, float(m_modifier.m_amount), apply);
                 }
             }
-            return;
         }
+        default:
+            target->HandleStatModifier(UNIT_MOD_HEALTH, TOTAL_VALUE, float(m_modifier.m_amount), apply);
     }
-
-    // generic case
-    target->HandleStatModifier(UNIT_MOD_HEALTH, TOTAL_VALUE, float(m_modifier.m_amount), apply);
 }
 
 void Aura::HandleAuraModIncreaseEnergy(bool apply, bool /*Real*/)
@@ -3502,9 +3502,38 @@ void Aura::HandleAuraModIncreaseEnergyPercent(bool apply, bool /*Real*/)
     GetTarget()->HandleStatModifier(unitMod, TOTAL_PCT, float(m_modifier.m_amount), apply);
 }
 
-void Aura::HandleAuraModIncreaseHealthPercent(bool apply, bool /*Real*/)
+void Aura::HandleAuraModIncreaseHealthPercent(bool apply, bool Real)
 {
-    GetTarget()->HandleStatModifier(UNIT_MOD_HEALTH, TOTAL_PCT, float(m_modifier.m_amount), apply);
+    Unit* target = GetTarget();
+    if(!target)
+        return;
+
+    // Special case with temporary increase max/current health percentage
+    switch (GetId())
+    {
+        case 23033:                                          // Battle Standard (Alliance)
+        case 23036:                                          // Battle Standard (Horde)
+        {
+            if (Real)
+            {
+                if (apply)
+                {
+                    target->HandleStatModifier(UNIT_MOD_HEALTH, TOTAL_PCT, float(m_modifier.m_amount), apply);
+                    target->ModifyHealth((target->GetMaxHealth()/((m_modifier.m_amount/100.0f)+1)) * (m_modifier.m_amount/100.0f));
+                }
+                else
+                {
+                    if (int32(target->GetHealthPercent()) > m_modifier.m_amount)
+                        target->ModifyHealth(-((target->GetMaxHealth()/((m_modifier.m_amount/100.0f)+1)) * (m_modifier.m_amount/100.0f)));
+                    else
+                        target->SetHealth(1);
+                        target->HandleStatModifier(UNIT_MOD_HEALTH, TOTAL_PCT, float(m_modifier.m_amount), apply);
+                }
+            }
+        }
+        default:
+            target->HandleStatModifier(UNIT_MOD_HEALTH, TOTAL_PCT, float(m_modifier.m_amount), apply);
+    }
 }
 
 /********************************/
