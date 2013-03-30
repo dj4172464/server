@@ -2349,7 +2349,6 @@ float Unit::CalculateLevelPenalty(SpellEntry const* spellProto) const
         return 1.0f;
 
     float LvlPenalty = 0.0f;
-
     if (spellLevel < 20)
         LvlPenalty = 20.0f - spellLevel * 3.75f;
 
