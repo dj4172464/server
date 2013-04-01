@@ -548,8 +548,9 @@ uint32 Unit::DealDamage(Unit* pVictim, uint32 damage, CleanDamage const* cleanDa
     {
         // Rage from physical damage received .
         if (cleanDamage && cleanDamage->damage && (damageSchoolMask & SPELL_SCHOOL_MASK_NORMAL) && pVictim->GetTypeId() == TYPEID_PLAYER && (pVictim->getPowerType() == POWER_RAGE))
-            ((Player*)pVictim)->RewardRage(cleanDamage->damage, false);
-
+            ((Player*)pVictim)->RewardRage(CalcArmorReducedDamage(pVictim, cleanDamage->damage), false);
+        if (cleanDamage && cleanDamage->damage && (damageSchoolMask & SPELL_SCHOOL_MASK_NORMAL) && damagetype == DIRECT_DAMAGE && this != pVictim && GetTypeId() == TYPEID_PLAYER && (getPowerType() == POWER_RAGE))
+            ((Player*)this)->RewardRage(CalcArmorReducedDamage(pVictim, cleanDamage->damage), true);
         return 0;
     }
     if (!spellProto || !IsAuraAddedBySpell(SPELL_AURA_MOD_FEAR, spellProto->Id))
@@ -818,8 +819,7 @@ uint32 Unit::DealDamage(Unit* pVictim, uint32 damage, CleanDamage const* cleanDa
             // Rage from damage received
             if (this != pVictim && pVictim->getPowerType() == POWER_RAGE)
             {
-                uint32 rage_damage = damage + (cleanDamage ? cleanDamage->damage : 0);
-                ((Player*)pVictim)->RewardRage(rage_damage, false);
+                ((Player*)pVictim)->RewardRage(damage, false);
             }
 
             // random durability for items (HIT TAKEN)
