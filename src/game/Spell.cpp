@@ -1683,8 +1683,24 @@ void Spell::SetTargetMap(SpellEffectIndex effIndex, uint32 targetMode, UnitList&
             break;
         }
         case TARGET_ALL_ENEMY_IN_AREA:
-            FillAreaTargets(targetUnitMap, radius, PUSH_DEST_CENTER, SPELL_TARGETS_AOE_DAMAGE);
+        {
+            FillAreaTargets(targetUnitMap, radius, PUSH_DEST_CENTER, SPELL_TARGETS_AOE_DAMAGE);            
+            if(m_spellInfo->SpellFamilyName == SPELLFAMILY_WARRIOR && m_spellInfo->SpellFamilyFlags & UI64LIT(0x0000000000040000))
+            {
+                Unit* pUnitTarget = m_targets.getUnitTarget();
+                UnitList::iterator next = targetUnitMap.begin();
+                while(next != targetUnitMap.end())
+                {
+                    if (*next == pUnitTarget)
+                    {
+                        targetUnitMap.erase(next);
+                        break;
+                    }
+                    ++next;
+                }
+            }
             break;
+        }
         case TARGET_AREAEFFECT_INSTANT:
         {
             SpellTargets targetB = SPELL_TARGETS_AOE_DAMAGE;
