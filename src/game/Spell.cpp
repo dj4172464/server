@@ -1658,12 +1658,14 @@ void Spell::SetTargetMap(SpellEffectIndex effIndex, uint32 targetMode, UnitList&
                 Unit* prev = pUnitTarget;
                 UnitList::iterator next = tempTargetUnitMap.begin();
 
+                bool isMeleeChainSpell = (m_spellInfo->DmgClass == SPELL_DAMAGE_CLASS_MELEE ? true : false);
+
                 while (t && next != tempTargetUnitMap.end())
                 {
                     if (!prev->IsWithinDist(*next, CHAIN_SPELL_JUMP_RADIUS))
                         break;
 
-                    if (!prev->IsWithinLOSInMap(*next))
+                    if (!prev->IsWithinLOSInMap(*next) || (!m_caster->HasInArc(M_PI_F, *next) && isMeleeChainSpell))
                     {
                         ++next;
                         continue;
