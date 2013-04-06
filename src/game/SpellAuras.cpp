@@ -2996,6 +2996,23 @@ void Aura::HandlePeriodicTriggerSpellWithValue(bool apply, bool /*Real*/)
 void Aura::HandlePeriodicEnergize(bool apply, bool /*Real*/)
 {
     m_isPeriodic = apply;
+
+    if (GetId() == 5229)                                     // Druid enrage in bear form
+    {
+        if (apply)
+        {
+            Aura* A = CreateAura(GetSpellProto(),EFFECT_INDEX_1,0,m_spellAuraHolder,GetTarget(),GetCaster());
+            m_spellAuraHolder->AddAura(A,EFFECT_INDEX_1);
+
+            if (GetTarget()->HasAura(9635))                  // -16% armor in dire bear form
+                A->m_modifier.m_amount = -16;
+        else
+            A->m_modifier.m_amount = -27;
+            A->m_modifier.m_miscvalue = SPELL_SCHOOL_MASK_NORMAL;
+            A->m_modifier.periodictime = 0;
+            A->m_modifier.m_auraname = SPELL_AURA_MOD_BASE_RESISTANCE_PCT;
+        }
+    }
 }
 
 void Aura::HandleAuraPowerBurn(bool apply, bool /*Real*/)
