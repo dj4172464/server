@@ -699,18 +699,21 @@ bool Pet::UpdateStats(Stats stat)
     // value = ((base_value * base_pct) + total_value) * total_pct
     float value  = GetTotalStatValue(stat);
 
+    /*[-ZERO]
     Unit* owner = GetOwner();
     if (stat == STAT_STAMINA)
     {
         if (owner)
             value += float(owner->GetStat(stat)) * 0.3f;
     }
+
     // warlock's and mage's pets gain 30% of owner's intellect
     else if (stat == STAT_INTELLECT && getPetType() == SUMMON_PET)
     {
         if (owner && (owner->getClass() == CLASS_WARLOCK || owner->getClass() == CLASS_MAGE))
             value += float(owner->GetStat(stat)) * 0.3f;
     }
+    */
 
     SetStat(stat, int32(value));
 
@@ -748,10 +751,12 @@ void Pet::UpdateResistances(uint32 school)
     {
         float value  = GetTotalAuraModValue(UnitMods(UNIT_MOD_RESISTANCE_START + school));
 
+        /*[-ZERO]
         Unit* owner = GetOwner();
         // hunter and warlock pets gain 40% of owner's resistance
         if (owner && (getPetType() == HUNTER_PET || (getPetType() == SUMMON_PET && owner->getClass() == CLASS_WARLOCK)))
             value += float(owner->GetResistance(SpellSchools(school))) * 0.4f;
+        */
 
         SetResistance(SpellSchools(school), int32(value));
     }
@@ -765,10 +770,12 @@ void Pet::UpdateArmor()
     float bonus_armor = 0.0f;
     UnitMods unitMod = UNIT_MOD_ARMOR;
 
+    /*[-ZERO]
     Unit* owner = GetOwner();
     // hunter and warlock pets gain 35% of owner's armor value
     if (owner && (getPetType() == HUNTER_PET || (getPetType() == SUMMON_PET && owner->getClass() == CLASS_WARLOCK)))
         bonus_armor = 0.35f * float(owner->GetArmor());
+    */
 
     value  = GetModifierValue(unitMod, BASE_VALUE);
     value *= GetModifierValue(unitMod, BASE_PCT);
@@ -820,6 +827,7 @@ void Pet::UpdateAttackPowerAndDamage(bool ranged)
     else
         val = 2 * GetStat(STAT_STRENGTH) - 20.0f;
 
+    /*[-ZERO]
     Unit* owner = GetOwner();
     if (owner && owner->GetTypeId() == TYPEID_PLAYER)
     {
@@ -841,6 +849,7 @@ void Pet::UpdateAttackPowerAndDamage(bool ranged)
             SetBonusDamage(int32(frost * 0.4f));
         }
     }
+    */
 
     SetModifierValue(UNIT_MOD_ATTACK_POWER, BASE_VALUE, val + bonusAP);
 
