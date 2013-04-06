@@ -5932,10 +5932,10 @@ bool Player::RewardHonor(Unit* uVictim, uint32 groupsize)
         if (cVictim->IsRacialLeader())
         {
             // maybe uncorrect honor value but no source to get it actually
-            AddHonorCP(398.0, HONORABLE, cVictim->GetEntry(), TYPEID_UNIT);
+            AddHonorCP(398.0f, HONORABLE, cVictim->GetEntry(), TYPEID_UNIT);
             // Send PVP credit racial leader
             WorldPacket data(SMSG_PVP_CREDIT, 12);
-            uint32 pvppoints = 398.0;
+            uint32 pvppoints = 398;
             uint32 rank = 19;
             data << pvppoints << cVictim->GetGUID() << static_cast<uint32>(rank);
             GetSession()->SendPacket(&data);
