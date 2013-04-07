@@ -5933,12 +5933,8 @@ bool Player::RewardHonor(Unit* uVictim, uint32 groupsize)
         {
             // maybe uncorrect honor value but no source to get it actually
             AddHonorCP(398.0f, HONORABLE, cVictim->GetEntry(), TYPEID_UNIT);
-            // Send PVP credit racial leader
-            WorldPacket data(SMSG_PVP_CREDIT, 12);
-            uint32 pvppoints = 398;
-            uint32 rank = 19;
-            data << pvppoints << cVictim->GetGUID() << static_cast<uint32>(rank);
-            GetSession()->SendPacket(&data);
+            // Send PvP credit racial leader
+            SendPvPCredit(cVictim->GetObjectGuid(), 19, 398);
             return true;
         }
     }
@@ -5951,17 +5947,24 @@ bool Player::RewardHonor(Unit* uVictim, uint32 groupsize)
 
         if (getLevel() < (pVictim->getLevel() + 5))
         {
-            AddHonorCP(MaNGOS::Honor::HonorableKillPoints(this, pVictim, groupsize), HONORABLE, pVictim->GetGUIDLow(), TYPEID_PLAYER);
-            // Send PVP credit
-            WorldPacket data(SMSG_PVP_CREDIT, 12);
-            uint32 pvppoints = MaNGOS::Honor::HonorableKillPoints(this, pVictim, groupsize);
-            data << pvppoints << pVictim->GetGUID() << static_cast<uint32>(pVictim->GetHonorRankInfo().rank);
-            GetSession()->SendPacket(&data);
+            float hp = MaNGOS::Honor::HonorableKillPoints(this, pVictim, groupsize);
+            AddHonorCP(hp, HONORABLE, pVictim->GetGUIDLow(), TYPEID_PLAYER);
+            // Send PvP credit
+            SendPvPCredit(pVictim->GetObjectGuid(), uint32(pVictim->GetHonorRankInfo().rank), uint32(hp));
             return true;
         }
     }
 
     return false;
+}
+
+void Player::SendPvPCredit(ObjectGuid guid, uint32 rank, uint32 points)
+{
+    WorldPacket data(SMSG_PVP_CREDIT, 4 + 8 + 4);
+    data << points;
+    data << guid;
+    data << rank;
+    GetSession()->SendPacket(&data);
 }
 
 bool Player::AddHonorCP(float honor, uint8 type, uint32 victim, uint8 victimType)
