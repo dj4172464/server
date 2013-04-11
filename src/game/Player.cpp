@@ -5932,7 +5932,7 @@ bool Player::RewardHonor(Unit* uVictim, uint32 groupsize)
         if (cVictim->IsRacialLeader())
         {
             // maybe uncorrect honor value but no source to get it actually
-            AddHonorCP(398.0f, HONORABLE, cVictim->GetEntry(), TYPEID_UNIT);
+            AddHonorCP(398.0, HONORABLE, cVictim->GetEntry(), TYPEID_UNIT);
             // Send PvP credit racial leader
             SendPvPCredit(cVictim->GetObjectGuid(), 19, 398);
             return true;
