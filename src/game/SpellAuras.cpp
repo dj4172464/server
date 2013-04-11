@@ -3490,11 +3490,13 @@ void Aura::HandleAuraModIncreaseHealth(bool apply, bool Real)
                 }
                 else
                 {
-                    if (int32(target->GetHealth()) > m_modifier.m_amount)
+                    int32 health = target->GetHealth();
+                    if (health > m_modifier.m_amount)
                         target->ModifyHealth(-m_modifier.m_amount);
-                    else
+                    else if (health != 0)
                         target->SetHealth(1);
-                        target->HandleStatModifier(UNIT_MOD_HEALTH, TOTAL_VALUE, float(m_modifier.m_amount), apply);
+
+                    target->HandleStatModifier(UNIT_MOD_HEALTH, TOTAL_VALUE, float(m_modifier.m_amount), apply);
                 }
             }
         }
