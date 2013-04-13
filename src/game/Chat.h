@@ -443,6 +443,8 @@ class MANGOS_DLL_SPEC ChatHandler
         bool HandleReloadSpellThreatsCommand(char* args);
         bool HandleReloadSpellPetAurasCommand(char* args);
 
+        bool HandleReloadSpellLinkedCommand(char* args);
+
         bool HandleResetAllCommand(char* args);
         bool HandleResetHonorCommand(char* args);
         bool HandleResetLevelCommand(char* args);

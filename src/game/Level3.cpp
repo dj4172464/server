@@ -329,6 +329,7 @@ bool ChatHandler::HandleReloadAllSpellCommand(char* /*args*/)
     HandleReloadSpellTargetPositionCommand((char*)"a");
     HandleReloadSpellThreatsCommand((char*)"a");
     HandleReloadSpellPetAurasCommand((char*)"a");
+    HandleReloadSpellLinkedCommand((char*)"a");
     return true;
 }
 
@@ -726,6 +727,14 @@ bool ChatHandler::HandleReloadSpellPetAurasCommand(char* /*args*/)
     sLog.outString("Re-Loading Spell pet auras...");
     sSpellMgr.LoadSpellPetAuras();
     SendGlobalSysMessage("DB table `spell_pet_auras` reloaded.");
+    return true;
+}
+
+bool ChatHandler::HandleReloadSpellLinkedCommand(char* /*arg*/)
+{
+    sLog.outString("Re-Loading spell linked table...");
+    sSpellMgr.LoadSpellLinked();
+    SendGlobalSysMessage("DB table `spell_linked` reloaded.");
     return true;
 }
 
