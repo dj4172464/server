@@ -3960,6 +3960,32 @@ SpellCastResult Spell::CheckCast(bool strict)
 
     if (Unit* target = m_targets.getUnitTarget())
     {
+        //Soothe animal
+        int maxLevel; //Maxlevel that this spell can be applied to
+        bool foundSootheAnimal = true; //will be set to false in the default case
+        switch (m_spellInfo->Id)
+        {
+            //Soothe animal rank 3
+        case 9901:
+            maxLevel = 70;
+            break;
+            //Soothe animal rank 2
+        case 8955:
+            maxLevel = 55;
+            break;
+            //Soothe animal rank 1
+        case 2908:
+            maxLevel = 40;
+            break;
+        default:
+            foundSootheAnimal = false;
+            break;
+        }
+        if (foundSootheAnimal)
+            if (target->getLevel() > maxLevel)
+                return SPELL_FAILED_HIGHLEVEL;
+        
+        
         // Swiftmend
         if (m_spellInfo->Id == 18562)                       // future versions have special aura state for this
         {
