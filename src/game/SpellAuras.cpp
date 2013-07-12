@@ -3572,8 +3572,12 @@ void Aura::HandleAuraModIncreaseEnergy(bool apply, bool /*Real*/)
 {
     Unit* target = GetTarget();
     Powers powerType = target->getPowerType();
+    
+    //We fallback to the power for the Modifier here because otherwise
+    //we will not cancel out effects that should be canceled, distilled flask of wisdom
+    //is an example of this as a druid, refer to issue #67 for mangoszero/server
     if (int32(powerType) != m_modifier.m_miscvalue)
-        return;
+        powerType = Powers(m_modifier.m_miscvalue);
 
     UnitMods unitMod = UnitMods(UNIT_MOD_POWER_START + powerType);
 
