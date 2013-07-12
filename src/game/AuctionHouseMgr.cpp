@@ -1,4 +1,4 @@
-/**
+/*
  * This code is part of MaNGOS. Contributor & Copyright details are in AUTHORS/THANKS.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -35,6 +35,11 @@
 #include "Mail.h"
 
 #include "Policies/Singleton.h"
+
+/** \addtogroup auctionhouse
+ * @{
+ * \file
+ */
 
 INSTANTIATE_SINGLETON_1(AuctionHouseMgr);
 
@@ -797,3 +802,5 @@ bool AuctionEntry::UpdateBid(uint32 newbid, Player* newbidder /*=NULL*/)
         return false;
     }
 }
+
+/** @} */

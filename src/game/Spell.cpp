@@ -4005,8 +4005,7 @@ SpellCastResult Spell::CheckCast(bool strict)
         if (foundSootheAnimal)
             if (target->getLevel() > m_spellInfo->MaxTargetLevel)
                 return SPELL_FAILED_HIGHLEVEL;
-        
-        
+
         // Swiftmend
         if (m_spellInfo->Id == 18562)                       // future versions have special aura state for this
         {

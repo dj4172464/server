@@ -1,4 +1,4 @@
-/**
+/*
  * This code is part of MaNGOS. Contributor & Copyright details are in AUTHORS/THANKS.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -24,8 +24,16 @@
 #include "SystemConfig.h"
 #include "SQLStorages.h"
 
-// Format is YYYYMMDDRR where RR is the change in the conf file
-// for that day.
+/** \addtogroup auctionbot
+ * @{
+ * \file
+ */
+
+
+/**
+ * Format is YYYYMMDDRR where RR is the change in the conf file
+ * for that day.
+ */
 #define AUCTIONHOUSEBOT_CONF_VERSION    2010102201
 
 #include "Policies/Singleton.h"
@@ -165,8 +173,12 @@ class AHB_Seller_Config
         SellerItemInfo m_ItemInfo[MAX_AUCTION_QUALITY];
 };
 
-// This class handle all Buyer method
-// (holder of AuctionBotConfig for each auction house type)
+/**
+ * This class handle all Buyer method
+ * (holder of AuctionBotConfig for each auction house type)
+ * (Taken from comments in file)
+ * \todo Perhaps a better description of the class?
+ */
 class AuctionBotBuyer : public AuctionBotAgent
 {
     public:
@@ -174,42 +186,149 @@ class AuctionBotBuyer : public AuctionBotAgent
         ~AuctionBotBuyer();
 
         bool        Initialize() override;
+        /** 
+         * Updates the specified house type. Will buy items if there are any that match certain
+         * criteria.
+         * @param houseType Type of the house.
+         * @return true if the update was successful, false otherwise
+         */
         bool        Update(AuctionHouseType houseType) override;
 
         void        LoadConfig();
+        /** 
+         * Adds the new auction buyer bot bid.
+         * @param config The config.
+         */
         void        addNewAuctionBuyerBotBid(AHB_Buyer_Config& config);
 
     private:
         uint32              m_CheckInterval;
         AHB_Buyer_Config    m_HouseConfig[MAX_AUCTION_HOUSE_TYPE];
 
+        /** 
+         * Loads the buyer values.
+         * @param config The config.
+         */
         void        LoadBuyerValues(AHB_Buyer_Config& config);
+        /** 
+         * Determines whether [is buyable entry] [the specified buyout price].
+         * 
+         * @param buyoutPrice The buyout price.
+         * @param InGame_BuyPrice The in game_ buy price.
+         * @param MaxBuyablePrice The max buyable price.
+         * @param MinBuyPrice The min buy price.
+         * @param MaxChance The max chance.
+         * @param ChanceRatio The chance ratio.
+         * @return true if the entry is buyable, false otherwise
+         */
         bool        IsBuyableEntry(uint32 buyoutPrice, double InGame_BuyPrice, double MaxBuyablePrice, uint32 MinBuyPrice, uint32 MaxChance, uint32 ChanceRatio);
+        /** 
+         * Determines whether [is bidable entry] [the specified bid price].
+         * 
+         * @param bidPrice The bid price.
+         * @param InGame_BuyPrice The in game_ buy price.
+         * @param MaxBidablePrice The max bidable price.
+         * @param MinBidPrice The min bid price.
+         * @param MaxChance The max chance.
+         * @param ChanceRatio The chance ratio.
+         * @return true if the bot can bid on this entry, false otherwise
+         */
         bool        IsBidableEntry(uint32 bidPrice, double InGame_BuyPrice, double MaxBidablePrice, uint32 MinBidPrice, uint32 MaxChance, uint32 ChanceRatio);
+        /** 
+         * Places the bid to entry.
+         * 
+         * @param auction The auction.
+         * @param bidPrice The bid price.
+         */
         void        PlaceBidToEntry(AuctionEntry* auction, uint32 bidPrice);
+        /** 
+         * Buys the entry.
+         * 
+         * @param auction The auction.
+         */
         void        BuyEntry(AuctionEntry* auction);
+        /** 
+         * Prepares the list of entry.
+         * 
+         * @param config The config.
+         */
         void        PrepareListOfEntry(AHB_Buyer_Config& config);
+        /** 
+         * Gets the buyable entry.
+         * 
+         * @param config The config.
+         * <returns></returns
+         */
         uint32      GetBuyableEntry(AHB_Buyer_Config& config);
 };
 
-// This class handle all Selling method
-// (holder of AHB_Seller_Config data for each auction house type)
+/**
+ * This class handle all Selling method
+ * (holder of AHB_Seller_Config data for each auction house type)
+ * (Taken from comments in file)
+ * \todo Maybe improve the description of this class
+ */
 class AuctionBotSeller : public AuctionBotAgent
 {
     public:
         typedef std::vector<uint32> ItemPool;
-
+        /** 
+         * Initializes a new instance of the \ref AuctionBotSeller class.
+         */
         AuctionBotSeller();
+        /** 
+         * Finalizes an instance of the \ref AuctionBotSeller class.
+         */
         ~AuctionBotSeller();
-
+        
+        /** 
+         * Initializes this instance.
+         */
         bool Initialize() override;
+        /** 
+         * Updates the specified house type by possibly putting up new items for
+         * sale if there's a need for it.
+         * @param houseType Type of the house.
+         */
         bool Update(AuctionHouseType houseType) override;
-
+        /** 
+         * Add new auction to one of the factions.
+         * Faction and setting associated is passed with the config
+         * @param config The config to use for adding the auctions
+         */
         void addNewAuctions(AHB_Seller_Config& config);
+        /** 
+         * Sets the items ratio. This should be a value betweeen 0 and 10000 which
+         * probably represents 0-100% 
+         * @param al The alliance item amount/ratio
+         * @param ho The horde item amount/ratio
+         * @param ne The neutral item amount/ratio
+         */
         void SetItemsRatio(uint32 al, uint32 ho, uint32 ne);
+        /** 
+         * Sets the items ratio for a specific house. Works as \ref AuctionBotSeller::SetItemsRatio
+         * but only changes the value for one house instead.
+         * @param house The house to change the ratio for
+         * @param val The new ratio
+         */
         void SetItemsRatioForHouse(AuctionHouseType house, uint32 val);
+        /** 
+         * Changes how many items of each item quality should be available.
+         * @param vals Array of size \ref MAX_AUCTION_QUALITY telling the amount of each item to be available on the AH.
+         * @see AuctionQuality
+         */
         void SetItemsAmount(uint32(&vals) [MAX_AUCTION_QUALITY]);
+        /** 
+         * Changes how many items of a certain quality should be available. Works as
+         * \ref AuctionBotSeller::SetItemsAmount but for one of the qualities instead
+         * of all.
+         * @param quality The quality to change
+         * @param val How many of this item quality that should be available on AH
+         */
         void SetItemsAmountForQuality(AuctionQuality quality, uint32 val);
+        /** 
+         * Loads the config.
+         */
         void LoadConfig();
 
     private:
@@ -217,10 +336,44 @@ class AuctionBotSeller : public AuctionBotAgent
 
         ItemPool m_ItemPool[MAX_AUCTION_QUALITY][MAX_ITEM_CLASS];
 
+        /** 
+         * Loads the seller values 
+         * @param config The config.
+         */
         void        LoadSellerValues(AHB_Seller_Config& config);
+        /** 
+         * Set static of items on one AH faction.
+         * Fill ItemInfos object with real content of AH.
+         * 
+         * @param config The config.
+         * @return 
+         */
         uint32      SetStat(AHB_Seller_Config& config);
+        /** 
+         * getRandomArray is used to make available the possibility to
+         * add any of missed item in place of first one to last one.
+         * 
+         * @param config The config.
+         * @param ra The ra.
+         * @param addedItem The added item.
+         */
         bool        getRandomArray(AHB_Seller_Config& config, RandomArray& ra, const std::vector<std::vector<uint32> >& addedItem);
+        /** 
+         * Set items price. All important value are passed by address.
+         * 
+         * @param itemProto The item proto.
+         * @param config The config.
+         * @param buyp The buyp.
+         * @param bidp The bidp.
+         * @param stackcnt The stackcnt.
+         * @param itemQuality The item quality.
+         */
         void        SetPricesOfItem(ItemPrototype const* itemProto, AHB_Seller_Config& config, uint32& buyp, uint32& bidp, uint32 stackcnt, ItemQualities itemQuality);
+        /** 
+         * Loads the items quantity.
+         * 
+         * @param config The config.
+         */
         void        LoadItemsQuantity(AHB_Seller_Config& config);
 };
 
@@ -311,7 +464,6 @@ void AuctionBotConfig::setConfig(AuctionBotConfigBoolValues index, char const* f
     setConfig(index, m_AhBotCfg.GetBoolDefault(fieldname, defvalue));
 }
 
-// Get AuctionHousebot configuration file
 void AuctionBotConfig::GetConfigFromFile()
 {
     // Check config file version
@@ -1385,8 +1537,6 @@ void AuctionBotSeller::LoadSellerValues(AHB_Seller_Config& config)
     DEBUG_FILTER_LOG(LOG_FILTER_AHBOT_SELLER, "AHBot: YellowItems = %u", config.GetItemsAmountPerQuality(AUCTION_QUALITY_YELLOW));
 }
 
-// Set static of items on one AH faction.
-// Fill ItemInfos object with real content of AH.
 uint32 AuctionBotSeller::SetStat(AHB_Seller_Config& config)
 {
     std::vector<std::vector<uint32> > ItemsInAH(MAX_AUCTION_QUALITY, std::vector< uint32 > (MAX_ITEM_CLASS));
@@ -1435,7 +1585,6 @@ uint32 AuctionBotSeller::SetStat(AHB_Seller_Config& config)
     return count;
 }
 
-// getRandomArray is used to make aviable the possibility to add any of missed item in place of first one to last one.
 bool AuctionBotSeller::getRandomArray(AHB_Seller_Config& config, RandomArray& ra, const std::vector<std::vector<uint32> >& addedItem)
 {
     ra.clear();
@@ -1458,7 +1607,6 @@ bool AuctionBotSeller::getRandomArray(AHB_Seller_Config& config, RandomArray& ra
     return Ok;
 }
 
-// Set items price. All important value are passed by address.
 void AuctionBotSeller::SetPricesOfItem(ItemPrototype const* itemProto, AHB_Seller_Config& config, uint32& buyp, uint32& bidp, uint32 stackcnt, ItemQualities itemQuality)
 {
     double temp_buyp = buyp * stackcnt *
@@ -1527,8 +1675,6 @@ void AuctionBotSeller::SetItemsAmountForQuality(AuctionQuality quality, uint32 v
         LoadItemsQuantity(m_HouseConfig[i]);
 }
 
-// Add new auction to one of the factions.
-// Faction and setting assossiated is defined passed argument ( config )
 void AuctionBotSeller::addNewAuctions(AHB_Seller_Config& config)
 {
     uint32 items;
@@ -1723,6 +1869,7 @@ void AuctionHouseBot::PrepareStatusInfos(AuctionHouseBotStatusInfo& statusInfo)
     }
 }
 
+
 void AuctionHouseBot::Rebuild(bool all)
 {
     for (uint32 i = 0; i < MAX_AUCTION_HOUSE_TYPE; ++i)
@@ -1766,3 +1913,4 @@ void AuctionHouseBot::Update()
             break;
     }
 }
+/** @} */

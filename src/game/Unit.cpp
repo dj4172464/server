@@ -1,4 +1,4 @@
-/**
+/*
  * This code is part of MaNGOS. Contributor & Copyright details are in AUTHORS/THANKS.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -507,7 +507,6 @@ void Unit::RemoveSpellsCausingAura(AuraType auraType, ObjectGuid casterGuid)
     }
 }
 
-/* Called by DealDamage for auras that have a chance to be dispelled on damage taken. */
 void Unit::RemoveSpellbyDamageTaken(AuraType auraType, uint32 damage)
 {
     if (!HasAuraType(auraType))
@@ -2876,6 +2875,7 @@ uint32 Unit::GetWeaponSkillValue(WeaponAttackType attType, Unit const* target) c
             return GetMaxSkillValueForLevel();              // always maximized SKILL_FERAL_COMBAT in fact
 
         // weapon skill or (unarmed for base attack)
+        // weapon skill type is what this returns, ie: SKILL_BOW etc, see SkillType enum
         uint32 skill = item ? item->GetSkill() : uint32(SKILL_UNARMED);
 
         // in PvP use full skill instead current skill value
@@ -4240,6 +4240,7 @@ Aura* Unit::GetAura(AuraType type, SpellFamily family, uint64 familyFlag, Object
 
 bool Unit::HasAura(uint32 spellId, SpellEffectIndex effIndex) const
 {
+    //Find all auras with corresponding spellid, can be more than one
     SpellAuraHolderConstBounds spair = GetSpellAuraHolderBounds(spellId);
     for (SpellAuraHolderMap::const_iterator i_holder = spair.first; i_holder != spair.second; ++i_holder)
         if (i_holder->second->GetAuraByEffectIndex(effIndex))
