@@ -15,6 +15,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+
 --
 -- Table structure for table `character_db_version`
 --
@@ -23,7 +24,7 @@ DROP TABLE IF EXISTS `character_db_version`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `character_db_version` (
-  `required_z1794_s1350_11716_09_characters_auction` bit(1) default NULL
+  `required_r2427_02_characters_character_whispers` bit(1) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Last applied sql update to DB';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -654,12 +655,13 @@ DROP TABLE IF EXISTS `character_ticket`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `character_ticket` (
-  `ticket_id` int(11) unsigned NOT NULL auto_increment,
-  `guid` int(11) unsigned NOT NULL default '0',
+  `ticket_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `guid` int(11) unsigned NOT NULL DEFAULT '0',
   `ticket_text` text,
-  `response_text` text CHARSET utf8 COLLATE utf8_general_ci NULL,
-  `ticket_lastchange` TIMESTAMP ON  UPDATE  CURRENT_TIMESTAMP  NOT  NULL  DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`ticket_id`)
+  `response_text` text,
+  `ticket_lastchange` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `resolved` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`ticket_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Player System';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -701,6 +703,23 @@ LOCK TABLES `character_tutorial` WRITE;
 /*!40000 ALTER TABLE `character_tutorial` DISABLE KEYS */;
 /*!40000 ALTER TABLE `character_tutorial` ENABLE KEYS */;
 UNLOCK TABLES;
+--
+-- Table structure for table `character_whispers`
+--
+
+DROP TABLE IF EXISTS `character_whispers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `character_whispers` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id of the whisper, sort by this',
+  `to_guid` int(10) NOT NULL COMMENT 'guid of receiver of the whisper',
+  `from_guid` int(10) NOT NULL COMMENT 'guid of sender of the whisper',
+  `message` varchar(256) NOT NULL COMMENT 'actual whisper that was sent',
+  `regarding_ticket_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'link to character_ticket.ticket_id, if 0 just a log of a whisper sent',
+  `sent_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'this is when the whisper was sent',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `corpse`

@@ -1,4 +1,4 @@
-/**
+/*
  * This code is part of MaNGOS. Contributor & Copyright details are in AUTHORS/THANKS.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -44,7 +44,7 @@ class SqlDelayThread : public ACE_Based::Runnable
         SqlDelayThread(Database* db, SqlConnection* conn);
         ~SqlDelayThread();
 
-        ///< Put sql statement to delay queue
+        /// Put sql statement to delay queue
         bool Delay(SqlOperation* sql) { m_sqlQueue.add(sql); return true; }
 
         virtual void Stop();                                ///< Stop event
