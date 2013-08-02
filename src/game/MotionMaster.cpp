@@ -457,7 +457,7 @@ void MotionMaster::Mutate(MovementGenerator* m)
     push(m);
 }
 
-void MotionMaster::propagateSpeedChange()
+void MotionMaster::PropagateSpeedChange()
 {
     Impl::container_type::iterator it = Impl::c.begin();
     for (; it != end(); ++it)
