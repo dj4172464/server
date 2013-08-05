@@ -97,6 +97,11 @@ void GMTicket::CloseWithSurvey() const
     _Close(GM_TICKET_STATUS_SURVEY);
 }
 
+void GMTicket::CloseByClient() const
+{
+    _Close(GM_TICKET_STATUS_DO_NOTHING);
+}
+
 void GMTicket::Close() const
 {
     _Close(GM_TICKET_STATUS_CLOSE);
@@ -113,7 +118,8 @@ void GMTicket::_Close(GMTicketStatus statusCode) const
                                "WHERE guid = %u AND resolved = 0",
                                m_guid.GetCounter());
     
-    pPlayer->GetSession()->SendGMTicketStatusUpdate(statusCode);
+    if (statusCode != GM_TICKET_STATUS_DO_NOTHING)
+        pPlayer->GetSession()->SendGMTicketStatusUpdate(statusCode);
 }
 
 void GMTicketMgr::LoadGMTickets()
@@ -165,13 +171,15 @@ void GMTicketMgr::LoadGMTickets()
 
 void GMTicketMgr::Create(ObjectGuid guid, const char* text)
 {
+    std::string escapedText = text;
+    CharacterDatabase.escape_string(escapedText);
     CharacterDatabase.BeginTransaction();
     //This needs to be Direct (not placed in queue) as we need the id of it soon afterwards
     CharacterDatabase.DirectPExecute("INSERT INTO character_ticket "
                                      "(guid, ticket_text) "
                                      "VALUES "
                                      "(%u,   '%s')",
-                                     guid.GetCounter(), text);
+                                     guid.GetCounter(), escapedText.c_str());
     
     //Get the id of the ticket, needed for logging whispers
     QueryResult* result = CharacterDatabase.PQuery("SELECT ticket_id, guid, resolved "
