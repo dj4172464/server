@@ -47,6 +47,12 @@ add_subdirectory(OutdoorPvP)
 add_subdirectory(movement)
 
 #-----------------------------------------------------------------------------
+# Build the mangos-zero Eluna library
+if(WITH_MOD_LUA AND LUA51_FOUND)
+    add_subdirectory(Eluna)
+endif()
+
+#-----------------------------------------------------------------------------
 # Define the game library
 set(sources
     AccountMgr.cpp
@@ -291,24 +297,6 @@ set(headers
     WorldSocketMgr.h
 )
 
-if(WITH_MOD_LUA AND LUA51_FOUND)
-    list(APPEND sources
-        ${CMAKE_CURRENT_SOURCE_DIR}/luaengine/LuaEngine.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/luaengine/LuaHookMgr.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/luaengine/LuaFunctions.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/luaengine/LuaHooks.cpp
-    )
-    list(APPEND headers
-        ${CMAKE_CURRENT_SOURCE_DIR}/luaengine/LuaEngine.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/luaengine/LuaHookMgr.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/luaengine/LuaIncludes.h
-    )
-    include_directories(
-        ${LUA_INCLUDE_DIR}
-        ${CMAKE_CURRENT_SOURCE_DIR}/luaengine/
-    )
-endif()
-
 set(game_LIB_SRCS ${sources} ${headers})
 
 mangos_source_group(${game_LIB_SRCS})
@@ -345,7 +333,7 @@ endif()
 if(WITH_MOD_LUA AND LUA51_FOUND)
     set(BUILD_PROPERTIES "${BUILD_PROPERTIES} -DWITH_MOD_LUA" )
     set_target_properties(mangos-game PROPERTIES COMPILE_FLAGS ${BUILD_PROPERTIES})
-    target_link_libraries(mangos-game ${LUA_LIBRARIES})
+    target_link_libraries(mangos-game mangos-eluna)
 elseif(WITH_MOD_SCRIPTDEV2)
     set(BUILD_PROPERTIES "${BUILD_PROPERTIES} -DWITH_MOD_SCRIPTDEV2" )
     set_target_properties(mangos-game PROPERTIES COMPILE_FLAGS ${BUILD_PROPERTIES})

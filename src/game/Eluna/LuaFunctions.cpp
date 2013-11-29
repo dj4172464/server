@@ -2,7 +2,11 @@
  * mangos-zero is a full featured server for World of Warcraft in its vanilla
  * version, supporting clients for patch 1.12.x.
  *
- * Copyright (C) 2005-2013  MaNGOS project <http://getmangos.com>
+ * Eluna provides an alternative Lua based scripting which allows your to
+ * easily customize game content without the need for compilers or any
+ * other development tools.
+ *
+ * Copyright (C) 2010-2013  Eluna Lua Engine <http://emudevs.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +26,5 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#ifndef LUA_INCLUDES_H
-#define LUA_INCLUDES_H
-
-#endif
+#include "LuaEngine.h"
+#include "LuaIncludes.h"
