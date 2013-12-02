@@ -29,4 +29,28 @@
 #ifndef LUA_INCLUDES_H
 #define LUA_INCLUDES_H
 
+#include "AccountMgr.h"
+#include "AuctionHouseMgr.h"
+#include "Chat.h"
+#include "Channel.h"
+#include "Creature.h"
+#include "Group.h"
+#include "Guild.h"
+#include "GuildMgr.h"
+#include "Language.h"
+#include "Map.h"
+#include "MapManager.h"
+#include "ObjectMgr.h"
+#include "Pet.h"
+#include "QuestDef.h"
+#include "GossipDef.h"
+#include "ScriptMgr.h"
+#include "CreatureAI.h"
+#include "SharedDefines.h"
+#include "SystemConfig.h"
+#include "ItemPrototype.h"
+#include "Spell.h"
+#include "GameObject.h"
+#include "Weather.h"
+
 #endif

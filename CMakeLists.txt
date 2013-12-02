@@ -478,7 +478,7 @@ if(WITH_POSTGRESQL)
 endif(WITH_POSTGRESQL)
 
 if(WITH_MOD_LUA)
-    find_package(Lua51 REQUIRED)
+    find_package(Lua52 REQUIRED)
 endif(WITH_MOD_LUA)
 
 #-----------------------------------------------------------------------------

@@ -69,6 +69,7 @@
 #include "AuctionHouseBot/AuctionHouseBot.h"
 #include "CharacterDatabaseCleaner.h"
 #include "CreatureLinkingMgr.h"
+#include "LuaEngine.h"
 
 INSTANTIATE_SINGLETON_1(World);
 
@@ -1236,6 +1237,9 @@ void World::SetInitialWorldSettings()
             sLog.outError("Scripting library build for old mangosd revision. You need rebuild it.");
             break;
     }
+
+    ///- Initialize Eluna Lua engine
+    sEluna.StartEluna(false);
 
     ///- Initialize game time and timers
     sLog.outString("DEBUG:: Initialize game time and timers");

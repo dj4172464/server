@@ -57,7 +57,7 @@ include_directories(
 #-----------------------------------------------------------------------------
 # Build the eluna library
 add_library(mangos-eluna STATIC ${eluna_LIB_SRCS})
-target_link_libraries(mangos-eluna mangos-shared mangos-framework Detour g3dlite ${ACE_LIBRARIES} ${MYSQL_LIBRARIES})
+target_link_libraries(mangos-eluna mangos-shared mangos-framework Detour g3dlite ${ACE_LIBRARIES} ${LUA_LIBRARIES} ${MYSQL_LIBRARIES})
 
 if(${CMAKE_BUILD_TYPE} MATCHES Debug)
     set(BUILD_PROPERTIES "-DMANGOS_DEBUG")

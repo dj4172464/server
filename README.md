@@ -78,7 +78,7 @@ their systems package management instead of source packages.*
   algorithms used in MPQ archives.
 * **OpenSSL**: [OpenSSL][48] ([OpenSSL for Windows][55]) provides encryption
   algorithms used when authenticating clients.
-* **Lua**: [Lua 5.1][56] ([Lua 5.1 for Windows][57]) provides a convenient, fast
+* **Lua**: [Lua 5.2][56] ([Lua 5.2 for Windows][57]) provides a convenient, fast
   scripting environment, which allows us to make live changes to scripted
   content.
 

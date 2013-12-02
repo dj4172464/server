@@ -106,6 +106,30 @@ class DBCStorage
         /**
          * @brief
          *
+         * @param id [description]
+         * @param t  [description]
+         */
+        void SetEntry(uint32 id, T* t)
+        {
+            if(!loaded)
+            {
+                for (uint32 i = 0; i < GetNumRows(); ++i)
+                {
+                    T const* node = LookupEntry(i);
+                    if (!node)
+                        continue;
+                    data[i] = node;
+                }
+                loaded = true;
+            }
+            if (id > nCount)
+                nCount = id+1;
+            data[id] = t;
+        }
+
+        /**
+         * @brief
+         *
          * @param fn
          * @return bool
          */
@@ -132,6 +156,12 @@ class DBCStorage
          */
         void Clear()
         {
+            if (loaded)
+            {
+                data.clear();
+                loaded = false;
+            }
+
             if (!indexTable)
                 { return; }
 
@@ -168,6 +198,8 @@ class DBCStorage
         char const* fmt; /**< TODO */
         T** indexTable; /**< TODO */
         T* m_dataTable; /**< TODO */
+        std::map<uint32, T const*> data;
+        bool loaded;
         StringPoolList m_stringPoolList; /**< TODO */
 };
 
