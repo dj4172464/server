@@ -9,10 +9,10 @@ in 0.19 minor versions.
 Major changes for this build which require your attention when upgrading include
 awesome things such as these:
 
-* By default we now ship [Lua](http://www.lua.org/) version 5.1 scripting instead
+* By default we now ship [Lua](http://www.lua.org/) version 5.2 scripting instead
   of **ScriptDev2**. You can still enable SD2 during CMake confguration, but we
   highly recommend to port your C++ scripts to Lua, since SD2 will be removed in
-  the next major release 0.20.0
+  the next major release 0.20.0.
 * The default world server database has been replaced, with a clean, basic version
   containing everything required to create characters, and walk the world.
 
@@ -32,3 +32,9 @@ Also numerous minor fixes and improvements have been added, such as:
 * *mangos-zero* will now properly report as *x86* architecture on 32 bit builds.
 * Trap game objects will now despawn with their parent object. A special case for
   the quest Gordunni Cobalt has been added, along with script support.
+
+Credits
+-------
+We would like to express our gratitude to great team of developers from the
+[Eluna](https://github.com/ElunaLuaEngine/) project, who made it possible to
+ship Lua as a scripting language for both *mangos* and *Trinity*!

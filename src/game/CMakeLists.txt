@@ -48,7 +48,7 @@ add_subdirectory(movement)
 
 #-----------------------------------------------------------------------------
 # Build the mangos-zero Eluna library
-if(WITH_MOD_LUA AND LUA52_FOUND)
+if(WITH_MOD_LUA)
     add_subdirectory(Eluna)
 endif()
 
@@ -320,7 +320,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/src/shared/
 )
 
-if(WITH_MOD_LUA AND LUA52_FOUND)
+if(WITH_MOD_LUA)
     include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/Eluna/
     )
@@ -336,7 +336,7 @@ if(${CMAKE_BUILD_TYPE} MATCHES Debug)
     set(BUILD_PROPERTIES "${BUILD_PROPERTIES} -DMANGOS_DEBUG")
 endif()
 
-if(WITH_MOD_LUA AND LUA52_FOUND)
+if(WITH_MOD_LUA)
     set(BUILD_PROPERTIES "${BUILD_PROPERTIES} -DWITH_MOD_LUA" )
     set_target_properties(mangos-game PROPERTIES COMPILE_FLAGS ${BUILD_PROPERTIES})
     target_link_libraries(mangos-game mangos-eluna)

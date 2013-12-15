@@ -1,0 +1,8 @@
+README
+======
+This is [Lua][1] 5.2.3, released on 11 Nov 2013.
+
+For installation instructions, license details, and
+further information about Lua, see doc/readme.html.
+
+[1]: http://www.lua.org/ "The Programming Language Lua"
