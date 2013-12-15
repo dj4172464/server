@@ -132,16 +132,16 @@ option(WITH_GIT_ID          "Build git database update helper"                  
 mark_as_advanced(WITH_GIT_ID)
 
 # dont want people disabling this unless they really know what they are doing.
-option(WITH_MAP_TOOLS       "Build map extractors and generators"                                           ON)
+option(WITH_MAP_TOOLS       "Build map extractors and generators"                                            ON)
 mark_as_advanced(WITH_MAP_TOOLS)
 
 # mangos-zero database bindings
-option(WITH_MYSQL           "Enable MySQL database backend"                                                 ON)
+option(WITH_MYSQL           "Enable MySQL database backend"                                                  ON)
 option(WITH_POSTGRESQL      "Enable PostgreSQL database backend"                                            OFF)
 
 # mangos-zero language bindings
-option(WITH_MOD_LUA         "Enable Lua scripting (requires Lua 5.1)"                                       ON)
-option(WITH_MOD_SCRIPTDEV2  "Enable the scripting library"                                                  OFF)
+option(WITH_MOD_LUA         "Enable Lua scripting"                                                           ON)
+option(WITH_MOD_SCRIPTDEV2  "Enable C++ scripting library"                                                  OFF)
 
 # Modifiers
 option(WITH_MOD_SOAP        "Enable SOAP bindings (export data e.g. for a website)"                         OFF)
@@ -163,8 +163,9 @@ if(NOT ${CMAKE_BUILD_TYPE} STREQUAL "Debug" AND WITH_DEBUG_OUTPUT)
     message(FATAL_ERROR "It is not recommeded to build mangos-zero with debug output in a non-development release.")
 endif()
 
-if(WITH_MOD_LUA AND WITH_MOD_SCRIPTDEV2)
-    message(FATAL_ERROR "Lua and ScriptDev2 can not be used in parallel. Disable Lua or ScriptDev2.")
+if(WITH_MOD_LUA)
+    # message(FATAL_ERROR "Lua and ScriptDev2 can not be used in parallel. Disable Lua or ScriptDev2.")
+    message(STATUS "Lua scripting in ${CMAKE_PROJECT_NAME} is experimental. Please report issues.")
 endif()
 
 #-----------------------------------------------------------------------------
@@ -476,10 +477,6 @@ endif(WITH_MYSQL)
 if(WITH_POSTGRESQL)
     find_package(PostgreSQL REQUIRED)
 endif(WITH_POSTGRESQL)
-
-if(WITH_MOD_LUA)
-    find_package(Lua52 REQUIRED)
-endif(WITH_MOD_LUA)
 
 #-----------------------------------------------------------------------------
 # Extra compile flags
