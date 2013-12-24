@@ -31,18 +31,23 @@
 
 struct AreaTriggerEntry;
 struct SpellEntry;
+
 class Aura;
+class Channel;
 class Creature;
 class CreatureAI;
 class GameObject;
 class GameObjectAI;
+class Guild;
 class InstanceData;
 class Item;
 class Map;
 class Object;
 class Player;
 class Quest;
+class Spell;
 class SpellCastTargets;
+class Transport;
 class Unit;
 class WorldObject;
 
