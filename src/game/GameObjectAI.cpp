@@ -22,19 +22,13 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#ifndef MANGOS_CREATUREAISELECTOR_H
-#define MANGOS_CREATUREAISELECTOR_H
+#include "GameObjectAI.h"
 
-class CreatureAI;
-class Creature;
-class MovementGenerator;
-class GameObjectAI;
-class GameObject;
-
-namespace FactorySelector
+int GameObjectAI::Permissible(const GameObject* go)
 {
-    CreatureAI* selectAI(Creature*);
-    MovementGenerator* selectMovementGenerator(Creature*);
-    GameObjectAI* SelectGameObjectAI(GameObject*);
+    if (go->GetAIName() == "GameObjectAI")
+        return PERMIT_BASE_SPECIAL;
+    return PERMIT_BASE_NO;
 }
-#endif
+
+NullGameObjectAI::NullGameObjectAI(GameObject *g) : GameObjectAI(g) {}

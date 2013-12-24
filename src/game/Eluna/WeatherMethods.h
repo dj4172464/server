@@ -26,51 +26,53 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#ifndef CORPSEMETHODS_H
-#define CORPSEMETHODS_H
+#ifndef WEATHERMETHODS_H
+#define WEATHERMETHODS_H
 
-namespace LuaCorpse
+namespace LuaWeather
 {
-    // GetOwnerGUID()
-    int GetOwnerGUID(lua_State* L, Corpse* corpse)
+    int GetScriptId(lua_State* L, Weather* weather)
     {
-        sEluna.Push(L, corpse->GetOwnerGuid());
+        sEluna.Push(L, weather->GetScriptId());
         return 1;
     }
 
-    // GetGhostTime()
-    int GetGhostTime(lua_State* L, Corpse* corpse)
+    int GetZoneId(lua_State* L, Weather* weather)
     {
-        sEluna.Push(L, corpse->GetGhostTime());
+        sEluna.Push(L, weather->GetZone());
         return 1;
     }
 
-    // GetType()
-    int GetType(lua_State* L, Corpse* corpse)
+    int SetWeather(lua_State* L, Weather* weather)
     {
-        sEluna.Push(L, corpse->GetType());
+        uint32 weatherType = luaL_checkunsigned(L, 1);
+        float grade = luaL_checknumber(L, 2);
+
+        weather->SetWeather((WeatherType)weatherType, grade);
+        return 0;
+    }
+
+    int SendWeatherUpdateToPlayer(lua_State* L, Weather* weather)
+    {
+        Player* player = sEluna.CHECK_PLAYER(L, 1);
+        if (!player)
+            return 0;
+
+        weather->SendWeatherUpdateToPlayer(player);
+        return 0;
+    }
+
+    int Regenerate(lua_State* L, Weather* weather)
+    {
+        sEluna.Push(L, weather->ReGenerate());
         return 1;
     }
 
-    // ResetGhostTime()
-    int ResetGhostTime(lua_State* L, Corpse* corpse)
+    int UpdateWeather(lua_State* L, Weather* weather)
     {
-        corpse->ResetGhostTime();
-        return 0;
-    }
-
-    // SaveToDB()
-    int SaveToDB(lua_State* L, Corpse* corpse)
-    {
-        corpse->SaveToDB();
-        return 0;
-    }
-
-    // DeleteBonesFromWorld()
-    int DeleteBonesFromWorld(lua_State* L, Corpse* corpse)
-    {
-        corpse->DeleteBonesFromWorld();
-        return 0;
+        sEluna.Push(L, weather->UpdateWeather());
+        return 1;
     }
 };
+
 #endif

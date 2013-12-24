@@ -41,6 +41,7 @@
 #include "Util.h"
 #include "GridNotifiersImpl.h"
 #include "CellImpl.h"
+#include "LuaHookMgr.h"
 
 bool WorldSession::processChatmessageFurtherAfterSecurityChecks(std::string& msg, uint32 lang)
 {
@@ -171,6 +172,11 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
             if (msg.empty())
                 { break; }
 
+            if (!sHookMgr.OnChat(GetPlayer(), type, lang, msg))
+            {
+                return;
+            }
+
             if (type == CHAT_MSG_SAY)
                 { GetPlayer()->Say(msg, lang); }
             else if (type == CHAT_MSG_EMOTE)
@@ -215,6 +221,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
                 }
             }
 
+            sHookMgr.OnChat(GetPlayer(), type, lang, msg, player);
             GetPlayer()->Whisper(msg, lang, player->GetObjectGuid());
         } break;
 
@@ -244,6 +251,11 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
                     { return; }
             }
 
+            if (!sHookMgr.OnChat(GetPlayer(), type, lang, msg, group))
+            {
+                return;
+            }
+
             WorldPacket data;
             ChatHandler::FillMessageData(&data, this, type, lang, msg.c_str());
             group->BroadcastPacket(&data, false, group->GetMemberGroup(GetPlayer()->GetObjectGuid()));
@@ -269,7 +281,12 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
 
             if (GetPlayer()->GetGuildId())
                 if (Guild* guild = sGuildMgr.GetGuildById(GetPlayer()->GetGuildId()))
-                    { guild->BroadcastToGuild(this, msg, lang == LANG_ADDON ? LANG_ADDON : LANG_UNIVERSAL); }
+                {
+                    if (!sHookMgr.OnChat(GetPlayer(), type, lang, msg, guild))
+                        return;
+
+                    guild->BroadcastToGuild(this, msg, lang == LANG_ADDON ? LANG_ADDON : LANG_UNIVERSAL);
+                }
 
             break;
         }
@@ -292,7 +309,12 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
 
             if (GetPlayer()->GetGuildId())
                 if (Guild* guild = sGuildMgr.GetGuildById(GetPlayer()->GetGuildId()))
-                    { guild->BroadcastToOfficers(this, msg, lang == LANG_ADDON ? LANG_ADDON : LANG_UNIVERSAL); }
+                    {
+                    if (!sHookMgr.OnChat(GetPlayer(), type, lang, msg, guild))
+                        return;
+
+                        guild->BroadcastToOfficers(this, msg, lang == LANG_ADDON ? LANG_ADDON : LANG_UNIVERSAL);
+                    }
 
             break;
         }
@@ -321,6 +343,9 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
                 if (!group || group->isBGGroup() || !group->isRaidGroup())
                     { return; }
             }
+
+            if (!sHookMgr.OnChat(GetPlayer(), type, lang, msg, group))
+                return;
 
             WorldPacket data;
             ChatHandler::FillMessageData(&data, this, CHAT_MSG_RAID, lang, msg.c_str());
@@ -352,6 +377,9 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
                     { return; }
             }
 
+            if (!sHookMgr.OnChat(GetPlayer(), type, lang, msg, group))
+                return;
+
             WorldPacket data;
             ChatHandler::FillMessageData(&data, this, CHAT_MSG_RAID_LEADER, lang, msg.c_str());
             group->BroadcastPacket(&data, false);
@@ -372,6 +400,9 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
             if (!group || !group->isRaidGroup() ||
                 !(group->IsLeader(GetPlayer()->GetObjectGuid()) || group->IsAssistant(GetPlayer()->GetObjectGuid())))
                 { return; }
+
+            if (!sHookMgr.OnChat(GetPlayer(), type, lang, msg, group))
+                return;
 
             WorldPacket data;
             // in battleground, raid warning is sent only to players in battleground - code is ok
@@ -395,6 +426,9 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
             if (!group || !group->isBGGroup())
                 { return; }
 
+            if (!sHookMgr.OnChat(GetPlayer(), type, lang, msg, group))
+                return;
+
             WorldPacket data;
             ChatHandler::FillMessageData(&data, this, CHAT_MSG_BATTLEGROUND, lang, msg.c_str());
             group->BroadcastPacket(&data, false);
@@ -416,6 +450,9 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
             if (!group || !group->isBGGroup() || !group->IsLeader(GetPlayer()->GetObjectGuid()))
                 { return; }
 
+            if (!sHookMgr.OnChat(GetPlayer(), type, lang, msg, group))
+                return;
+
             WorldPacket data;
             ChatHandler::FillMessageData(&data, this, CHAT_MSG_BATTLEGROUND_LEADER, lang, msg.c_str());
             group->BroadcastPacket(&data, false);
@@ -435,7 +472,12 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
 
             if (ChannelMgr* cMgr = channelMgr(_player->GetTeam()))
                 if (Channel* chn = cMgr->GetChannel(channel, _player))
-                    { chn->Say(_player->GetObjectGuid(), msg.c_str(), lang); }
+                    {
+                    if (!sHookMgr.OnChat(GetPlayer(), type, lang, msg, chn))
+                        return;
+
+                        chn->Say(_player->GetObjectGuid(), msg.c_str(), lang);
+                    }
         } break;
 
         case CHAT_MSG_AFK:
@@ -461,6 +503,9 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
 
                     _player->ToggleAFK();
                 }
+
+                if (!sHookMgr.OnChat(GetPlayer(), type, lang, msg))
+                    return;
             }
             break;
         }
@@ -485,6 +530,10 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
 
                 _player->ToggleDND();
             }
+
+            if (!sHookMgr.OnChat(GetPlayer(), type, lang, msg))
+                return;
+
             break;
         }
 
@@ -501,6 +550,7 @@ void WorldSession::HandleEmoteOpcode(WorldPacket& recv_data)
 
     uint32 emote;
     recv_data >> emote;
+    sHookMgr.OnEmote(GetPlayer(), emote);
     GetPlayer()->HandleEmoteCommand(emote);
 }
 
@@ -554,6 +604,8 @@ void WorldSession::HandleTextEmoteOpcode(WorldPacket& recv_data)
     recv_data >> text_emote;
     recv_data >> emoteNum;
     recv_data >> guid;
+
+    sHookMgr.OnTextEmote(GetPlayer(), text_emote, emoteNum, guid);
 
     EmotesTextEntry const* em = sEmotesTextStore.LookupEntry(text_emote);
     if (!em)

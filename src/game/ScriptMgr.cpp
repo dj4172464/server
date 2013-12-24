@@ -38,7 +38,6 @@
 #include "OutdoorPvP/OutdoorPvP.h"
 #include "WaypointMovementGenerator.h"
 #include "LuaHookMgr.h"
-#include "LuaEngine.h"
 
 #include "revision_nr.h"
 
@@ -63,6 +62,7 @@ ScriptMgr::ScriptMgr() :
     m_pGetScriptLibraryVersion(NULL),
 
     m_pGetCreatureAI(NULL),
+    m_pGetGameObjectAI(NULL),
     m_pCreateInstanceData(NULL),
 
     m_pOnGossipHello(NULL),
@@ -74,6 +74,8 @@ ScriptMgr::ScriptMgr() :
     m_pOnQuestAccept(NULL),
     m_pOnGOQuestAccept(NULL),
     m_pOnItemQuestAccept(NULL),
+    m_pOnQuestComplete(NULL),
+    m_pOnGOQuestComplete(NULL),
     m_pOnQuestRewarded(NULL),
     m_pOnGOQuestRewarded(NULL),
     m_pGetNPCDialogStatus(NULL),
@@ -1917,6 +1919,8 @@ void ScriptMgr::LoadScriptNames()
                               "UNION "
                               "SELECT DISTINCT(ScriptName) FROM scripted_event WHERE ScriptName <> '' "
                               "UNION "
+                              "SELECT DISTINCT(ScriptName) FROM game_weather WHERE ScriptName <> '' "
+                              "UNION "
                               "SELECT DISTINCT(ScriptName) FROM instance_template WHERE ScriptName <> '' "
                               "UNION "
                               "SELECT DISTINCT(ScriptName) FROM world_template WHERE ScriptName <> ''");
@@ -1991,7 +1995,7 @@ char const* ScriptMgr::GetScriptLibraryVersion() const
 
 CreatureAI* ScriptMgr::GetCreatureAI(Creature* pCreature)
 {
-    if( CreatureAI* luaAI = sEluna.LuaCreatureAI->GetAI(pCreature))
+    if (CreatureAI* luaAI = sHookMgr.GetAI(pCreature))
         return luaAI;
 
     if (!m_pGetCreatureAI)
@@ -2008,6 +2012,17 @@ InstanceData* ScriptMgr::CreateInstanceData(Map* pMap)
     return m_pCreateInstanceData(pMap);
 }
 
+GameObjectAI* ScriptMgr::GetGameObjectAI(GameObject* pGameObject)
+{
+    if (GameObjectAI* luaAI = sHookMgr.GetAI(pGameObject))
+        return luaAI;
+
+    if (!m_pGetGameObjectAI)
+        return NULL;
+
+    return m_pGetGameObjectAI(pGameObject);
+}
+
 bool ScriptMgr::OnGossipHello(Player* pPlayer, Creature* pCreature)
 {
     if (sHookMgr.OnGossipHello(pPlayer, pCreature))
@@ -2018,6 +2033,9 @@ bool ScriptMgr::OnGossipHello(Player* pPlayer, Creature* pCreature)
 
 bool ScriptMgr::OnGossipHello(Player* pPlayer, GameObject* pGameObject)
 {
+    if (sHookMgr.OnGossipHello(pPlayer, pGameObject))
+        return true;
+
     return m_pOnGOGossipHello != NULL && m_pOnGOGossipHello(pPlayer, pGameObject);
 }
 
@@ -2041,6 +2059,15 @@ bool ScriptMgr::OnGossipSelect(Player* pPlayer, Creature* pCreature, uint32 send
 bool ScriptMgr::OnGossipSelect(Player* pPlayer, GameObject* pGameObject, uint32 sender, uint32 action, const char* code)
 {
     if (code)
+    {
+        if (sHookMgr.OnGossipSelectCode(pPlayer, pGameObject, sender, action, code))
+            return true;
+    }
+    else
+        if (sHookMgr.OnGossipSelect(pPlayer, pGameObject, sender, action))
+            return true;
+
+    if (code)
         { return m_pOnGOGossipSelectWithCode != NULL && m_pOnGOGossipSelectWithCode(pPlayer, pGameObject, sender, action, code); }
     else
         { return m_pOnGOGossipSelect != NULL && m_pOnGOGossipSelect(pPlayer, pGameObject, sender, action); }
@@ -2048,31 +2075,65 @@ bool ScriptMgr::OnGossipSelect(Player* pPlayer, GameObject* pGameObject, uint32 
 
 bool ScriptMgr::OnQuestAccept(Player* pPlayer, Creature* pCreature, Quest const* pQuest)
 {
+    if (sHookMgr.OnQuestAccept(pPlayer, pCreature, pQuest))
+        return true;
+
     return m_pOnQuestAccept != NULL && m_pOnQuestAccept(pPlayer, pCreature, pQuest);
 }
 
 bool ScriptMgr::OnQuestAccept(Player* pPlayer, GameObject* pGameObject, Quest const* pQuest)
 {
+    if (sHookMgr.OnQuestAccept(pPlayer, pGameObject, pQuest))
+        return true;
+
     return m_pOnGOQuestAccept != NULL && m_pOnGOQuestAccept(pPlayer, pGameObject, pQuest);
 }
 
 bool ScriptMgr::OnQuestAccept(Player* pPlayer, Item* pItem, Quest const* pQuest)
 {
+    if(sHookMgr.OnQuestAccept(pPlayer, pItem, pQuest))
+        return true;
+
     return m_pOnItemQuestAccept != NULL && m_pOnItemQuestAccept(pPlayer, pItem, pQuest);
+}
+
+bool ScriptMgr::OnQuestComplete(Player* pPlayer, Creature* pCreature, Quest const* pQuest)
+{
+    if (sHookMgr.OnQuestComplete(pPlayer, pCreature, pQuest))
+        return true;
+
+    return m_pOnQuestComplete != NULL && m_pOnQuestComplete(pPlayer, pCreature, pQuest);
+}
+
+bool ScriptMgr::OnQuestComplete(Player* pPlayer, GameObject* pGameObject, Quest const* pQuest)
+{
+    if (sHookMgr.OnQuestComplete(pPlayer, pGameObject, pQuest))
+        return true;
+
+    return m_pOnGOQuestComplete != NULL && m_pOnGOQuestComplete(pPlayer, pGameObject, pQuest);
 }
 
 bool ScriptMgr::OnQuestRewarded(Player* pPlayer, Creature* pCreature, Quest const* pQuest)
 {
+    if (sHookMgr.OnQuestReward(pPlayer, pCreature, pQuest))
+        return true;
+
     return m_pOnQuestRewarded != NULL && m_pOnQuestRewarded(pPlayer, pCreature, pQuest);
 }
 
 bool ScriptMgr::OnQuestRewarded(Player* pPlayer, GameObject* pGameObject, Quest const* pQuest)
 {
+    if (sHookMgr.OnQuestReward(pPlayer, pGameObject, pQuest))
+        return true;
+
     return m_pOnGOQuestRewarded != NULL && m_pOnGOQuestRewarded(pPlayer, pGameObject, pQuest);
 }
 
 uint32 ScriptMgr::GetDialogStatus(Player* pPlayer, Creature* pCreature)
 {
+    if (uint32 dialogId = sHookMgr.GetDialogStatus(pPlayer, pCreature))
+        return dialogId;
+
     if (!m_pGetNPCDialogStatus)
         { return DIALOG_STATUS_UNDEFINED; }
 
@@ -2081,6 +2142,9 @@ uint32 ScriptMgr::GetDialogStatus(Player* pPlayer, Creature* pCreature)
 
 uint32 ScriptMgr::GetDialogStatus(Player* pPlayer, GameObject* pGameObject)
 {
+    if (uint32 dialogId = sHookMgr.GetDialogStatus(pPlayer, pGameObject))
+        return dialogId;
+
     if (!m_pGetGODialogStatus)
         { return DIALOG_STATUS_UNDEFINED; }
 
@@ -2089,16 +2153,25 @@ uint32 ScriptMgr::GetDialogStatus(Player* pPlayer, GameObject* pGameObject)
 
 bool ScriptMgr::OnGameObjectUse(Player* pPlayer, GameObject* pGameObject)
 {
+    if (sHookMgr.OnGameObjectUse(pPlayer, pGameObject))
+        return true;
+
     return m_pOnGOUse != NULL && m_pOnGOUse(pPlayer, pGameObject);
 }
 
 bool ScriptMgr::OnItemUse(Player* pPlayer, Item* pItem, SpellCastTargets const& targets)
 {
+    if(sHookMgr.OnUse(pPlayer, pItem, targets))
+        return true;
+
     return m_pOnItemUse != NULL && m_pOnItemUse(pPlayer, pItem, targets);
 }
 
 bool ScriptMgr::OnAreaTrigger(Player* pPlayer, AreaTriggerEntry const* atEntry)
 {
+    if(sHookMgr.OnAreaTrigger(pPlayer, atEntry))
+        return true;
+
     return m_pOnAreaTrigger != NULL && m_pOnAreaTrigger(pPlayer, atEntry);
 }
 
@@ -2109,16 +2182,25 @@ bool ScriptMgr::OnProcessEvent(uint32 eventId, Object* pSource, Object* pTarget,
 
 bool ScriptMgr::OnEffectDummy(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Creature* pTarget, ObjectGuid originalCasterGuid)
 {
+    if(sHookMgr.OnDummyEffect(pCaster, spellId, effIndex, pTarget))
+        return true;
+
     return m_pOnEffectDummyCreature != NULL && m_pOnEffectDummyCreature(pCaster, spellId, effIndex, pTarget, originalCasterGuid);
 }
 
 bool ScriptMgr::OnEffectDummy(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, GameObject* pTarget, ObjectGuid originalCasterGuid)
 {
+    if(sHookMgr.OnDummyEffect(pCaster, spellId, effIndex, pTarget))
+        return true;
+
     return m_pOnEffectDummyGO != NULL && m_pOnEffectDummyGO(pCaster, spellId, effIndex, pTarget, originalCasterGuid);
 }
 
 bool ScriptMgr::OnEffectDummy(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Item* pTarget, ObjectGuid originalCasterGuid)
 {
+    if(sHookMgr.OnDummyEffect(pCaster, spellId, effIndex, pTarget))
+        return true;
+
     return m_pOnEffectDummyItem != NULL && m_pOnEffectDummyItem(pCaster, spellId, effIndex, pTarget, originalCasterGuid);
 }
 
@@ -2164,6 +2246,7 @@ ScriptLoadResult ScriptMgr::LoadScriptLibrary(const char* libName)
     GET_SCRIPT_HOOK_PTR(m_pGetScriptLibraryVersion,    "GetScriptLibraryVersion");
 
     GET_SCRIPT_HOOK_PTR(m_pGetCreatureAI,              "GetCreatureAI");
+    GET_SCRIPT_HOOK_PTR(m_pGetGameObjectAI,            "GetGameObjectAI");
     GET_SCRIPT_HOOK_PTR(m_pCreateInstanceData,         "CreateInstanceData");
 
     GET_SCRIPT_HOOK_PTR(m_pOnGossipHello,              "GossipHello");
@@ -2175,6 +2258,8 @@ ScriptLoadResult ScriptMgr::LoadScriptLibrary(const char* libName)
     GET_SCRIPT_HOOK_PTR(m_pOnQuestAccept,              "QuestAccept");
     GET_SCRIPT_HOOK_PTR(m_pOnGOQuestAccept,            "GOQuestAccept");
     GET_SCRIPT_HOOK_PTR(m_pOnItemQuestAccept,          "ItemQuestAccept");
+    GET_SCRIPT_HOOK_PTR(m_pOnQuestComplete,            "QuestComplete");
+    GET_SCRIPT_HOOK_PTR(m_pOnGOQuestComplete,          "GOQuestComplete");
     GET_SCRIPT_HOOK_PTR(m_pOnQuestRewarded,            "QuestRewarded");
     GET_SCRIPT_HOOK_PTR(m_pOnGOQuestRewarded,          "GOQuestRewarded");
     GET_SCRIPT_HOOK_PTR(m_pGetNPCDialogStatus,         "GetNPCDialogStatus");
@@ -2218,6 +2303,7 @@ void ScriptMgr::UnloadScriptLibrary()
     m_pGetScriptLibraryVersion  = NULL;
 
     m_pGetCreatureAI            = NULL;
+    m_pGetGameObjectAI          = NULL;
     m_pCreateInstanceData       = NULL;
 
     m_pOnGossipHello            = NULL;
@@ -2229,6 +2315,8 @@ void ScriptMgr::UnloadScriptLibrary()
     m_pOnQuestAccept            = NULL;
     m_pOnGOQuestAccept          = NULL;
     m_pOnItemQuestAccept        = NULL;
+    m_pOnQuestComplete          = NULL;
+    m_pOnGOQuestComplete        = NULL;
     m_pOnQuestRewarded          = NULL;
     m_pOnGOQuestRewarded        = NULL;
     m_pGetNPCDialogStatus       = NULL;

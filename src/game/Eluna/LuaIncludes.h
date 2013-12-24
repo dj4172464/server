@@ -34,6 +34,7 @@
 #include "Chat.h"
 #include "Channel.h"
 #include "Creature.h"
+#include "GridNotifiers.h"
 #include "Group.h"
 #include "Guild.h"
 #include "GuildMgr.h"
@@ -45,12 +46,34 @@
 #include "QuestDef.h"
 #include "GossipDef.h"
 #include "ScriptMgr.h"
-#include "CreatureAI.h"
+#include "ReactorAI.h"
 #include "SharedDefines.h"
 #include "SystemConfig.h"
+#include "SpellAuras.h"
 #include "ItemPrototype.h"
+#include "Item.h"
 #include "Spell.h"
 #include "GameObject.h"
 #include "Weather.h"
+#include "World.h"
+#include "Weather.h"
+#include "CellImpl.h"
+#include "GridNotifiers.h"
+#include "GridNotifiersImpl.h"
+#include "SpellMgr.h"
+#include "revision_nr.h"
+#include "TemporarySummon.h"
+#include "Mail.h"
+#include "LuaHookMgr.h"
+#include "CreatureEventAI.h"
+
+enum SelectAggroTarget
+{
+    SELECT_TARGET_RANDOM = 0,                               //Just selects a random target
+    SELECT_TARGET_TOPAGGRO,                                 //Selects targes from top aggro to bottom
+    SELECT_TARGET_BOTTOMAGGRO,                              //Selects targets from bottom aggro to top
+    SELECT_TARGET_NEAREST,
+    SELECT_TARGET_FARTHEST
+};
 
 #endif

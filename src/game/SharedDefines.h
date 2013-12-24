@@ -150,6 +150,7 @@ enum Powers
 };
 
 #define MAX_POWERS                        5
+#define POWER_ALL                         127        // default for class? - need check for ZERO
 
 /**
  * The different spell schools that are available, used in both damage calculation
@@ -502,6 +503,13 @@ enum Language
 };
 
 #define LANGUAGES_COUNT   15
+
+enum TeamId
+{
+    TEAM_ALLIANCE = 0,
+    TEAM_HORDE,
+    TEAM_NEUTRAL
+};
 
 // In fact !=0 values is alliance/horde root faction ids
 enum Team

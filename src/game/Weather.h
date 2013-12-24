@@ -51,7 +51,21 @@ enum WeatherState
     WEATHER_STATE_BLACKRAIN         = 90
 };
 
-struct WeatherZoneChances;
+#define WEATHER_SEASONS 4
+
+struct WeatherSeasonChances
+{
+    uint32 rainChance;
+    uint32 snowChance;
+    uint32 stormChance;
+};
+
+struct WeatherZoneChances
+{
+    WeatherSeasonChances data[WEATHER_SEASONS];
+    uint32 ScriptId;
+};
+
 
 /// Weather for one zone
 class Weather
@@ -59,6 +73,7 @@ class Weather
     public:
         Weather(uint32 zone, WeatherZoneChances const* weatherChances);
         ~Weather() { };
+        bool Update(time_t diff);
         bool ReGenerate();
         bool UpdateWeather();
         void SendWeatherUpdateToPlayer(Player* player);
@@ -66,7 +81,7 @@ class Weather
         void SetWeather(WeatherType type, float grade);
         /// For which zone is this weather?
         uint32 GetZone() { return m_zone; };
-        bool Update(time_t diff);
+        uint32 GetScriptId() const { return m_weatherChances->ScriptId; }
     private:
         uint32 GetSound();
         uint32 m_zone;

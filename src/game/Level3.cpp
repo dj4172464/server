@@ -377,6 +377,15 @@ bool ChatHandler::HandleReloadConfigCommand(char* /*args*/)
     return true;
 }
 
+extern void StartEluna(bool restart);
+bool ChatHandler::HandleReloadElunaCommand(char* /*args*/)
+{
+    sLog.outString("Re-Loading Eluna LuaEngine...");
+    StartEluna(true);
+    SendGlobalSysMessage("Eluna LuaEngine reloaded.");
+    return true;
+}
+
 bool ChatHandler::HandleReloadAreaTriggerTavernCommand(char* /*args*/)
 {
     sLog.outString("Re-Loading Tavern Area Triggers...");

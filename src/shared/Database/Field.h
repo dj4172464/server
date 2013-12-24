@@ -107,6 +107,8 @@ class Field
          * @return bool
          */
         bool GetBool() const { return mValue ? atoi(mValue) > 0 : false; }
+        double GetDouble() const { return mValue ? static_cast<double>(atof(mValue)) : 0.0f; }
+        int8 GetInt8() const { return mValue ? static_cast<int8>(atol(mValue)) : int8(0); }
         /**
          * @brief
          *

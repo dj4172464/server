@@ -37,6 +37,7 @@
 #include "World.h"
 #include "Util.h"
 #include "DBCStores.h"
+#include "LuaHookMgr.h"
 
 void WorldSession::HandleAutostoreLootItemOpcode(WorldPacket& recv_data)
 {
@@ -567,6 +568,8 @@ void WorldSession::HandleLootMasterGiveOpcode(WorldPacket& recv_data)
     // now move item from loot to target inventory
     Item* newitem = target->StoreNewItem(dest, item.itemid, true, item.randomPropertyId);
     target->SendNewItem(newitem, uint32(item.count), false, false, true);
+
+    sHookMgr.OnLootItem(target, newitem, item.count, lootguid);
 
     // mark as looted
     item.count = 0;

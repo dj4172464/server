@@ -45,6 +45,7 @@
 #include "Language.h"
 #include "Chat.h"
 #include "SpellMgr.h"
+#include "LuaHookMgr.h"
 
 // config option SkipCinematics supported values
 enum CinematicsSkipMode
@@ -364,6 +365,8 @@ void WorldSession::HandleCharCreateOpcode(WorldPacket& recv_data)
     BASIC_LOG("Account: %d (IP: %s) Create Character:[%s] (guid: %u)", GetAccountId(), IP_str.c_str(), name.c_str(), pNewChar->GetGUIDLow());
     sLog.outChar("Account: %d (IP: %s) Create Character:[%s] (guid: %u)", GetAccountId(), IP_str.c_str(), name.c_str(), pNewChar->GetGUIDLow());
 
+    sHookMgr.OnCreate(pNewChar);
+
     delete pNewChar;                                        // created only to call SaveToDB()
 }
 
@@ -406,6 +409,8 @@ void WorldSession::HandleCharDeleteOpcode(WorldPacket& recv_data)
     std::string IP_str = GetRemoteAddress();
     BASIC_LOG("Account: %d (IP: %s) Delete Character:[%s] (guid: %u)", GetAccountId(), IP_str.c_str(), name.c_str(), lowguid);
     sLog.outChar("Account: %d (IP: %s) Delete Character:[%s] (guid: %u)", GetAccountId(), IP_str.c_str(), name.c_str(), lowguid);
+
+    sHookMgr.OnDelete(lowguid);
 
     if (sLog.IsOutCharDump())                               // optimize GetPlayerDump call
     {
@@ -706,6 +711,7 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder* holder)
     /* We've done what we need to, remove the flag */
     if (pCurrChar->HasAtLoginFlag(AT_LOGIN_FIRST))
     {
+        sHookMgr.OnFirstLogin(pCurrChar);
         pCurrChar->RemoveAtLoginFlag(AT_LOGIN_FIRST);
     }
 
@@ -750,6 +756,8 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder* holder)
 
     /* Used for looting */
     pCurrChar->lastTimeLooted = time(NULL);
+
+    sHookMgr.OnLogin(pCurrChar);
 
     delete holder;
 }

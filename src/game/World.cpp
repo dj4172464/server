@@ -70,6 +70,8 @@
 #include "CharacterDatabaseCleaner.h"
 #include "CreatureLinkingMgr.h"
 #include "LuaEngine.h"
+#include "LuaEngine.h"
+#include "LuaHookMgr.h"
 
 INSTANTIATE_SINGLETON_1(World);
 
@@ -844,6 +846,8 @@ void World::LoadConfigSettings(bool reload)
     std::string ignoreMapIds = sConfig.GetStringDefault("mmap.ignoreMapIds", "");
     MMAP::MMapFactory::preventPathfindingOnMaps(ignoreMapIds.c_str());
     sLog.outString("WORLD: mmap pathfinding %sabled", getConfig(CONFIG_BOOL_MMAP_ENABLED) ? "en" : "dis");
+
+    setConfig(CONFIG_BOOL_ELUNA_ENABLED, "Eluna.Enabled", false);
 }
 
 /// Initialize the World
@@ -1241,6 +1245,10 @@ void World::SetInitialWorldSettings()
     ///- Initialize Eluna Lua engine
     sEluna.StartEluna(false);
 
+    ///- Initialize Lua Engine
+    sLog.outString("Initialize Eluna Lua Engine...");
+    sEluna.Initialize();
+
     ///- Initialize game time and timers
     sLog.outString("DEBUG:: Initialize game time and timers");
     m_gameTime = time(NULL);
@@ -1445,6 +1453,8 @@ void World::Update(uint32 diff)
     sMapMgr.Update(diff);
     sBattleGroundMgr.Update(diff);
     sOutdoorPvPMgr.Update(diff);
+
+    sHookMgr.OnWorldUpdate(diff);
 
     ///- Delete all characters which have been deleted X days before
     if (m_timers[WUPDATE_DELETECHARS].Passed())

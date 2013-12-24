@@ -37,6 +37,7 @@ class Aura;
 class Creature;
 class CreatureAI;
 class GameObject;
+class GameObjectAI;
 class InstanceData;
 class Item;
 class Map;
@@ -500,6 +501,7 @@ class ScriptMgr
         static bool CanSpellEffectStartDBScript(SpellEntry const* spellinfo, SpellEffectIndex effIdx);
 
         CreatureAI* GetCreatureAI(Creature* pCreature);
+        GameObjectAI* GetGameObjectAI(GameObject* pGameObject);
         InstanceData* CreateInstanceData(Map* pMap);
 
         char const* GetScriptLibraryVersion() const;
@@ -510,6 +512,8 @@ class ScriptMgr
         bool OnQuestAccept(Player* pPlayer, Creature* pCreature, Quest const* pQuest);
         bool OnQuestAccept(Player* pPlayer, GameObject* pGameObject, Quest const* pQuest);
         bool OnQuestAccept(Player* pPlayer, Item* pItem, Quest const* pQuest);
+        bool OnQuestComplete(Player* pPlayer, Creature* pCreature, Quest const* pQuest);
+        bool OnQuestComplete(Player* pPlayer, GameObject* pGameObject, Quest const* pQuest);
         bool OnQuestRewarded(Player* pPlayer, Creature* pCreature, Quest const* pQuest);
         bool OnQuestRewarded(Player* pPlayer, GameObject* pGameObject, Quest const* pQuest);
         uint32 GetDialogStatus(Player* pPlayer, Creature* pCreature);
@@ -553,6 +557,7 @@ class ScriptMgr
         const char* (MANGOS_IMPORT* m_pGetScriptLibraryVersion)();
 
         CreatureAI* (MANGOS_IMPORT* m_pGetCreatureAI)(Creature*);
+        GameObjectAI* (MANGOS_IMPORT* m_pGetGameObjectAI)(GameObject*);
         InstanceData* (MANGOS_IMPORT* m_pCreateInstanceData)(Map*);
 
         bool (MANGOS_IMPORT* m_pOnGossipHello)(Player*, Creature*);
@@ -564,6 +569,8 @@ class ScriptMgr
         bool (MANGOS_IMPORT* m_pOnQuestAccept)(Player*, Creature*, Quest const*);
         bool (MANGOS_IMPORT* m_pOnGOQuestAccept)(Player*, GameObject*, Quest const*);
         bool (MANGOS_IMPORT* m_pOnItemQuestAccept)(Player*, Item*, Quest const*);
+        bool (MANGOS_IMPORT* m_pOnQuestComplete)(Player*, Creature*, Quest const*);
+        bool (MANGOS_IMPORT* m_pOnGOQuestComplete)(Player*, GameObject*, Quest const*);
         bool (MANGOS_IMPORT* m_pOnQuestRewarded)(Player*, Creature*, Quest const*);
         bool (MANGOS_IMPORT* m_pOnGOQuestRewarded)(Player*, GameObject*, Quest const*);
         uint32(MANGOS_IMPORT* m_pGetNPCDialogStatus)(Player*, Creature*);

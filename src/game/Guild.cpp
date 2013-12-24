@@ -35,6 +35,7 @@
 #include "Util.h"
 #include "Language.h"
 #include "World.h"
+#include "LuaHookMgr.h"
 
 //// MemberSlot ////////////////////////////////////////////
 void MemberSlot::SetMemberStats(Player* player)
@@ -147,7 +148,10 @@ bool Guild::Create(Player* leader, std::string gname)
 
     CreateDefaultGuildRanks(lSession->GetSessionDbLocaleIndex());
 
-    return AddMember(m_LeaderGuid, GR_GUILDMASTER);
+    // Trigger OnCreate event
+    sHookMgr.OnCreate(this, leader, gname.c_str());
+
+    return AddMember(m_LeaderGuid, (uint32)GR_GUILDMASTER);
 }
 
 void Guild::CreateDefaultGuildRanks(int locale_idx)
@@ -241,6 +245,9 @@ bool Guild::AddMember(ObjectGuid plGuid, uint32 plRank)
 
     UpdateAccountsNumber();
 
+    // Trigger OnAddMember event
+    sHookMgr.OnAddMember(this, pl, newmember.RankId);
+
     return true;
 }
 
@@ -251,6 +258,9 @@ void Guild::SetMOTD(std::string motd)
     // motd now can be used for encoding to DB
     CharacterDatabase.escape_string(motd);
     CharacterDatabase.PExecute("UPDATE guild SET motd='%s' WHERE guildid='%u'", motd.c_str(), m_Id);
+
+    // Trigger OnMOTDChanged event
+    sHookMgr.OnMOTDChanged(this, motd);
 }
 
 void Guild::SetGINFO(std::string ginfo)
@@ -260,6 +270,9 @@ void Guild::SetGINFO(std::string ginfo)
     // ginfo now can be used for encoding to DB
     CharacterDatabase.escape_string(ginfo);
     CharacterDatabase.PExecute("UPDATE guild SET info='%s' WHERE guildid='%u'", ginfo.c_str(), m_Id);
+
+    // Trigger OnMOTDChanged event
+    sHookMgr.OnInfoChanged(this, ginfo);
 }
 
 bool Guild::LoadGuildFromDB(QueryResult* guildDataResult)
@@ -544,7 +557,21 @@ bool Guild::DelMember(ObjectGuid guid, bool isDisbanding)
     if (!isDisbanding)
         { UpdateAccountsNumber(); }
 
+    // Trigger OnRemoveMember event
+    sHookMgr.OnRemoveMember(this, player, isDisbanding, true); // IsKicked not a part of Mangos, implement?
+
     return members.empty();
+}
+
+bool Guild::ChangeMemberRank(ObjectGuid guid, uint8 newRank)
+{
+    if (newRank <= GetLowestRank())                    // Validate rank (allow only existing ranks)
+        if (MemberSlot* member = GetMemberSlot(guid))
+        {
+            member->ChangeRank(newRank);
+            return true;
+        }
+    return false;
 }
 
 void Guild::BroadcastToGuild(WorldSession* session, const std::string& msg, uint32 language)
@@ -695,6 +722,10 @@ void Guild::Disband()
     CharacterDatabase.PExecute("DELETE FROM guild_rank WHERE guildid = '%u'", m_Id);
     CharacterDatabase.PExecute("DELETE FROM guild_eventlog WHERE guildid = '%u'", m_Id);
     CharacterDatabase.CommitTransaction();
+
+    // Trigger OnDisband event
+    sHookMgr.OnDisband(this);
+
     sGuildMgr.RemoveGuild(m_Id);
 }
 

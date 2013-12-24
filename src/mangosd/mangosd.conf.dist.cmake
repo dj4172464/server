@@ -303,6 +303,10 @@ CleanCharacterDB                  = 1
 #        Log file of DB errors detected at server run
 #        Default: "DBErrors.log"
 #
+#    ElunaErrorLogFile
+#        Log file of Eluna errors detected at server run
+#        Default: "world-eluna.log"
+#
 #    EventAIErrorLogFile
 #        Log file of EventAI errors detected at server run
 #        Default: "EventAIErrors.log"
@@ -380,6 +384,7 @@ LogFilter_SpellCast         = 0
 WorldLogFile                = "world-packets.log"
 WorldLogTimestamp           = 0
 DBErrorLogFile              = "world-database.log"
+ElunaErrorLogFile           = "world-eluna.log"
 EventAIErrorLogFile         = "world-eventai.log"
 CharLogFile                 = "world-characters.log"
 CharLogTimestamp            = 0
@@ -1534,3 +1539,14 @@ SOAP.Port      = 7878
 CharDelete.Method   = 0
 CharDelete.MinLevel = 0
 CharDelete.KeepDays = 30
+
+###################################################################################################################
+# ELUNA SETTINGS
+#
+#    Eluna.Enabled
+#        Enable Enabled Eluna LuaEngine
+#        Default: 1 (Enabled)
+#                 0 (Disabled)
+#
+###################################################################################################################
+Eluna.Enabled = 1

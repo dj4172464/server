@@ -51,6 +51,7 @@
 #include "Util.h"
 #include "Chat.h"
 #include "SQLStorages.h"
+#include "LuaHookMgr.h"
 
 extern pEffect SpellEffects[TOTAL_SPELL_EFFECTS];
 
@@ -2736,6 +2737,9 @@ void Spell::cast(bool skipCheck)
     // traded items have trade slot instead of guid in m_itemTargetGUID
     // set to real guid to be sent later to the client
     m_targets.updateTradeSlotItem();
+
+    if (m_caster->GetTypeId() == TYPEID_PLAYER)
+        sHookMgr.OnSpellCast(m_caster->ToPlayer(), this, skipCheck);
 
     FillTargetMap();
 

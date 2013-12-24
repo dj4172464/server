@@ -22,19 +22,41 @@
  * and lore are copyrighted by Blizzard Entertainment, Inc.
  */
 
-#ifndef MANGOS_CREATUREAISELECTOR_H
-#define MANGOS_CREATUREAISELECTOR_H
+#ifndef MANGOS_GAMEOBJECTAI_H
+#define MANGOS_GAMEOBJECTAI_H
 
-class CreatureAI;
-class Creature;
-class MovementGenerator;
-class GameObjectAI;
-class GameObject;
+#include <list>
+#include "Object.h"
+#include "GameObject.h"
+#include "CreatureAI.h"
 
-namespace FactorySelector
+class MANGOS_DLL_SPEC GameObjectAI
 {
-    CreatureAI* selectAI(Creature*);
-    MovementGenerator* selectMovementGenerator(Creature*);
-    GameObjectAI* SelectGameObjectAI(GameObject*);
-}
+protected:
+    GameObject * const go;
+public:
+    explicit GameObjectAI(GameObject *g) : go(g) {}
+    virtual ~GameObjectAI() {}
+
+    virtual void UpdateAI(const uint32 diff) {}
+
+    virtual void InitializeAI() { Reset(); }
+
+    virtual void Reset() {};
+
+    static int Permissible(const GameObject* go);
+
+    virtual bool GossipHello(Player* player) { return false; }
+};
+
+class NullGameObjectAI : public GameObjectAI
+{
+public:
+    explicit NullGameObjectAI(GameObject *g);
+
+    void UpdateAI(const uint32) {}
+
+    // static int Permissible(const GameObject* go) { return (Permitions)PERMIT_BASE_IDLE; } // Thats give error with ScriptDev2 i have no idea to fix this, set for the moment to 1
+    static int Permissible(const GameObject* go) { return 1; }
+};
 #endif

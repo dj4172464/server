@@ -378,6 +378,7 @@ class MANGOS_DLL_SPEC ChatHandler
         bool HandleReloadAllLocalesCommand(char* args);
 
         bool HandleReloadConfigCommand(char* args);
+        bool HandleReloadElunaCommand(char* args);
 
         bool HandleReloadAreaTriggerTavernCommand(char* args);
         bool HandleReloadAreaTriggerTeleportCommand(char* args);
@@ -449,7 +450,6 @@ class MANGOS_DLL_SPEC ChatHandler
         bool HandleReloadSpellPetAurasCommand(char* args);
 
         bool HandleReloadSpellLinkedCommand(char* args);
-        bool HandleResetAchievementsCommand(char* args);
         bool HandleResetAllCommand(char* args);
         bool HandleResetHonorCommand(char* args);
         bool HandleResetLevelCommand(char* args);
