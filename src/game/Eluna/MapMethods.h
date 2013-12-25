@@ -31,14 +31,26 @@
 
 namespace LuaMap
 {
-    // :GetName()
+    /**
+     * @brief GetName()
+     *
+     * @param L
+     * @param map
+     * @return int
+     */
     int GetName(lua_State* L, Map* map)
     {
         sEluna.Push(L, map->GetMapName());
         return 1;
     }
 
-    // GetHeight(x, y[, phase])
+    /**
+     * @brief GetHeight(x, y[, phase])
+     *
+     * @param L
+     * @param map
+     * @return int
+     */
     int GetHeight(lua_State* L, Map* map)
     {
         float x = luaL_checknumber(L, 1);
@@ -52,35 +64,65 @@ namespace LuaMap
         return 1;
     }
 
-    // :GetDifficulty()
+    /**
+     * @brief GetDifficulty()
+     *
+     * @param L
+     * @param map
+     * @return int
+     */
     int GetDifficulty(lua_State* L, Map* map)
     {
         sEluna.Push(L, map->GetDifficulty());
         return 1;
     }
 
-    // :GetInstanceId()
+    /**
+     * @brief GetInstanceId()
+     *
+     * @param L
+     * @param map
+     * @return int
+     */
     int GetInstanceId(lua_State* L, Map* map)
     {
         sEluna.Push(L, map->GetInstanceId());
         return 1;
     }
 
-    // :GetPlayerCount()
+    /**
+     * @brief GetPlayerCount()
+     *
+     * @param L
+     * @param map
+     * @return int
+     */
     int GetPlayerCount(lua_State* L, Map* map)
     {
         sEluna.Push(L, map->GetPlayersCountExceptGMs());
         return 1;
     }
 
-    // :GetMapId()
+    /**
+     * @brief GetMapId()
+     *
+     * @param L
+     * @param map
+     * @return int
+     */
     int GetMapId(lua_State* L, Map* map)
     {
         sEluna.Push(L, map->GetId());
         return 1;
     }
 
-    // :GetAreaId(x, y, z)
+    /**
+     * @brief GetAreaId(x, y, z)
+     *
+     * @param L
+     * @param map
+     * @return int
+     */
     int GetAreaId(lua_State* L, Map* map)
     {
         float x = luaL_checknumber(L, 1);
@@ -91,42 +133,78 @@ namespace LuaMap
         return 1;
     }
 
-    // :IsArena()
+    /**
+     * @brief IsArena()
+     *
+     * @param L
+     * @param map
+     * @return int
+     */
     int IsArena(lua_State* L, Map* map)
     {
         sEluna.Push(L, map->IsBattleArena());
         return 1;
     }
 
-    // :IsBattleground()
+    /**
+     * @brief IsBattleground()
+     *
+     * @param L
+     * @param map
+     * @return int
+     */
     int IsBattleground(lua_State* L, Map* map)
     {
         sEluna.Push(L, map->IsBattleGround());
         return 1;
     }
 
-    // :IsDungeon()
+    /**
+     * @brief IsDungeon()
+     *
+     * @param L
+     * @param map
+     * @return int
+     */
     int IsDungeon(lua_State* L, Map* map)
     {
         sEluna.Push(L, map->IsDungeon());
         return 1;
     }
 
-    // :IsEmpty()
+    /**
+     * @brief IsEmpty()
+     *
+     * @param L
+     * @param map
+     * @return int
+     */
     int IsEmpty(lua_State* L, Map* map)
     {
         sEluna.Push(L, map->isEmpty());
         return 1;
     }
 
-    // :IsHeroic()
+    /**
+     * @brief IsHeroic()
+     *
+     * @param L
+     * @param map
+     * @return int
+     */
     int IsHeroic(lua_State* L, Map* map)
     {
         sEluna.Push(L, map->IsHeroic());
         return 1;
     }
 
-    // :IsRaid()
+    /**
+     * @brief IsRaid()
+     *
+     * @param L
+     * @param map
+     * @return int
+     */
     int IsRaid(lua_State* L, Map* map)
     {
         sEluna.Push(L, map->IsRaid());

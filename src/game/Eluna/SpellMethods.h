@@ -31,36 +31,78 @@
 
 namespace LuaSpell
 {
+    /**
+     * @brief
+     *
+     * @param L
+     * @param spell
+     * @return int
+     */
     int GetCaster(lua_State* L, Spell* spell)
     {
         sEluna.Push(L, spell->GetCaster());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param spell
+     * @return int
+     */
     int GetCastTime(lua_State* L, Spell* spell)
     {
         sEluna.Push(L, spell->GetCastTime());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param spell
+     * @return int
+     */
     int GetId(lua_State* L, Spell* spell)
     {
         sEluna.Push(L, spell->m_spellInfo->Id);
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param spell
+     * @return int
+     */
     int GetPowerCost(lua_State* L, Spell* spell)
     {
         sEluna.Push(L, spell->GetPowerCost());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param spell
+     * @return int
+     */
     int GetDuration(lua_State* L, Spell* spell)
     {
         sEluna.Push(L, GetSpellDuration(spell->m_spellInfo));
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param spell
+     * @return int
+     */
     int Cast(lua_State* L, Spell* spell)
     {
         bool skipCheck = lua_toboolean(L, 1);
@@ -68,12 +110,26 @@ namespace LuaSpell
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param spell
+     * @return int
+     */
     int IsAutoRepeat(lua_State* L, Spell* spell)
     {
         sEluna.Push(L, spell->IsAutoRepeat());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param spell
+     * @return int
+     */
     int SetAutoRepeat(lua_State* L, Spell* spell)
     {
         bool repeat = luaL_checkbool(L, 1);
@@ -81,6 +137,13 @@ namespace LuaSpell
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param spell
+     * @return int
+     */
     int cancel(lua_State* L, Spell* spell)
     {
         spell->cancel();
@@ -88,12 +151,26 @@ namespace LuaSpell
     }
 
     // Finish()
+    /**
+     * @brief
+     *
+     * @param L
+     * @param spell
+     * @return int
+     */
     int Finish(lua_State* L, Spell* spell)
     {
         spell->finish();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param spell
+     * @return int
+     */
     int GetTargetDest(lua_State* L, Spell* spell)
     {
         if (!(spell->m_targets.m_targetMask & TARGET_FLAG_DEST_LOCATION))

@@ -31,6 +31,13 @@
 
 namespace LuaGameObject
 {
+    /**
+     * @brief
+     *
+     * @param L
+     * @param go
+     * @return int
+     */
     int GetRelativePoint(lua_State* L, GameObject* go)
     {
         if (!go || !go->IsInWorld())
@@ -46,6 +53,13 @@ namespace LuaGameObject
         return 3;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param go
+     * @return int
+     */
     int SummonCreature(lua_State* L, GameObject* go)
     {
         if (!go || !go->IsInWorld())
@@ -93,6 +107,13 @@ namespace LuaGameObject
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param go
+     * @return int
+     */
     int SummonGameObject(lua_State* L, GameObject* go)
     {
         if (!go || !go->IsInWorld())
@@ -108,6 +129,13 @@ namespace LuaGameObject
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param go
+     * @return int
+     */
     int GetDisplayId(lua_State* L, GameObject* go)
     {
         if (!go || !go->IsInWorld())
@@ -117,6 +145,13 @@ namespace LuaGameObject
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param go
+     * @return int
+     */
     int HasQuest(lua_State* L, GameObject* go)
     {
         uint32 questId = luaL_checkunsigned(L, 1);
@@ -125,6 +160,13 @@ namespace LuaGameObject
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param go
+     * @return int
+     */
     int IsSpawned(lua_State* L, GameObject* go)
     {
         if (!go || !go->IsInWorld())
@@ -134,6 +176,13 @@ namespace LuaGameObject
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param go
+     * @return int
+     */
     int IsTransport(lua_State* L, GameObject* go)
     {
         if (!go || !go->IsInWorld())
@@ -152,6 +201,13 @@ namespace LuaGameObject
         return 1;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param go
+     * @return int
+     */
     int IsActive(lua_State* L, GameObject* go)
     {
         if (!go || !go->IsInWorld())
@@ -161,6 +217,13 @@ namespace LuaGameObject
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param go
+     * @return int
+     */
     int Move(lua_State* L, GameObject* go)
     {
         if (!go || !go->IsInWorld())
@@ -174,12 +237,26 @@ namespace LuaGameObject
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param go
+     * @return int
+     */
     int SaveToDB(lua_State* L, GameObject* go)
     {
         go->SaveToDB();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param go
+     * @return int
+     */
     int RemoveFromWorld(lua_State* L, GameObject* go)
     {
         if (!go || !go->IsInWorld())
@@ -192,6 +269,13 @@ namespace LuaGameObject
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param go
+     * @return int
+     */
     int RegisterEvent(lua_State* L, GameObject* go)
     {
         luaL_checktype(L, 1, LUA_TFUNCTION);
@@ -204,6 +288,13 @@ namespace LuaGameObject
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param go
+     * @return int
+     */
     int RemoveEventById(lua_State* L, GameObject* go)
     {
         int eventId = luaL_checkinteger(L, 1);
@@ -211,12 +302,26 @@ namespace LuaGameObject
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param go
+     * @return int
+     */
     int RemoveEvents(lua_State* L, GameObject* go)
     {
         sEluna.EventMgr.RemoveEvents(go->GetObjectGuid().GetRawValue());
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param go
+     * @return int
+     */
     int UseDoorOrButton(lua_State* L, GameObject* go)
     {
         if (!go || !go->IsInWorld())
@@ -228,6 +333,13 @@ namespace LuaGameObject
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param go
+     * @return int
+     */
     int SetGoState(lua_State* L, GameObject* go)
     {
         if (!go || !go->IsInWorld())
@@ -245,6 +357,13 @@ namespace LuaGameObject
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param go
+     * @return int
+     */
     int GetGoState(lua_State* L, GameObject* go)
     {
         if (!go || !go->IsInWorld())
@@ -254,6 +373,13 @@ namespace LuaGameObject
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param go
+     * @return int
+     */
     int SetLootState(lua_State* L, GameObject* go)
     {
         if (!go || !go->IsInWorld())
@@ -273,6 +399,13 @@ namespace LuaGameObject
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param go
+     * @return int
+     */
     int GetLootState(lua_State* L, GameObject* go)
     {
         if (!go || !go->IsInWorld())
@@ -282,6 +415,13 @@ namespace LuaGameObject
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param go
+     * @return int
+     */
     int Despawn(lua_State* L, GameObject* go)
     {
         uint32 delay = luaL_optunsigned(L, 1, 1);
@@ -293,6 +433,13 @@ namespace LuaGameObject
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param go
+     * @return int
+     */
     int Respawn(lua_State* L, GameObject* go)
     {
         uint32 delay = luaL_optunsigned(L, 1, 1);

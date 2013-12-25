@@ -31,6 +31,13 @@
 
 namespace LuaQuery
 {
+    /**
+     * @brief
+     *
+     * @param L
+     * @param result
+     * @return int
+     */
     int NextRow(lua_State* L, QueryResult* result)
     {
         if (!result)
@@ -40,6 +47,13 @@ namespace LuaQuery
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param result
+     * @return int
+     */
     int GetColumnCount(lua_State* L, QueryResult* result)
     {
         if (!result)
@@ -49,6 +63,13 @@ namespace LuaQuery
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param result
+     * @return int
+     */
     int GetRowCount(lua_State* L, QueryResult* result)
     {
         if (!result)
@@ -63,6 +84,13 @@ namespace LuaQuery
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param result
+     * @return int
+     */
     int IsNull(lua_State* L, QueryResult* result)
     {
         uint32 col = luaL_checkunsigned(L, 1);
@@ -73,6 +101,13 @@ namespace LuaQuery
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param result
+     * @return int
+     */
     int GetBool(lua_State* L, QueryResult* result)
     {
         uint32 col = luaL_checkunsigned(L, 1);
@@ -83,6 +118,13 @@ namespace LuaQuery
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param result
+     * @return int
+     */
     int GetUInt8(lua_State* L, QueryResult* result)
     {
         uint32 col = luaL_checkunsigned(L, 1);
@@ -93,6 +135,13 @@ namespace LuaQuery
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param result
+     * @return int
+     */
     int GetUInt16(lua_State* L, QueryResult* result)
     {
         uint32 col = luaL_checkunsigned(L, 1);
@@ -103,6 +152,13 @@ namespace LuaQuery
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param result
+     * @return int
+     */
     int GetUInt32(lua_State* L, QueryResult* result)
     {
         uint32 col = luaL_checkunsigned(L, 1);
@@ -113,6 +169,13 @@ namespace LuaQuery
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param result
+     * @return int
+     */
     int GetUInt64(lua_State* L, QueryResult* result)
     {
         uint32 col = luaL_checkunsigned(L, 1);
@@ -123,6 +186,13 @@ namespace LuaQuery
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param result
+     * @return int
+     */
     int GetInt8(lua_State* L, QueryResult* result)
     {
         uint32 col = luaL_checkunsigned(L, 1);
@@ -133,6 +203,13 @@ namespace LuaQuery
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param result
+     * @return int
+     */
     int GetInt16(lua_State* L, QueryResult* result)
     {
         uint32 col = luaL_checkunsigned(L, 1);
@@ -143,6 +220,13 @@ namespace LuaQuery
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param result
+     * @return int
+     */
     int GetInt32(lua_State* L, QueryResult* result)
     {
         uint32 col = luaL_checkunsigned(L, 1);
@@ -153,6 +237,13 @@ namespace LuaQuery
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param result
+     * @return int
+     */
     int GetInt64(lua_State* L, QueryResult* result)
     {
         uint32 col = luaL_checkunsigned(L, 1);
@@ -163,6 +254,13 @@ namespace LuaQuery
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param result
+     * @return int
+     */
     int GetFloat(lua_State* L, QueryResult* result)
     {
         uint32 col = luaL_checkunsigned(L, 1);
@@ -173,6 +271,13 @@ namespace LuaQuery
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param result
+     * @return int
+     */
     int GetDouble(lua_State* L, QueryResult* result)
     {
         uint32 col = luaL_checkunsigned(L, 1);
@@ -183,6 +288,13 @@ namespace LuaQuery
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param result
+     * @return int
+     */
     int GetString(lua_State* L, QueryResult* result)
     {
         uint32 col = luaL_checkunsigned(L, 1);

@@ -31,6 +31,13 @@
 
 namespace LuaGuild
 {
+    /**
+     * @brief
+     *
+     * @param L
+     * @param guild
+     * @return int
+     */
     int GetMembers(lua_State* L, Guild* guild)
     {
         lua_newtable(L);
@@ -56,18 +63,39 @@ namespace LuaGuild
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param guild
+     * @return int
+     */
     int GetMemberCount(lua_State* L, Guild* guild)
     {
         sEluna.Push(L, guild->GetMemberSize());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param guild
+     * @return int
+     */
     int GetLeader(lua_State* L, Guild* guild)
     {
         sEluna.Push(L, sObjectMgr.GetPlayer(guild->GetLeaderGuid()));
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param guild
+     * @return int
+     */
     int SetLeader(lua_State* L, Guild* guild)
     {
         Player* player = sEluna.CHECK_PLAYER(L, 1);
@@ -78,13 +106,26 @@ namespace LuaGuild
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param guild
+     * @return int
+     */
     int GetLeaderGUID(lua_State* L, Guild* guild)
     {
         sEluna.Push(L, guild->GetLeaderGuid());
         return 1;
     }
 
-    // SendPacketToGuild(packet)
+    /**
+     * @brief SendPacketToGuild(packet)
+     *
+     * @param L
+     * @param guild
+     * @return int
+     */
     int SendPacket(lua_State* L, Guild* guild)
     {
         WorldPacket* data = sEluna.CHECK_PACKET(L, 1);
@@ -94,7 +135,13 @@ namespace LuaGuild
         return 0;
     }
 
-    // SendPacketToRankedInGuild(packet, rankId)
+    /**
+     * @brief SendPacketToRankedInGuild(packet, rankId)
+     *
+     * @param L
+     * @param guild
+     * @return int
+     */
     int SendPacketToRanked(lua_State* L, Guild* guild)
     {
         WorldPacket* data = sEluna.CHECK_PACKET(L, 1);
@@ -105,36 +152,78 @@ namespace LuaGuild
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param guild
+     * @return int
+     */
     int Disband(lua_State* L, Guild* guild)
     {
         guild->Disband();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param guild
+     * @return int
+     */
     int GetId(lua_State* L, Guild* guild)
     {
         sEluna.Push(L, guild->GetId());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param guild
+     * @return int
+     */
     int GetName(lua_State* L, Guild* guild)
     {
         sEluna.Push(L, guild->GetName());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param guild
+     * @return int
+     */
     int GetMOTD(lua_State* L, Guild* guild)
     {
         sEluna.Push(L, guild->GetMOTD());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param guild
+     * @return int
+     */
     int GetInfo(lua_State* L, Guild* guild)
     {
         sEluna.Push(L, guild->GetGINFO());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param guild
+     * @return int
+     */
     int AddMember(lua_State* L, Guild* guild)
     {
         Player* player = sEluna.CHECK_PLAYER(L, 1);
@@ -145,6 +234,13 @@ namespace LuaGuild
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param guild
+     * @return int
+     */
     int DeleteMember(lua_State* L, Guild* guild)
     {
         Player* player = sEluna.CHECK_PLAYER(L, 1);
@@ -155,6 +251,13 @@ namespace LuaGuild
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param guild
+     * @return int
+     */
     int ChangeMemberRank(lua_State* L, Guild* guild)
     {
         Player* player = sEluna.CHECK_PLAYER(L, 1);
@@ -165,6 +268,13 @@ namespace LuaGuild
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param guild
+     * @return int
+     */
     int SetBankTabText(lua_State* L, Guild* guild)
     {
         uint8 tabId = luaL_checkunsigned(L, 1);
@@ -173,12 +283,26 @@ namespace LuaGuild
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param guild
+     * @return int
+     */
     int GetBankMoney(lua_State* L, Guild* guild)
     {
         sEluna.Push(L, guild->GetGuildBankMoney());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param guild
+     * @return int
+     */
     int WithdrawBankMoney(lua_State* L, Guild* guild)
     {
         Player* player = sEluna.CHECK_PLAYER(L, 1);
@@ -192,6 +316,13 @@ namespace LuaGuild
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param guild
+     * @return int
+     */
     int DepositBankMoney(lua_State* L, Guild* guild)
     {
         Player* player = sEluna.CHECK_PLAYER(L, 1);

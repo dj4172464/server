@@ -31,11 +31,25 @@
 
 namespace LuaWorldObject
 {
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetName(lua_State* L, WorldObject* obj)
     {
         sEluna.Push(L, obj->GetName());
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetMap(lua_State* L, WorldObject* obj)
     {
         sEluna.Push(L, obj->GetMap());
@@ -46,46 +60,109 @@ namespace LuaWorldObject
         sEluna.Push(L, obj->GetPhaseMask());
         return 1;
     }*/
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetInstanceId(lua_State* L, WorldObject* obj)
     {
         sEluna.Push(L, obj->GetInstanceId());
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetAreaId(lua_State* L, WorldObject* obj)
     {
         sEluna.Push(L, obj->GetAreaId());
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetZoneId(lua_State* L, WorldObject* obj)
     {
         sEluna.Push(L, obj->GetZoneId());
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetMapId(lua_State* L, WorldObject* obj)
     {
         sEluna.Push(L, obj->GetMapId());
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetX(lua_State* L, WorldObject* obj)
     {
         sEluna.Push(L, obj->GetPositionX());
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetY(lua_State* L, WorldObject* obj)
     {
         sEluna.Push(L, obj->GetPositionY());
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetZ(lua_State* L, WorldObject* obj)
     {
         sEluna.Push(L, obj->GetPositionZ());
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetO(lua_State* L, WorldObject* obj)
     {
         sEluna.Push(L, obj->GetOrientation());
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetLocation(lua_State* L, WorldObject* obj)
     {
         sEluna.Push(L, obj->GetPositionX());
@@ -94,6 +171,13 @@ namespace LuaWorldObject
         sEluna.Push(L, obj->GetOrientation());
         return 4;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetNearestPlayer(lua_State* L, WorldObject* obj)
     {
         float range = luaL_optnumber(L, 1, SIZE_OF_GRIDS);
@@ -106,6 +190,13 @@ namespace LuaWorldObject
         sEluna.Push(L, target);
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetNearestGameObject(lua_State* L, WorldObject* obj)
     {
         float range = luaL_optnumber(L, 1, SIZE_OF_GRIDS);
@@ -119,6 +210,13 @@ namespace LuaWorldObject
         sEluna.Push(L, target);
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetNearestCreature(lua_State* L, WorldObject* obj)
     {
         float range = luaL_optnumber(L, 1, SIZE_OF_GRIDS);
@@ -132,6 +230,13 @@ namespace LuaWorldObject
         sEluna.Push(L, target);
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetPlayersInRange(lua_State* L, WorldObject* obj)
     {
         float range = luaL_optnumber(L, 1, SIZE_OF_GRIDS);
@@ -155,6 +260,13 @@ namespace LuaWorldObject
         lua_settop(L, tbl);
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetCreaturesInRange(lua_State* L, WorldObject* obj)
     {
         float range = luaL_optnumber(L, 1, SIZE_OF_GRIDS);
@@ -179,6 +291,13 @@ namespace LuaWorldObject
         lua_settop(L, tbl);
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetGameObjectsInRange(lua_State* L, WorldObject* obj)
     {
         float range = luaL_optnumber(L, 1, SIZE_OF_GRIDS);
@@ -203,6 +322,13 @@ namespace LuaWorldObject
         lua_settop(L, tbl);
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetWorldObject(lua_State* L, WorldObject* obj)
     {
         ObjectGuid guid = ObjectGuid(sEluna.CHECK_ULONG(L, 1));
@@ -213,7 +339,6 @@ namespace LuaWorldObject
             case HIGHGUID_TRANSPORT:
             case HIGHGUID_MO_TRANSPORT:
             case HIGHGUID_GAMEOBJECT:    sEluna.Push(L, obj->GetMap()->GetGameObject(guid)); break;
-            // case HIGHGUID_VEHICLE:
             case HIGHGUID_UNIT:
             case HIGHGUID_PET:           sEluna.Push(L, obj->GetMap()->GetAnyTypeCreature(guid)); break;
             default:                     return 0;

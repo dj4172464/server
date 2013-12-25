@@ -31,21 +31,39 @@
 
 namespace LuaPacket
 {
-    // GetOpcode()
+    /**
+     * @brief GetOpcode()
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int GetOpcode(lua_State* L, WorldPacket* packet)
     {
         sEluna.Push(L, packet->GetOpcode());
         return 1;
     }
 
-    // GetSize()
+    /**
+     * @brief GetSize()
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int GetSize(lua_State* L, WorldPacket* packet)
     {
         sEluna.Push(L, packet->size());
         return 1;
     }
 
-    // SetOpcode(opcode)
+    /**
+     * @brief SetOpcode(opcode)
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int SetOpcode(lua_State* L, WorldPacket* packet)
     {
         uint16 opcode = luaL_checkunsigned(L, 1);
@@ -56,7 +74,13 @@ namespace LuaPacket
         return 0;
     }
 
-    // ReadByte()
+    /**
+     * @brief ReadByte()
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int ReadByte(lua_State* L, WorldPacket* packet)
     {
         int8 byte;
@@ -65,7 +89,13 @@ namespace LuaPacket
         return 1;
     }
 
-    // ReadUByte()
+    /**
+     * @brief ReadUByte()
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int ReadUByte(lua_State* L, WorldPacket* packet)
     {
         uint8 byte;
@@ -74,7 +104,13 @@ namespace LuaPacket
         return 1;
     }
 
-    // ReadShort()
+    /**
+     * @brief ReadShort()
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int ReadShort(lua_State* L, WorldPacket* packet)
     {
         int16 _short;
@@ -83,7 +119,13 @@ namespace LuaPacket
         return 1;
     }
 
-    // ReadUShort()
+    /**
+     * @brief ReadUShort()
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int ReadUShort(lua_State* L, WorldPacket* packet)
     {
         uint16 _ushort;
@@ -92,7 +134,13 @@ namespace LuaPacket
         return 1;
     }
 
-    // ReadLong()
+    /**
+     * @brief ReadLong()
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int ReadLong(lua_State* L, WorldPacket* packet)
     {
         int32 _long;
@@ -101,7 +149,13 @@ namespace LuaPacket
         return 1;
     }
 
-    // ReadULong()
+    /**
+     * @brief ReadULong()
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int ReadULong(lua_State* L, WorldPacket* packet)
     {
         uint32 _ulong;
@@ -110,7 +164,13 @@ namespace LuaPacket
         return 1;
     }
 
-    // ReadFloat()
+    /**
+     * @brief ReadFloat()
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int ReadFloat(lua_State* L, WorldPacket* packet)
     {
         float _val;
@@ -119,7 +179,13 @@ namespace LuaPacket
         return 1;
     }
 
-    // ReadDouble()
+    /**
+     * @brief ReadDouble()
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int ReadDouble(lua_State* L, WorldPacket* packet)
     {
         double _val;
@@ -128,7 +194,13 @@ namespace LuaPacket
         return 1;
     }
 
-    // ReadGUID()
+    /**
+     * @brief ReadGUID()
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int ReadGUID(lua_State* L, WorldPacket* packet)
     {
         uint64 guid;
@@ -137,7 +209,13 @@ namespace LuaPacket
         return 1;
     }
 
-    // ReadString()
+    /**
+     * @brief ReadString()
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int ReadString(lua_State* L, WorldPacket* packet)
     {
         std::string _val;
@@ -146,7 +224,13 @@ namespace LuaPacket
         return 1;
     }
 
-    // WriteGUID(guid)
+    /**
+     * @brief WriteGUID(guid)
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int WriteGUID(lua_State* L, WorldPacket* packet)
     {
         uint64 guid = sEluna.CHECK_ULONG(L, 1);
@@ -154,7 +238,13 @@ namespace LuaPacket
         return 0;
     }
 
-    // WriteString(string)
+    /**
+     * @brief WriteString(string)
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int WriteString(lua_State* L, WorldPacket* packet)
     {
         std::string _val = std::string(luaL_checkstring(L, 1));
@@ -162,7 +252,13 @@ namespace LuaPacket
         return 0;
     }
 
-    // WriteBye(byte)
+    /**
+     * @brief WriteBye(byte)
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int WriteByte(lua_State* L, WorldPacket* packet)
     {
         int8 byte = luaL_checkinteger(L, 1);
@@ -170,7 +266,13 @@ namespace LuaPacket
         return 0;
     }
 
-    // WriteUByte(byte)
+    /**
+     * @brief WriteUByte(byte)
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int WriteUByte(lua_State* L, WorldPacket* packet)
     {
         uint8 byte = luaL_checkunsigned(L, 1);
@@ -178,7 +280,13 @@ namespace LuaPacket
         return 0;
     }
 
-    // WriteUShort(short)
+    /**
+     * @brief WriteUShort(short)
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int WriteUShort(lua_State* L, WorldPacket* packet)
     {
         uint16 _ushort = luaL_checkunsigned(L, 1);
@@ -186,7 +294,13 @@ namespace LuaPacket
         return 0;
     }
 
-    // WriteShort(short)
+    /**
+     * @brief WriteShort(short)
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int WriteShort(lua_State* L, WorldPacket* packet)
     {
         int16 _short = luaL_checkinteger(L, 1);
@@ -194,7 +308,13 @@ namespace LuaPacket
         return 0;
     }
 
-    // WriteLong(long)
+    /**
+     * @brief WriteLong(long)
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int WriteLong(lua_State* L, WorldPacket* packet)
     {
         int32 _long = luaL_checkinteger(L, 1);
@@ -202,7 +322,13 @@ namespace LuaPacket
         return 0;
     }
 
-    // WriteULong(long)
+    /**
+     * @brief WriteULong(long)
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int WriteULong(lua_State* L, WorldPacket* packet)
     {
         uint32 _ulong = luaL_checkunsigned(L, 1);
@@ -210,7 +336,13 @@ namespace LuaPacket
         return 0;
     }
 
-    // WriteFloat(float)
+    /**
+     * @brief WriteFloat(float)
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int WriteFloat(lua_State* L, WorldPacket* packet)
     {
         float _val = luaL_checknumber(L, 1);
@@ -218,7 +350,13 @@ namespace LuaPacket
         return 0;
     }
 
-    // WriteDouble(double)
+    /**
+     * @brief WriteDouble(double)
+     *
+     * @param L
+     * @param packet
+     * @return int
+     */
     int WriteDouble(lua_State* L, WorldPacket* packet)
     {
         double _val = luaL_checknumber(L, 1);

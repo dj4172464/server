@@ -31,12 +31,26 @@
 
 namespace LuaPlayer
 {
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SaveToDB(lua_State* L, Player* player)
     {
         player->SaveToDB();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int HasQuest(lua_State* L, Player* player)
     {
         uint32 quest = luaL_checkunsigned(L, 1);
@@ -45,6 +59,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int HasSpell(lua_State* L, Player* player)
     {
         uint32 id = luaL_checkunsigned(L, 1);
@@ -53,6 +74,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SummonPlayer(lua_State* L, Player* player)
     {
         Player* target = sEluna.CHECK_PLAYER(L, 1);
@@ -74,6 +102,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int Mute(lua_State* L, Player* player)
     {
         uint32 muteseconds = luaL_checkunsigned(L, 1);
@@ -85,12 +120,26 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int CreateCorpse(lua_State* L, Player* player)
     {
         player->CreateCorpse();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int RewardQuest(lua_State* L, Player* player)
     {
         uint32 entry = luaL_checkunsigned(L, 1);
@@ -134,12 +183,26 @@ namespace LuaPlayer
         return 1;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetLatency(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetSession()->GetLatency());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SendAuctionMenu(lua_State* L, Player* player)
     {
         Creature* creature = sEluna.CHECK_CREATURE(L, 1);
@@ -170,6 +233,13 @@ namespace LuaPlayer
         return 0;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SendTaxiMenu(lua_State* L, Player* player)
     {
         Creature* creature = sEluna.CHECK_CREATURE(L, 1);
@@ -179,12 +249,26 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SendSpiritResurrect(lua_State* L, Player* player)
     {
         player->GetSession()->SendSpiritResurrect();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SendTabardVendorActivate(lua_State* L, Player* player)
     {
         WorldObject* obj = sEluna.CHECK_WORLDOBJECT(L, 1);
@@ -194,6 +278,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SendShowBank(lua_State* L, Player* player)
     {
         WorldObject* obj = sEluna.CHECK_WORLDOBJECT(L, 1);
@@ -203,6 +294,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SendListInventory(lua_State* L, Player* player)
     {
         WorldObject* obj = sEluna.CHECK_WORLDOBJECT(L, 1);
@@ -213,6 +311,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SendTrainerList(lua_State* L, Player* player)
     {
         WorldObject* obj = sEluna.CHECK_WORLDOBJECT(L, 1);
@@ -222,6 +327,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SendGuildInvite(lua_State* L, Player* player)
     {
         Player* plr = sEluna.CHECK_PLAYER(L, 1);
@@ -231,6 +343,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int LogoutPlayer(lua_State* L, Player* player)
     {
         bool save = luaL_optbool(L, 1, true);
@@ -239,6 +358,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetChampioningFaction(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetChampioningFaction());
@@ -259,30 +385,65 @@ namespace LuaPlayer
         return 1;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetOriginalSubGroup(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetOriginalSubGroup());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetOriginalGroup(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetOriginalGroup());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int RemoveFromBattlegroundOrBattlefieldRaid(lua_State* L, Player* player)
     {
         player->RemoveFromBattleGroundRaid();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int CanUninviteFromGroup(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->CanUninviteFromGroup() == ERR_PARTY_RESULT_OK);
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetNextRandomRaidMember(lua_State* L, Player* player)
     {
         float radius = luaL_checknumber(L, 1);
@@ -291,12 +452,26 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetSubGroup(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetSubGroup());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetGroupInvite(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetGroupInvite());
@@ -309,6 +484,13 @@ namespace LuaPlayer
         return 1;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int UnbindInstance(lua_State* L, Player* player)
     {
         uint32 map = luaL_checkunsigned(L, 1);
@@ -325,6 +507,13 @@ namespace LuaPlayer
         return 0;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetAtLoginFlag(lua_State* L, Player* player)
     {
         uint32 flag = luaL_checkunsigned(L, 1);
@@ -345,6 +534,13 @@ namespace LuaPlayer
         return 1;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int HasAtLoginFlag(lua_State* L, Player* player)
     {
         uint32 flag = luaL_checkunsigned(L, 1);
@@ -353,6 +549,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IsVisibleForPlayer(lua_State* L, Player* player)
     {
         Player* target = sEluna.CHECK_PLAYER(L, 1);
@@ -379,6 +582,13 @@ namespace LuaPlayer
         return 1;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetRestTime(lua_State* L, Player* player)
     {
         uint32 value = luaL_checkunsigned(L, 1);
@@ -387,12 +597,26 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetRestTime(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetRestTime());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetXPRestBonus(lua_State* L, Player* player)
     {
         uint32 xp = luaL_checkunsigned(L, 1);
@@ -401,6 +625,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int CanSpeak(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->CanSpeak());
@@ -413,12 +644,26 @@ namespace LuaPlayer
         return 1;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IsRested(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->isRested());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int LeaveBattleground(lua_State* L, Player* player)
     {
         bool teleToEntryPoint = luaL_optbool(L, 1, true);
@@ -427,18 +672,39 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int InBattlegroundQueue(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->InBattleGroundQueue());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetBattlegroundTypeId(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetBattleGroundTypeId());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetBattlegroundId(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetBattleGroundId());
@@ -451,12 +717,26 @@ namespace LuaPlayer
         return 1;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int InArena(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->InArena());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int InBattleground(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->InBattleGround());
@@ -475,24 +755,52 @@ namespace LuaPlayer
         return 1;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int CanBlock(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->CanBlock());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int CanParry(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->CanParry());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetDrunkValue(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetDrunkValue());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetDrunkValue(lua_State* L, Player* player)
     {
         uint8 newDrunkValue = luaL_checkunsigned(L, 1);
@@ -501,6 +809,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetSpellCooldowns(lua_State* L, Player* player)
     {
         lua_newtable(L);
@@ -519,6 +834,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int ModifyArenaPoints(lua_State* L, Player* player)
     {
         int32 amount = luaL_checkunsigned(L, 1);
@@ -527,6 +849,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int ModifyHonorPoints(lua_State* L, Player* player)
     {
         int32 amount = luaL_checkunsigned(L, 1);
@@ -535,6 +864,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetReputationRank(lua_State* L, Player* player)
     {
         uint32 faction = luaL_checkunsigned(L, 1);
@@ -543,6 +879,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IsHonorOrXPTarget(lua_State* L, Player* player)
     {
         Unit* victim = sEluna.CHECK_UNIT(L, 1);
@@ -554,6 +897,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetFactionForRace(lua_State* L, Player* player)
     {
         uint8 race = luaL_checkunsigned(L, 1);
@@ -562,6 +912,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetSkill(lua_State* L, Player* player)
     {
         uint16 id = luaL_checkunsigned(L, 1);
@@ -573,6 +930,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int HasSkill(lua_State* L, Player* player)
     {
         uint32 skill = luaL_checkunsigned(L, 1);
@@ -581,6 +945,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetSkillTempBonusValue(lua_State* L, Player* player)
     {
         uint32 skill = luaL_checkunsigned(L, 1);
@@ -589,6 +960,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetSkillPermBonusValue(lua_State* L, Player* player)
     {
         uint32 skill = luaL_checkunsigned(L, 1);
@@ -597,6 +975,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetPureSkillValue(lua_State* L, Player* player)
     {
         uint32 skill = luaL_checkunsigned(L, 1);
@@ -605,6 +990,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetBaseSkillValue(lua_State* L, Player* player)
     {
         uint32 skill = luaL_checkunsigned(L, 1);
@@ -613,6 +1005,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetSkillValue(lua_State* L, Player* player)
     {
         uint32 skill = luaL_checkunsigned(L, 1);
@@ -621,6 +1020,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetPureMaxSkillValue(lua_State* L, Player* player)
     {
         uint32 skill = luaL_checkunsigned(L, 1);
@@ -629,6 +1035,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetMaxSkillValue(lua_State* L, Player* player)
     {
         uint32 skill = luaL_checkunsigned(L, 1);
@@ -645,6 +1058,13 @@ namespace LuaPlayer
         return 0;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int DurabilityRepair(lua_State* L, Player* player)
     {
         uint16 position = luaL_checkunsigned(L, 1);
@@ -656,6 +1076,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int DurabilityRepairAll(lua_State* L, Player* player)
     {
         bool cost = luaL_optbool(L, 1, true);
@@ -666,6 +1093,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int DurabilityPointLossForEquipSlot(lua_State* L, Player* player)
     {
         int32 slot = luaL_checkinteger(L, 1);
@@ -675,6 +1109,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int DurabilityPointsLossAll(lua_State* L, Player* player)
     {
         int32 points = luaL_checkinteger(L, 1);
@@ -684,6 +1125,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int DurabilityPointsLoss(lua_State* L, Player* player)
     {
         Item* item = sEluna.CHECK_ITEM(L, 1);
@@ -694,6 +1142,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int DurabilityLoss(lua_State* L, Player* player)
     {
         Item* item = sEluna.CHECK_ITEM(L, 1);
@@ -704,6 +1159,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int DurabilityLossAll(lua_State* L, Player* player)
     {
         double percent = luaL_checknumber(L, 1);
@@ -713,24 +1175,52 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int KillPlayer(lua_State* L, Player* player)
     {
         player->KillPlayer();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetManaBonusFromIntellect(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetManaBonusFromIntellect());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetHealthBonusFromStamina(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetHealthBonusFromStamina());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetDifficulty(lua_State* L, Player* player)
     {
         bool isRaid = luaL_optbool(L, 1, true);
@@ -739,12 +1229,26 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetGuildRank(lua_State* L, Player* player) // TODO: Move to Guild Methods
     {
         sEluna.Push(L, player->GetRank());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetGuildRank(lua_State* L, Player* player) // TODO: Move to Guild Methods
     {
         uint8 rank = luaL_checkunsigned(L, 1);
@@ -756,6 +1260,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int RemoveFromGroup(lua_State* L, Player* player)
     {
         if (!player->GetGroup())
@@ -765,6 +1276,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IsGroupVisibleFor(lua_State* L, Player* player)
     {
         Player* target = sEluna.CHECK_PLAYER(L, 1);
@@ -775,6 +1293,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IsInSameRaidWith(lua_State* L, Player* player)
     {
         Player* target = sEluna.CHECK_PLAYER(L, 1);
@@ -785,6 +1310,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IsInSameGroupWith(lua_State* L, Player* player)
     {
         Player* target = sEluna.CHECK_PLAYER(L, 1);
@@ -795,6 +1327,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetSpellCooldownDelay(lua_State* L, Player* player)
     {
         uint32 spellId = luaL_checkunsigned(L, 1);
@@ -838,6 +1377,13 @@ namespace LuaPlayer
         return 1;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int ResetTalentsCost(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->resetTalentsCost());
@@ -853,6 +1399,13 @@ namespace LuaPlayer
         return 0;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetFreeTalentPoints(lua_State* L, Player* player)
     {
         uint32 points = luaL_checkunsigned(L, 1);
@@ -861,12 +1414,26 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetFreeTalentPoints(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetFreeTalentPoints());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetGuildName(lua_State* L, Player* player)
     {
         if (!player->GetGuildId())
@@ -875,6 +1442,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetReputation(lua_State* L, Player* player)
     {
         uint32 faction = luaL_checkunsigned(L, 1);
@@ -883,6 +1457,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetReputation(lua_State* L, Player* player)
     {
         uint32 faction = luaL_checkunsigned(L, 1);
@@ -893,6 +1474,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int RemoveSpell(lua_State* L, Player* player)
     {
         uint32 entry = luaL_checkunsigned(L, 1);
@@ -903,6 +1491,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int ClearComboPoints(lua_State* L, Player* player)
     {
         player->ClearComboPoints();
@@ -917,6 +1512,13 @@ namespace LuaPlayer
         return 0;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int AddComboPoints(lua_State* L, Player* player)
     {
         Unit* target = sEluna.CHECK_UNIT(L, 1);
@@ -928,12 +1530,26 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetComboTarget(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetMap()->GetUnit(player->GetComboTargetGuid()));
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetComboPoints(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetComboPoints());
@@ -948,12 +1564,26 @@ namespace LuaPlayer
         return 1;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int RegenerateHealth(lua_State* L, Player* player)
     {
         player->RegenerateHealth();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int Regenerate(lua_State* L, Player* player)
     {
         uint32 power = luaL_checkunsigned(L, 1);
@@ -964,6 +1594,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int RegenerateAll(lua_State* L, Player* player)
     {
         player->RegenerateAll();
@@ -976,12 +1613,26 @@ namespace LuaPlayer
         return 0;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetInGameTime(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetInGameTime());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int TalkedToCreature(lua_State* L, Player* player)
     {
         uint32 entry = luaL_checkunsigned(L, 1);
@@ -1015,6 +1666,13 @@ namespace LuaPlayer
         return 0;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GroupEventHappens(lua_State* L, Player* player)
     {
         uint32 questId = luaL_checkunsigned(L, 1);
@@ -1026,6 +1684,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int AreaExploredOrEventHappens(lua_State* L, Player* player)
     {
         uint32 questId = luaL_checkunsigned(L, 1);
@@ -1034,6 +1699,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int CanShareQuest(lua_State* L, Player* player)
     {
         uint32 entry = luaL_checkunsigned(L, 1);
@@ -1042,6 +1714,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int HasQuestForGO(lua_State* L, Player* player)
     {
 
@@ -1051,6 +1730,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int HasQuestForItem(lua_State* L, Player* player)
     {
         uint32 entry = luaL_checkunsigned(L, 1);
@@ -1059,6 +1745,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetReqKillOrCastCurrentCount(lua_State* L, Player* player)
     {
         uint32 questId = luaL_checkunsigned(L, 1);
@@ -1084,6 +1777,13 @@ namespace LuaPlayer
         return 0;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetQuestStatus(lua_State* L, Player* player)
     {
         uint32 entry = luaL_checkunsigned(L, 1);
@@ -1095,6 +1795,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetQuestStatus(lua_State* L, Player* player)
     {
         uint32 entry = luaL_checkunsigned(L, 1);
@@ -1103,6 +1810,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetQuestRewardStatus(lua_State* L, Player* player)
     {
         uint32 questId = luaL_checkunsigned(L, 1);
@@ -1111,6 +1825,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int FailQuest(lua_State* L, Player* player)
     {
         uint32 entry = luaL_checkunsigned(L, 1);
@@ -1119,6 +1840,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IncompleteQuest(lua_State* L, Player* player)
     {
         uint32 entry = luaL_checkunsigned(L, 1);
@@ -1127,6 +1855,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int CompleteQuest(lua_State* L, Player* player)
     {
         uint32 entry = luaL_checkunsigned(L, 1);
@@ -1135,6 +1870,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IsActiveQuest(lua_State* L, Player* player)
     {
         uint32 entry = luaL_checkunsigned(L, 1);
@@ -1143,6 +1885,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetQuestLevel(lua_State* L, Player* player)
     {
         Quest* quest = sEluna.CHECK_QUEST(L, 1);
@@ -1153,6 +1902,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetItemByEntry(lua_State* L, Player* player)
     {
         uint32 entry = luaL_checkunsigned(L, 1);
@@ -1161,6 +1917,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetEquippedItemBySlot(lua_State* L, Player* player)
     {
         uint8 slot = luaL_checkunsigned(L, 1);
@@ -1172,6 +1935,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int Whisper(lua_State* L, Player* player)
     {
         std::string text = luaL_checkstring(L, 1);
@@ -1182,6 +1952,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int TextEmote(lua_State* L, Player* player)
     {
         std::string text = luaL_checkstring(L, 1);
@@ -1190,6 +1967,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int Yell(lua_State* L, Player* player)
     {
         std::string text = luaL_checkstring(L, 1);
@@ -1199,6 +1983,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int Say(lua_State* L, Player* player)
     {
         std::string text = luaL_checkstring(L, 1);
@@ -1243,12 +2034,26 @@ namespace LuaPlayer
         return 0;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetRestType(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetRestType());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetRestType(lua_State* L, Player* player)
     {
         int type = luaL_checkinteger(L, 1);
@@ -1257,6 +2062,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetRestBonus(lua_State* L, Player* player)
     {
         float bonus = luaL_checknumber(L, 1);
@@ -1265,12 +2077,26 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetRestBonus(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetRestBonus());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GiveLevel(lua_State* L, Player* player)
     {
         uint8 level = luaL_checkunsigned(L, 1);
@@ -1279,6 +2105,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GiveXP(lua_State* L, Player* player)
     {
         uint32 xp = luaL_checkunsigned(L, 1);
@@ -1346,30 +2179,65 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IsGMVisible(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->isGMVisible());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IsTaxiCheater(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->isTaxiCheater());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IsGMChat(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->isGMChat());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IsAcceptingWhispers(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->isAcceptWhispers());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetAcceptWhispers(lua_State* L, Player* player)
     {
         bool on = luaL_optbool(L, 1, true);
@@ -1378,6 +2246,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetPvPDeath(lua_State* L, Player* player)
     {
         bool on = luaL_optbool(L, 1, true);
@@ -1386,6 +2261,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetGMVisible(lua_State* L, Player* player)
     {
         bool on = luaL_optbool(L, 1, true);
@@ -1394,6 +2276,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetTaxiCheat(lua_State* L, Player* player)
     {
         bool on = luaL_optbool(L, 1, true);
@@ -1402,6 +2291,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetGMChat(lua_State* L, Player* player)
     {
         bool on = luaL_optbool(L, 1, true);
@@ -1410,6 +2306,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetGameMaster(lua_State* L, Player* player)
     {
         bool on = luaL_optbool(L, 1, true);
@@ -1418,36 +2321,78 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetChatTag(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetChatTag());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IsDND(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->isDND());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IsAFK(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->isAFK());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int ToggleDND(lua_State* L, Player* player)
     {
         player->ToggleDND();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int ToggleAFK(lua_State* L, Player* player)
     {
         player->ToggleAFK();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IsFalling(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->IsFalling());
@@ -1460,6 +2405,13 @@ namespace LuaPlayer
         return 1;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int EquipItem(lua_State* L, Player* player)
     {
         uint16 dest = 0;
@@ -1497,6 +2449,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int CanEquipItem(lua_State* L, Player* player)
     {
         Item* item = sEluna.CHECK_ITEM(L, 1);
@@ -1532,6 +2491,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetItemByPos(lua_State* L, Player* player)
     {
         /*
@@ -1548,12 +2514,26 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetArenaPoints(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetArenaPoints());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetGender(lua_State* L, Player* player)
     {
         Gender gender;
@@ -1578,12 +2558,26 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetHonorPoints(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetHonorPoints());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetGossipTextId(lua_State* L, Player* player)
     {
         WorldObject* obj = sEluna.CHECK_WORLDOBJECT(L, 1);
@@ -1593,36 +2587,78 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetSelection(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetMap()->GetUnit(player->GetSelectionGuid()));
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetGMRank(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetSession()->GetSecurity());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetCoinage(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetMoney());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetGuildId(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetGuildId());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetTeam(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetTeamId());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetItemCount(lua_State* L, Player* player)
     {
         int id = luaL_checknumber(L, 1);
@@ -1631,42 +2667,91 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetLifetimeKills(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetUInt32Value(PLAYER_FIELD_LIFETIME_HONORBALE_KILLS));
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetPlayerIP(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetSession()->GetRemoteAddress());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetLevelPlayedTime(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetLevelPlayedTime());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetTotalPlayedTime(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetTotalPlayedTime());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetGuild(lua_State* L, Player* player)
     {
         sEluna.Push(L, sGuildMgr.GetGuildById(player->GetGuildId()));
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetGroup(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetGroup());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetArenaPoints(lua_State* L, Player* player)
     {
         uint32 arenaP = luaL_checkunsigned(L, 1);
@@ -1674,6 +2759,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetHonorPoints(lua_State* L, Player* player)
     {
         uint32 honorP = luaL_checkunsigned(L, 1);
@@ -1681,6 +2773,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetLifetimeKills(lua_State* L, Player* player)
     {
         uint32 val = luaL_checkunsigned(L, 1);
@@ -1688,6 +2787,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetCoinage(lua_State* L, Player* player)
     {
         uint32 amt = luaL_checkunsigned(L, 1);
@@ -1695,6 +2801,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetBindPoint(lua_State* L, Player* player)
     {
         float x = luaL_checknumber(L, 1);
@@ -1708,6 +2821,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetKnownTitle(lua_State* L, Player* player)
     {
         uint32 id = luaL_checkunsigned(L, 1);
@@ -1717,6 +2837,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int UnsetKnownTitle(lua_State* L, Player* player)
     {
         uint32 id = luaL_checkunsigned(L, 1);
@@ -1726,12 +2853,26 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int AdvanceSkillsToMax(lua_State* L, Player* player)
     {
         player->UpdateSkillsToMaxSkillsForLevel();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int AdvanceAllSkills(lua_State* L, Player* player)
     {
         uint32 step = luaL_checkunsigned(L, 1);
@@ -1753,6 +2894,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int AdvanceSkill(lua_State* L, Player* player)
     {
         uint32 _skillId = luaL_checkunsigned(L, 1);
@@ -1765,24 +2913,52 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IsInGroup(lua_State* L, Player* player)
     {
         sEluna.Push(L, (player->GetGroup() != NULL));
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IsInGuild(lua_State* L, Player* player)
     {
         sEluna.Push(L, (player->GetGuildId() != 0));
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IsGM(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->isGameMaster());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IsInArenaTeam(lua_State* L, Player* player)
     {
         uint32 type = luaL_checkunsigned(L, 1);
@@ -1793,18 +2969,39 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IsHorde(lua_State* L, Player* player)
     {
         sEluna.Push(L, (player->GetTeam() == HORDE));
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IsAlliance(lua_State* L, Player* player)
     {
         sEluna.Push(L, (player->GetTeam() == ALLIANCE));
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int HasTitle(lua_State* L, Player* player)
     {
         uint32 id = luaL_checkunsigned(L, 1);
@@ -1816,6 +3013,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int HasItem(lua_State* L, Player* player)
     {
         uint32 itemId = luaL_checkunsigned(L, 1);
@@ -1825,6 +3029,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int Teleport(lua_State* L, Player* player)
     {
         uint32 mapId = luaL_checkunsigned(L, 1);
@@ -1841,6 +3052,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int AddLifetimeKills(lua_State* L, Player* player)
     {
         uint32 val = luaL_checkunsigned(L, 1);
@@ -1849,6 +3067,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int AddItem(lua_State* L, Player* player)
     {
         uint32 itemId = luaL_checkunsigned(L, 1);
@@ -1857,6 +3082,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int RemoveItem(lua_State* L, Player* player)
     {
         Item* item = sEluna.CHECK_ITEM(L, 1);
@@ -1871,6 +3103,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int RemoveLifetimeKills(lua_State* L, Player* player)
     {
         uint32 val = luaL_checkunsigned(L, 1);
@@ -1881,6 +3120,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int ResetSpellCooldown(lua_State* L, Player* player)
     {
         uint32 spellId = luaL_checkunsigned(L, 1);
@@ -1889,6 +3135,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int ResetTypeCooldowns(lua_State* L, Player* player)
     {
         uint32 category = luaL_checkunsigned(L, 1);
@@ -1897,12 +3150,26 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int ResetAllCooldowns(lua_State* L, Player* player)
     {
         player->RemoveAllSpellCooldown();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SendClearCooldowns(lua_State* L, Player* player)
     {
         uint32 spellId = luaL_checkunsigned(L, 1);
@@ -1914,6 +3181,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SendBroadcastMessage(lua_State* L, Player* player)
     {
         const char* message = luaL_checkstring(L, 1);
@@ -1922,6 +3196,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SendAreaTriggerMessage(lua_State* L, Player* player)
     {
         const char* msg = luaL_checkstring(L, 1);
@@ -1930,6 +3211,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SendNotification(lua_State* L, Player* player)
     {
         const char* msg = luaL_checkstring(L, 1);
@@ -1938,6 +3226,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SendPacketToPlayer(lua_State* L, Player* player)
     {
         WorldPacket* data = sEluna.CHECK_PACKET(L, 1);
@@ -1946,6 +3241,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SendPacket(lua_State* L, Player* player)
     {
         WorldPacket* data = sEluna.CHECK_PACKET(L, 1);
@@ -1980,6 +3282,13 @@ namespace LuaPlayer
         return 0;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SendVendorWindow(lua_State* L, Player* player)
     {
         Unit* sendTo = sEluna.CHECK_UNIT(L, 1);
@@ -1989,12 +3298,26 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int KickPlayer(lua_State* L, Player* player)
     {
         player->GetSession()->KickPlayer();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int ModifyMoney(lua_State* L, Player* player)
     {
         int32 amt = luaL_checkinteger(L, 1);
@@ -2003,6 +3326,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int LearnSpell(lua_State* L, Player* player)
     {
         uint32 id = luaL_checkunsigned(L, 1);
@@ -2010,6 +3340,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int ResurrectPlayer(lua_State* L, Player* player)
     {
         float percent = luaL_optnumber(L, 1, 100.0f);
@@ -2019,12 +3356,26 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetAccountId(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetSession()->GetAccountId());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetAccountName(lua_State* L, Player* player)
     {
         std::string accName;
@@ -2035,12 +3386,26 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetCorpse(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetCorpse());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GossipMenuAddItem(lua_State* L, Player* player)
     {
         uint32 _icon = luaL_checkunsigned(L, 1);
@@ -2054,12 +3419,26 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GossipComplete(lua_State* L, Player* player)
     {
         player->PlayerTalkClass->CloseGossip();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GossipSendMenu(lua_State* L, Player* player)
     {
         uint32 _npcText = luaL_checkunsigned(L, 1);
@@ -2076,12 +3455,26 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GossipClearMenu(lua_State* L, Player* player)
     {
         player->PlayerTalkClass->ClearMenus();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int PlaySoundToPlayer(lua_State* L, Player* player)
     {
         uint32 soundId = luaL_checkunsigned(L, 1);
@@ -2093,6 +3486,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int StartTaxi(lua_State* L, Player* player)
     {
         uint32 pathId = luaL_checkunsigned(L, 1);
@@ -2101,6 +3501,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetPlayerLock(lua_State* L, Player* player)
     {
         bool apply = luaL_optbool(L, 1, true);
@@ -2118,6 +3525,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GossipSendPOI(lua_State* L, Player* player)
     {
         float x = luaL_checknumber(L, 1);
@@ -2138,6 +3552,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GossipAddQuests(lua_State* L, Player* player)
     {
         WorldObject* source = sEluna.CHECK_WORLDOBJECT(L, 1);
@@ -2157,6 +3578,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SendQuestTemplate(lua_State* L, Player* player)
     {
         uint32 questId = luaL_checkunsigned(L, 1);
@@ -2170,12 +3598,26 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SpawnBones(lua_State* L, Player* player)
     {
         player->SpawnCorpseBones();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int RemovedInsignia(lua_State* L, Player* player)
     {
         Player* looter = sEluna.CHECK_PLAYER(L, 1);
@@ -2185,18 +3627,39 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetDbLocaleIndex(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetSession()->GetSessionDbLocaleIndex());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetDbcLocale(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetSession()->GetSessionDbcLocale());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int CanUseItem(lua_State* L, Player* player)
     {
         Item* item = sEluna.CHECK_ITEM(L, 1);
@@ -2214,6 +3677,13 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int HasSpellCooldown(lua_State* L, Player* player)
     {
         uint32 spellId = luaL_checkunsigned(L, 1);
@@ -2222,18 +3692,39 @@ namespace LuaPlayer
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int GetShieldBlockValue(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->GetShieldBlockValue());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int IsInWater(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->IsInWater());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int SetSheath(lua_State* L, Player* player)
     {
         uint32 sheathed = luaL_checkunsigned(L, 1);
@@ -2244,6 +3735,13 @@ namespace LuaPlayer
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param player
+     * @return int
+     */
     int CanFly(lua_State* L, Player* player)
     {
         sEluna.Push(L, player->CanFly());

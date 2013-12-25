@@ -31,54 +31,117 @@
 
 namespace LuaAura
 {
+    /**
+     * @brief
+     *
+     * @param L
+     * @param aura
+     * @return int
+     */
     int GetCaster(lua_State* L, Aura* aura)
     {
         sEluna.Push(L, aura->GetCaster());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param aura
+     * @return int
+     */
     int GetCasterGUID(lua_State* L, Aura* aura)
     {
         sEluna.Push(L, aura->GetCasterGuid());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param aura
+     * @return int
+     */
     int GetCasterLevel(lua_State* L, Aura* aura)
     {
         sEluna.Push(L, aura->GetCaster()->getLevel());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param aura
+     * @return int
+     */
     int GetDuration(lua_State* L, Aura* aura)
     {
         sEluna.Push(L, aura->GetAuraDuration());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param aura
+     * @return int
+     */
     int GetCharges(lua_State* L, Aura* aura)
     {
         sEluna.Push(L, aura->GetStackAmount());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param aura
+     * @return int
+     */
     int GetAuraId(lua_State* L, Aura* aura)
     {
         sEluna.Push(L, aura->GetId());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param aura
+     * @return int
+     */
     int GetMaxDuration(lua_State* L, Aura* aura)
     {
         sEluna.Push(L, aura->GetAuraMaxDuration());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param aura
+     * @return int
+     */
     int GetStackAmount(lua_State* L, Aura* aura)
     {
         sEluna.Push(L, aura->GetStackAmount());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param aura
+     * @return int
+     */
     int SetDuration(lua_State* L, Aura* aura)
     {
         int duration = luaL_checkinteger(L, 1);
@@ -86,6 +149,13 @@ namespace LuaAura
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param aura
+     * @return int
+     */
     int SetMaxDuration(lua_State* L, Aura* aura)
     {
         int duration = luaL_checkinteger(L, 1);
@@ -93,6 +163,13 @@ namespace LuaAura
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param aura
+     * @return int
+     */
     int SetStackAmount(lua_State* L, Aura* aura)
     {
         int amount = luaL_checkunsigned(L, 1);
@@ -100,12 +177,26 @@ namespace LuaAura
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param aura
+     * @return int
+     */
     int Remove(lua_State* L, Aura* aura)
     {
         aura->GetHolder()->RemoveAura(aura->GetEffIndex());
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param aura
+     * @return int
+     */
     int GetOwner(lua_State* L, Aura* aura)
     {
         sEluna.Push(L, aura->GetTarget());

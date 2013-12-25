@@ -208,8 +208,8 @@ class DBCStorage
         char const* fmt; /**< TODO */
         T** indexTable; /**< TODO */
         T* m_dataTable; /**< TODO */
-        std::map<uint32, T const*> data;
-        bool loaded;
+        std::map<uint32, T const*> data; /**< TODO */
+        bool loaded; /**< TODO */
         StringPoolList m_stringPoolList; /**< TODO */
 };
 

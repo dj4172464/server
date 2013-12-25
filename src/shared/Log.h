@@ -237,8 +237,16 @@ class Log : public MaNGOS::Singleton<Log, MaNGOS::ClassLevelLockable<Log, ACE_Th
          * @param str...
          */
         void outChar(const char* str, ...)        ATTR_PRINTF(2, 3);
-        void outErrorEluna();                               // any log level
-        // any log level
+        /**
+         * @brief any log level
+         *
+         */
+        void outErrorEluna();
+        /**
+         * @brief any log level
+         *
+         * @param str...
+         */
         void outErrorEluna(const char* str, ...)        ATTR_PRINTF(2, 3);
         /**
          * @brief any log level

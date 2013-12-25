@@ -31,60 +31,130 @@
 
 namespace LuaQuest
 {
+    /**
+     * @brief
+     *
+     * @param L
+     * @param quest
+     * @return int
+     */
     int GetId(lua_State* L, Quest* quest)
     {
         sEluna.Push(L, quest->GetQuestId());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param quest
+     * @return int
+     */
     int GetLevel(lua_State* L, Quest* quest)
     {
         sEluna.Push(L, quest->GetQuestLevel());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param quest
+     * @return int
+     */
     int GetMaxLevel(lua_State* L, Quest* quest)
     {
         sEluna.Push(L, quest->GetMaxLevel());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param quest
+     * @return int
+     */
     int GetMinLevel(lua_State* L, Quest* quest)
     {
         sEluna.Push(L, quest->GetMinLevel());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param quest
+     * @return int
+     */
     int GetNextQuestId(lua_State* L, Quest* quest)
     {
         sEluna.Push(L, quest->GetNextQuestId());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param quest
+     * @return int
+     */
     int GetPrevQuestId(lua_State* L, Quest* quest)
     {
         sEluna.Push(L, quest->GetPrevQuestId());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param quest
+     * @return int
+     */
     int GetNextQuestInChain(lua_State* L, Quest* quest)
     {
         sEluna.Push(L, quest->GetNextQuestInChain());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param quest
+     * @return int
+     */
     int GetFlags(lua_State* L, Quest* quest)
     {
         sEluna.Push(L, quest->GetQuestFlags());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param quest
+     * @return int
+     */
     int GetType(lua_State* L, Quest* quest)
     {
         sEluna.Push(L, quest->GetType());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param quest
+     * @return int
+     */
     int HasFlag(lua_State* L, Quest* quest)
     {
         uint32 flag = luaL_checkunsigned(L, 1);
@@ -92,18 +162,39 @@ namespace LuaQuest
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param quest
+     * @return int
+     */
     int IsDaily(lua_State* L, Quest* quest)
     {
         sEluna.Push(L, quest->IsDaily());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param quest
+     * @return int
+     */
     int IsRepeatable(lua_State* L, Quest* quest)
     {
         sEluna.Push(L, quest->IsRepeatable());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param quest
+     * @return int
+     */
     int SetFlag(lua_State* L, Quest* quest)
     {
         uint32 flag = luaL_checkunsigned(L, 1);

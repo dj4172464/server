@@ -37,12 +37,26 @@ namespace LuaCreature
         return 1;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int IsReputationGainDisabled(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->IsReputationGainDisabled());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int SetDisableReputationGain(lua_State* L, Creature* creature)
     {
         bool disable = luaL_optbool(L, 1, true);
@@ -75,12 +89,26 @@ namespace LuaCreature
         return 4;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int IsRegeneratingHealth(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->IsRegeneratingHealth());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int HasInvolvedQuest(lua_State* L, Creature* creature)
     {
         uint32 quest_id = luaL_checkunsigned(L, 1);
@@ -89,12 +117,26 @@ namespace LuaCreature
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int SetInCombatWithZone(lua_State* L, Creature* creature)
     {
         creature->SetInCombatWithZone();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int SetRespawnRadius(lua_State* L, Creature* creature)
     {
         float dist = luaL_checknumber(L, 1);
@@ -103,18 +145,39 @@ namespace LuaCreature
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int GetRespawnRadius(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->GetRespawnRadius());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int Respawn(lua_State* L, Creature* creature)
     {
         creature->Respawn();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int SetRespawnDelay(lua_State* L, Creature* creature)
     {
         uint32 delay = luaL_checkunsigned(L, 1);
@@ -123,12 +186,26 @@ namespace LuaCreature
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int GetRespawnDelay(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->GetRespawnDelay());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int DespawnOrUnsummon(lua_State* L, Creature* creature)
     {
         uint32 msTimeToDespawn = luaL_optunsigned(L, 1, 0);
@@ -137,12 +214,26 @@ namespace LuaCreature
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int RemoveCorpse(lua_State* L, Creature* creature)
     {
         creature->RemoveCorpse();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int SetDefaultMovementType(lua_State* L, Creature* creature)
     {
         int32 type = luaL_checkinteger(L, 1);
@@ -151,12 +242,26 @@ namespace LuaCreature
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int GetDefaultMovementType(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->GetDefaultMovementType());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int IsTargetAcceptable(lua_State* L, Creature* creature)
     {
         Unit* target = sEluna.CHECK_UNIT(L, 1);
@@ -168,6 +273,13 @@ namespace LuaCreature
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int CanAssistTo(lua_State* L, Creature* creature)
     {
         Unit* u = sEluna.CHECK_UNIT(L, 1);
@@ -183,12 +295,26 @@ namespace LuaCreature
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int HasSearchedAssistance(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->HasSearchedAssistance());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int SetNoSearchAssistance(lua_State* L, Creature* creature)
     {
         bool val = luaL_optbool(L, 1, true);
@@ -197,6 +323,13 @@ namespace LuaCreature
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int SetNoCallAssistance(lua_State* L, Creature* creature)
     {
         bool val = luaL_optbool(L, 1, true);
@@ -205,12 +338,26 @@ namespace LuaCreature
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int CallAssistance(lua_State* L, Creature* creature)
     {
         creature->CallAssistance();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int CallForHelp(lua_State* L, Creature* creature)
     {
         float radius = luaL_checknumber(L, 1);
@@ -219,12 +366,26 @@ namespace LuaCreature
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int FleeToGetAssistance(lua_State* L, Creature* creature)
     {
         creature->DoFleeToGetAssistance();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int GetAggroRange(lua_State* L, Creature* creature)
     {
         Unit* target = sEluna.CHECK_UNIT(L, 1);
@@ -235,6 +396,13 @@ namespace LuaCreature
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int GetAttackDistance(lua_State* L, Creature* creature)
     {
         Unit* target = sEluna.CHECK_UNIT(L, 1);
@@ -302,6 +470,13 @@ namespace LuaCreature
         return 1;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int IsTappedBy(lua_State* L, Creature* creature)
     {
         Player* player = sEluna.CHECK_PLAYER(L, 1);
@@ -313,24 +488,52 @@ namespace LuaCreature
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int HasLootRecipient(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->HasLootRecipient());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int GetLootRecipientGroup(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->GetGroupLootRecipient());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int GetLootRecipient(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->GetLootRecipient());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int SetDeathState(lua_State* L, Creature* creature)
     {
         int32 state = luaL_checkinteger(L, 1);
@@ -339,6 +542,13 @@ namespace LuaCreature
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int SetWalk(lua_State* L, Creature* creature) // TODO: Move same to Player ?
     {
         bool enable = luaL_optbool(L, 1, true);
@@ -347,6 +557,13 @@ namespace LuaCreature
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int SetReactState(lua_State* L, Creature* creature)
     {
         int32 state = luaL_checkinteger(L, 1);
@@ -355,12 +572,26 @@ namespace LuaCreature
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int GetReactState(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->GetCharmInfo()->GetReactState());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int HasReactState(lua_State* L, Creature* creature)
     {
         int32 state = luaL_checkinteger(L, 1);
@@ -369,12 +600,26 @@ namespace LuaCreature
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int CanSwim(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->CanSwim());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int CanWalk(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->CanWalk());
@@ -390,6 +635,13 @@ namespace LuaCreature
         return 1;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int SetHover(lua_State* L, Creature* creature)
     {
         bool enable = luaL_optbool(L, 1, true);
@@ -398,18 +650,39 @@ namespace LuaCreature
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int IsInEvadeMode(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->IsInEvadeMode());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int IsElite(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->IsElite());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int IsGuard(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->IsGuard());
@@ -422,18 +695,39 @@ namespace LuaCreature
         return 1;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int IsCivilian(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->IsCivilian());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int IsRacialLeader(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->IsRacialLeader());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int HasCategoryCooldown(lua_State* L, Creature* creature)
     {
         uint32 spell = luaL_checkunsigned(L, 1);
@@ -442,24 +736,52 @@ namespace LuaCreature
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int GetScriptName(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->GetScriptName());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int GetAIName(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->GetAIName());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int GetScriptId(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->GetScriptId());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int GetCreatureSpellCooldownDelay(lua_State* L, Creature* creature)
     {
         uint32 spell = luaL_checkunsigned(L, 1);
@@ -468,12 +790,26 @@ namespace LuaCreature
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int GetCorpseDelay(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->GetCorpseDelay());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int GetHomePosition(lua_State* L, Creature* creature)
     {
         float x, y, z, o;
@@ -486,6 +822,13 @@ namespace LuaCreature
         return 4;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int AttackStart(lua_State* L, Creature* creature)
     {
         Unit* target = sEluna.CHECK_UNIT(L, 1);
@@ -532,6 +875,13 @@ namespace LuaCreature
         return 0;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int GetAITarget(lua_State* L, Creature* creature)
     {
         SelectAggroTarget targetType = (SelectAggroTarget)luaL_checkunsigned(L, 1);
@@ -606,6 +956,13 @@ namespace LuaCreature
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int GetAITargets(lua_State* L, Creature* creature)
     {
         lua_newtable(L);
@@ -629,6 +986,13 @@ namespace LuaCreature
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int GetAITargetsCount(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->getThreatManager().getThreatList().size());
@@ -641,18 +1005,39 @@ namespace LuaCreature
         return 1;
     }*/
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int IsWorldBoss(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->IsWorldBoss());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int GetNPCFlags(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->GetUInt32Value(UNIT_NPC_FLAGS));
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int SetNPCFlags(lua_State* L, Creature* creature)
     {
         uint32 flags = luaL_checkunsigned(L, 1);
@@ -661,6 +1046,13 @@ namespace LuaCreature
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int HasSpell(lua_State* L, Creature* creature)
     {
         uint32 id = luaL_checkunsigned(L, 1);
@@ -669,6 +1061,13 @@ namespace LuaCreature
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int HasQuest(lua_State* L, Creature* creature)
     {
         uint32 questId = luaL_checkunsigned(L, 1);
@@ -677,12 +1076,26 @@ namespace LuaCreature
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int SaveToDB(lua_State* L, Creature* creature)
     {
         creature->SaveToDB();
         return 0;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int HasSpellCooldown(lua_State* L, Creature* creature)
     {
         uint32 spellId = luaL_checkunsigned(L, 1);
@@ -691,12 +1104,26 @@ namespace LuaCreature
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int GetShieldBlockValue(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->GetShieldBlockValue());
         return 1;
     }
 
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int CanFly(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->CanFly());
@@ -704,6 +1131,13 @@ namespace LuaCreature
     }
 
     // Actually unit method, but not on TC
+    /**
+     * @brief
+     *
+     * @param L
+     * @param creature
+     * @return int
+     */
     int SelectVictim(lua_State* L, Creature* creature)
     {
         sEluna.Push(L, creature->SelectHostileTarget());

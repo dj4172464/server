@@ -31,42 +31,78 @@
 
 namespace LuaCorpse
 {
-    // GetOwnerGUID()
+    /**
+     * @brief GetOwnerGUID
+     *
+     * @param L
+     * @param corpse
+     * @return int
+     */
     int GetOwnerGUID(lua_State* L, Corpse* corpse)
     {
         sEluna.Push(L, corpse->GetOwnerGuid());
         return 1;
     }
 
-    // GetGhostTime()
+    /**
+     * @brief GetGhostTime
+     *
+     * @param L
+     * @param corpse
+     * @return int
+     */
     int GetGhostTime(lua_State* L, Corpse* corpse)
     {
         sEluna.Push(L, corpse->GetGhostTime());
         return 1;
     }
 
-    // GetType()
+    /**
+     * @brief GetType
+     *
+     * @param L
+     * @param corpse
+     * @return int
+     */
     int GetType(lua_State* L, Corpse* corpse)
     {
         sEluna.Push(L, corpse->GetType());
         return 1;
     }
 
-    // ResetGhostTime()
+    /**
+     * @brief ResetGhostTime
+     *
+     * @param L
+     * @param corpse
+     * @return int
+     */
     int ResetGhostTime(lua_State* L, Corpse* corpse)
     {
         corpse->ResetGhostTime();
         return 0;
     }
 
-    // SaveToDB()
+    /**
+     * @brief SaveToDB
+     *
+     * @param L
+     * @param corpse
+     * @return int
+     */
     int SaveToDB(lua_State* L, Corpse* corpse)
     {
         corpse->SaveToDB();
         return 0;
     }
 
-    // DeleteBonesFromWorld()
+    /**
+     * @brief DeleteBonesFromWorld
+     *
+     * @param L
+     * @param corpse
+     * @return int
+     */
     int DeleteBonesFromWorld(lua_State* L, Corpse* corpse)
     {
         corpse->DeleteBonesFromWorld();

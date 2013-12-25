@@ -38,18 +38,44 @@ extern "C"
 
 #include "LuaIncludes.h"
 
+/**
+ * @brief
+ *
+ */
 typedef std::set<std::string> LoadedScripts;
 
+/**
+ * @brief
+ *
+ * @return const char
+ */
 template<typename T> const char* GetTName();
 
 template<class T>
+/**
+ * @brief
+ *
+ */
 struct ElunaRegister
 {
-    const char* name;
+    const char* name; /**< TODO */
+    /**
+     * @brief
+     *
+     * @param
+     * @param
+     * @return int
+     */
     int(*mfunc)(lua_State*, T*);
 };
 
 template<typename T>
+/**
+ * @brief
+ *
+ * @param L
+ * @param methodTable
+ */
 void SetMethods(lua_State* L, ElunaRegister<T>* methodTable)
 {
     if (!methodTable)
@@ -69,15 +95,30 @@ void SetMethods(lua_State* L, ElunaRegister<T>* methodTable)
 }
 
 template<typename T>
+/**
+ * @brief
+ *
+ */
 class ElunaTemplate
 {
     public:
+        /**
+         * @brief
+         *
+         * @param L
+         * @return int
+         */
         static int type(lua_State* L)
         {
             lua_pushstring(L, GetTName<T>());
             return 1;
         }
 
+        /**
+         * @brief
+         *
+         * @param L
+         */
         static void Register(lua_State* L)
         {
             lua_settop(L, 0); // clean stack
@@ -110,6 +151,14 @@ class ElunaTemplate
             lua_setmetatable(L, methods);
         }
 
+        /**
+         * @brief
+         *
+         * @param L
+         * @param obj
+         * @param gc
+         * @return int
+         */
         static int push(lua_State* L, T const* obj, bool gc = false)
         {
             if (!obj)
@@ -150,6 +199,13 @@ class ElunaTemplate
             return idxMt;
         }
 
+        /**
+         * @brief
+         *
+         * @param L
+         * @param narg
+         * @return T
+         */
         static T* check(lua_State* L, int narg)
         {
             T** ptrHold = static_cast<T**>(lua_touserdata(L, narg));
@@ -158,6 +214,12 @@ class ElunaTemplate
             return *ptrHold;
         }
 
+        /**
+         * @brief
+         *
+         * @param L
+         * @return int
+         */
         static int thunk(lua_State* L)
         {
             T* obj = check(L, 1); // get self
@@ -168,6 +230,12 @@ class ElunaTemplate
             return l->mfunc(L, obj);
         }
 
+        /**
+         * @brief
+         *
+         * @param L
+         * @return int
+         */
         static int gcT(lua_State* L)
         {
             T* obj = check(L, 1);
@@ -188,6 +256,12 @@ class ElunaTemplate
             return 1;
         }
 
+        /**
+         * @brief
+         *
+         * @param L
+         * @return int
+         */
         static int tostringT(lua_State* L)
         {
             char buff[32];
@@ -198,11 +272,23 @@ class ElunaTemplate
             return 1;
         }
 
+        /**
+         * @brief
+         *
+         * @param buff
+         * @param obj
+         */
         inline static void tostring(char* buff, void const* obj)
         {
             sprintf(buff, "%p", obj);
         }
 
+        /**
+         * @brief
+         *
+         * @param L
+         * @return int
+         */
         static int index(lua_State* L)
         {
             lua_getglobal(L, GetTName<T>());
@@ -245,37 +331,81 @@ class ElunaTemplate
         }
 };
 
+/**
+ * @brief
+ *
+ */
 struct EventMgr
 {
     struct LuaEvent;
 
+    /**
+     * @brief
+     *
+     */
     typedef std::set<LuaEvent*> EventSet;
+    /**
+     * @brief
+     *
+     */
     typedef std::map<EventProcessor*, EventSet> EventMap;
+    /**
+     * @brief
+     *
+     */
     typedef UNORDERED_MAP<uint64, EventProcessor> ProcessorMap;
 
-    EventMap LuaEvents; // LuaEvents[events] = {LuaEvents}
-    ProcessorMap Processors; // Processors[guid] = processor
-    EventProcessor GlobalEvents;
+    EventMap LuaEvents; // LuaEvents[events] = {LuaEvents} /**< TODO */
+    ProcessorMap Processors; // Processors[guid] = processor /**< TODO */
+    EventProcessor GlobalEvents; /**< TODO */
 
+    /**
+     * @brief
+     *
+     */
     struct LuaEvent : public BasicEvent
     {
+        /**
+         * @brief
+         *
+         * @param _events
+         * @param _funcRef
+         * @param _delay
+         * @param _calls
+         * @param _obj
+         */
         LuaEvent(EventProcessor* _events, int _funcRef, uint32 _delay, uint32 _calls, Object* _obj);
 
+        /**
+         * @brief
+         *
+         */
         ~LuaEvent();
 
-        // Should never execute on dead events
+        /**
+         * @brief Should never execute on dead events
+         *
+         * @param time
+         * @param diff
+         * @return bool
+         */
         bool Execute(uint64 time, uint32 diff);
 
-        bool hasObject; // Dont call event if object no longer exists
-        Object* obj;    // Object to push
-        int funcRef;    // Lua function reference ID, also used as event ID
-        uint32 delay;   // Delay between event calls
-        uint32 calls;   // Amount of calls to make, 0 for infinite
-        EventProcessor* events; // Pointer to events (holds the timed event)
+        bool hasObject; // Dont call event if object no longer exists /**< TODO */
+        Object* obj;    // Object to push /**< TODO */
+        int funcRef;    // Lua function reference ID, also used as event ID /**< TODO */
+        uint32 delay;   // Delay between event calls /**< TODO */
+        uint32 calls;   // Amount of calls to make, 0 for infinite /**< TODO */
+        EventProcessor* events; // Pointer to events (holds the timed event) /**< TODO */
     };
 
-    // Updates all processors stored in the manager
-    // Should be run on world tick
+    /**
+     * @brief Updates all processors stored in the manager
+     *
+     * Should be run on world tick
+     *
+     * @param diff
+     */
     void Update(uint32 diff)
     {
         GlobalEvents.Update(diff);
@@ -294,7 +424,11 @@ struct EventMgr
     }
     */
 
-    // Aborts all lua events
+    /**
+     * @brief Aborts all lua events
+     *
+     * @param events
+     */
     void KillAllEvents(EventProcessor* events)
     {
         if (!events)
@@ -306,7 +440,10 @@ struct EventMgr
             (*itr)->to_Abort = true; // Abort event
     }
 
-    // Remove all timed events
+    /**
+     * @brief Remove all timed events
+     *
+     */
     void RemoveEvents()
     {
         for (ProcessorMap::iterator it = Processors.begin(); it != Processors.end(); ++it)
@@ -317,7 +454,11 @@ struct EventMgr
         LuaEvents.clear(); // remove pointer sets
     }
 
-    // Remove timed events from processor
+    /**
+     * @brief Remove timed events from processor
+     *
+     * @param events
+     */
     void RemoveEvents(EventProcessor* events)
     {
         if (!events)
@@ -326,7 +467,11 @@ struct EventMgr
         LuaEvents.erase(events); // remove pointer set
     }
 
-    // Remove timed events from guid
+    /**
+     * @brief Remove timed events from guid
+     *
+     * @param guid
+     */
     void RemoveEvents(uint64 guid)
     {
         if (Processors.find(guid) == Processors.end())
@@ -335,7 +480,16 @@ struct EventMgr
         Processors.erase(guid); // remove processor
     }
 
-    // Adds a new event to the processor and returns the eventID or 0 (Never negative)
+    /**
+     * @brief Adds a new event to the processor and returns the eventID or 0 (Never negative)
+     *
+     * @param events
+     * @param funcRef
+     * @param delay
+     * @param calls
+     * @param obj
+     * @return int
+     */
     int AddEvent(EventProcessor* events, int funcRef, uint32 delay, uint32 calls, Object* obj = NULL)
     {
         if (!events || funcRef <= 0) // If funcRef <= 0, function reference failed
@@ -344,7 +498,16 @@ struct EventMgr
         return funcRef; // return the event ID
     }
 
-    // Creates a processor for the guid if needed and adds the event to it
+    /**
+     * @brief Creates a processor for the guid if needed and adds the event to it
+     *
+     * @param guid
+     * @param funcRef
+     * @param delay
+     * @param calls
+     * @param obj
+     * @return int
+     */
     int AddEvent(uint64 guid, int funcRef, uint32 delay, uint32 calls, Object* obj = NULL)
     {
         if (!guid) // 0 should be unused
@@ -352,7 +515,13 @@ struct EventMgr
         return AddEvent(&Processors[guid], funcRef, delay, calls, obj);
     }
 
-    // Finds the event that has the ID from events
+    /**
+     * @brief Finds the event that has the ID from events
+     *
+     * @param events
+     * @param eventId
+     * @return LuaEvent
+     */
     LuaEvent* GetEvent(EventProcessor* events, int eventId)
     {
         if (!events || !eventId)
@@ -366,8 +535,13 @@ struct EventMgr
         return NULL;
     }
 
-    // Remove the event with the eventId from processor
-    // Returns true if event is removed
+    /**
+     * @brief Remove the event with the eventId from processor
+     *
+     * @param events
+     * @param eventId
+     * @return bool Returns true if event is removed
+     */
     bool RemoveEvent(EventProcessor* events, int eventId) // eventId = funcRef
     {
         if (!events || !eventId)
@@ -380,7 +554,13 @@ struct EventMgr
         return true;
     }
 
-    // Remove event by ID from processor stored for guid
+    /**
+     * @brief Remove event by ID from processor stored for guid
+     *
+     * @param guid
+     * @param eventId
+     * @return bool
+     */
     bool RemoveEvent(uint64 guid, int eventId)
     {
         if (!guid || Processors.find(guid) == Processors.end())
@@ -388,7 +568,11 @@ struct EventMgr
         return RemoveEvent(&Processors[guid], eventId);
     }
 
-    // Removes the eventId from all events
+    /**
+     * @brief Removes the eventId from all events
+     *
+     * @param eventId
+     */
     void RemoveEvent(int eventId)
     {
         if (!eventId)
@@ -399,58 +583,193 @@ struct EventMgr
     }
 };
 
+/**
+ * @brief
+ *
+ */
 class Eluna
 {
     public:
         friend class ScriptMgr;
-        lua_State* L;
-        EventMgr EventMgr;
+        lua_State* L; /**< TODO */
+        EventMgr EventMgr; /**< TODO */
 
+        /**
+         * @brief
+         *
+         */
         typedef std::map<int, int> ElunaBindingMap;
+        /**
+         * @brief
+         *
+         */
         typedef UNORDERED_MAP<uint32, ElunaBindingMap> ElunaEntryMap;
         struct ElunaBind;
-        std::map<int, std::vector<int> > ServerEventBindings;
-        std::map<int, std::vector<int> > PlayerEventBindings;
-        std::map<int, std::vector<int> > GuildEventBindings;
-        std::map<int, std::vector<int> > GroupEventBindings;
-        ElunaBind* CreatureEventBindings;
-        ElunaBind* CreatureGossipBindings;
-        ElunaBind* GameObjectEventBindings;
-        ElunaBind* GameObjectGossipBindings;
-        ElunaBind* ItemEventBindings;
-        ElunaBind* ItemGossipBindings;
-        ElunaBind* playerGossipBindings;
+        std::map<int, std::vector<int> > ServerEventBindings; /**< TODO */
+        std::map<int, std::vector<int> > PlayerEventBindings; /**< TODO */
+        std::map<int, std::vector<int> > GuildEventBindings; /**< TODO */
+        std::map<int, std::vector<int> > GroupEventBindings; /**< TODO */
+        ElunaBind* CreatureEventBindings; /**< TODO */
+        ElunaBind* CreatureGossipBindings; /**< TODO */
+        ElunaBind* GameObjectEventBindings; /**< TODO */
+        ElunaBind* GameObjectGossipBindings; /**< TODO */
+        ElunaBind* ItemEventBindings; /**< TODO */
+        ElunaBind* ItemGossipBindings; /**< TODO */
+        ElunaBind* playerGossipBindings; /**< TODO */
 
+        /**
+         * @brief
+         *
+         */
         void Initialize();
+        /**
+         * @brief
+         *
+         * @param
+         */
         static void report(lua_State*);
+        /**
+         * @brief
+         *
+         * @param reg
+         * @param id
+         * @param evt
+         * @param func
+         */
         void Register(uint8 reg, uint32 id, uint32 evt, int func);
+        /**
+         * @brief
+         *
+         * @param fReference
+         */
         void BeginCall(int fReference);
+        /**
+         * @brief
+         *
+         * @param params
+         * @param res
+         * @return bool
+         */
         bool ExecuteCall(uint8 params, uint8 res);
+        /**
+         * @brief
+         *
+         * @param res
+         */
         void EndCall(uint8 res);
+        /**
+         * @brief
+         *
+         * @param directory
+         * @param scr
+         */
         void LoadDirectory(char* directory, LoadedScripts* scr);
         // Pushes
+        /**
+         * @brief
+         *
+         * @param
+         */
         void Push(lua_State*); // nil
+        /**
+         * @brief
+         *
+         * @param
+         * @param uint64
+         */
         void Push(lua_State*, uint64);
+        /**
+         * @brief
+         *
+         * @param
+         * @param int64
+         */
         void Push(lua_State*, int64);
+        /**
+         * @brief
+         *
+         * @param
+         * @param uint32
+         */
         void Push(lua_State*, uint32);
+        /**
+         * @brief
+         *
+         * @param
+         * @param int32
+         */
         void Push(lua_State*, int32);
+        /**
+         * @brief
+         *
+         * @param
+         * @param bool
+         */
         void Push(lua_State*, bool);
+        /**
+         * @brief
+         *
+         * @param
+         * @param float
+         */
         void Push(lua_State*, float);
+        /**
+         * @brief
+         *
+         * @param
+         * @param double
+         */
         void Push(lua_State*, double);
+        /**
+         * @brief
+         *
+         * @param
+         * @param
+         */
         void Push(lua_State*, const char*);
+        /**
+         * @brief
+         *
+         * @param
+         * @param std::string
+         */
         void Push(lua_State*, std::string);
+        /**
+         * @brief
+         *
+         * @param L
+         * @param ptr
+         */
         template<typename T> void Push(lua_State* L, T const* ptr)
         {
             ElunaTemplate<T>::push(L, ptr);
         }
+        /**
+         * @brief
+         *
+         * @param L
+         * @param pet
+         */
         template<> void Eluna::Push<Pet>(lua_State* L, Pet const* pet)
         {
             Push(L, pet->ToCreature());
         }
+        /**
+         * @brief
+         *
+         * @param L
+         * @param summon
+         */
         template<> void Eluna::Push<TemporarySummon>(lua_State* L, TemporarySummon const* summon)
         {
             Push(L, summon->ToCreature());
         }
+        /**
+         * @brief
+         *
+         * @param L
+         * @param unit
+         */
         template<> void Eluna::Push<Unit>(lua_State* L, Unit const* unit)
         {
             if (!unit)
@@ -470,6 +789,12 @@ class Eluna
                     ElunaTemplate<Unit>::push(L, unit);
             }
         }
+        /**
+         * @brief
+         *
+         * @param
+         * @param obj
+         */
         template<> void Eluna::Push<WorldObject>(lua_State*, WorldObject const* obj)
         {
             if (!obj)
@@ -495,6 +820,12 @@ class Eluna
                     ElunaTemplate<WorldObject>::push(L, obj);
             }
         }
+        /**
+         * @brief
+         *
+         * @param L
+         * @param obj
+         */
         template<> void Eluna::Push<Object>(lua_State* L, Object const* obj)
         {
             if (!obj)
@@ -522,21 +853,115 @@ class Eluna
         }
 
         // Checks
+        /**
+         * @brief
+         *
+         * @param L
+         * @param narg
+         * @return WorldPacket
+         */
         WorldPacket* CHECK_PACKET(lua_State* L, int narg);
+        /**
+         * @brief
+         *
+         * @param L
+         * @param narg
+         * @return Object
+         */
         Object* CHECK_OBJECT(lua_State* L, int narg);
+        /**
+         * @brief
+         *
+         * @param L
+         * @param narg
+         * @return WorldObject
+         */
         WorldObject* CHECK_WORLDOBJECT(lua_State* L, int narg);
+        /**
+         * @brief
+         *
+         * @param L
+         * @param narg
+         * @return Unit
+         */
         Unit* CHECK_UNIT(lua_State* L, int narg);
+        /**
+         * @brief
+         *
+         * @param L
+         * @param narg
+         * @return Player
+         */
         Player* CHECK_PLAYER(lua_State* L, int narg);
+        /**
+         * @brief
+         *
+         * @param L
+         * @param narg
+         * @return Creature
+         */
         Creature* CHECK_CREATURE(lua_State* L, int narg);
+        /**
+         * @brief
+         *
+         * @param L
+         * @param narg
+         * @return GameObject
+         */
         GameObject* CHECK_GAMEOBJECT(lua_State* L, int narg);
+        /**
+         * @brief
+         *
+         * @param L
+         * @param narg
+         * @return Corpse
+         */
         Corpse* CHECK_CORPSE(lua_State* L, int narg);
+        /**
+         * @brief
+         *
+         * @param L
+         * @param narg
+         * @return Quest
+         */
         Quest* CHECK_QUEST(lua_State* L, int narg);
+        /**
+         * @brief
+         *
+         * @param L
+         * @param narg
+         * @return Spell
+         */
         Spell* CHECK_SPELL(lua_State* L, int narg);
+        /**
+         * @brief
+         *
+         * @param L
+         * @param narg
+         * @return uint64
+         */
         uint64 CHECK_ULONG(lua_State* L, int narg);
+        /**
+         * @brief
+         *
+         * @param L
+         * @param narg
+         * @return int64
+         */
         int64 CHECK_LONG(lua_State* L, int narg);
+        /**
+         * @brief
+         *
+         * @param L
+         * @param narg
+         * @return Item
+         */
         Item* CHECK_ITEM(lua_State* L, int narg);
 
-        // Creates new binding stores
+        /**
+         * @brief Creates new binding stores
+         *
+         */
         Eluna()
         {
             L = NULL;
@@ -573,6 +998,10 @@ class Eluna
             playerGossipBindings = new ElunaBind;
         }
 
+        /**
+         * @brief
+         *
+         */
         ~Eluna()
         {
             for (std::map<int, std::vector<int> >::iterator itr = ServerEventBindings.begin(); itr != ServerEventBindings.end(); ++itr)
@@ -617,12 +1046,33 @@ class Eluna
             lua_close(L); // Closing
         }
 
+        /**
+         * @brief
+         *
+         */
         struct ElunaBind
         {
-            void Clear(); // unregisters all registered functions and clears all registered events from the bind std::maps (reset)
-            void Insert(uint32 entryId, uint32 eventId, int funcRef); // Inserts a new registered event
+            /**
+             * @brief unregisters all registered functions and clears all registered events from the bind std::maps (reset)
+             *
+             */
+            void Clear();
+            /**
+             * @brief Inserts a new registered event
+             *
+             * @param entryId
+             * @param eventId
+             * @param funcRef
+             */
+            void Insert(uint32 entryId, uint32 eventId, int funcRef);
 
-            // Gets the function ref of an entry for an event
+            /**
+             * @brief Gets the function ref of an entry for an event
+             *
+             * @param entryId
+             * @param eventId
+             * @return int
+             */
             int GetBind(uint32 entryId, uint32 eventId)
             {
                 ElunaEntryMap::iterator itr = Bindings.find(entryId);
@@ -632,7 +1082,12 @@ class Eluna
                 return itr->second[eventId];
             }
 
-            // Gets the binding std::map containing all registered events with the function refs for the entry
+            /**
+             * @brief Gets the binding std::map containing all registered events with the function refs for the entry
+             *
+             * @param entryId
+             * @return ElunaBindingMap
+             */
             ElunaBindingMap* GetBindMap(uint32 entryId)
             {
                 ElunaEntryMap::iterator itr = Bindings.find(entryId);
@@ -642,40 +1097,94 @@ class Eluna
                 return &itr->second;
             }
 
-            ElunaEntryMap Bindings; // Binding store Bindings[entryId][eventId] = funcRef;
+            ElunaEntryMap Bindings; // Binding store Bindings[entryId][eventId] = funcRef; /**< TODO */
         };
 
+        /**
+         * @brief
+         *
+         */
         struct ObjectGUIDCheck
         {
+            /**
+             * @brief
+             *
+             * @param GUID
+             */
             ObjectGUIDCheck(ObjectGuid GUID) : _GUID(GUID) { }
+            /**
+             * @brief
+             *
+             * @param object
+             * @return bool operator
+             */
             bool operator()(WorldObject* object)
             {
                 return object->GetObjectGuid() == _GUID;
             }
 
-            ObjectGuid _GUID;
+            ObjectGuid _GUID; /**< TODO */
         };
 
-        // Binary predicate to sort WorldObjects based on the distance to a reference WorldObject
+        /**
+         * @brief Binary predicate to sort WorldObjects based on the distance to a reference WorldObject
+         *
+         */
         struct ObjectDistanceOrderPred
         {
+            /**
+             * @brief
+             *
+             * @param pRefObj
+             * @param ascending
+             */
             ObjectDistanceOrderPred(WorldObject const* pRefObj, bool ascending = true) : m_refObj(pRefObj), m_ascending(ascending) { }
+            /**
+             * @brief
+             *
+             * @param pLeft
+             * @param pRight
+             * @return bool operator
+             */
             bool operator()(WorldObject const* pLeft, WorldObject const* pRight) const
             {
                 return m_ascending ? m_refObj->GetDistanceOrder(pLeft, pRight) : !m_refObj->GetDistanceOrder(pLeft, pRight);
             }
 
-            WorldObject const* m_refObj;
-            const bool m_ascending;
+            WorldObject const* m_refObj; /**< TODO */
+            const bool m_ascending; /**< TODO */
         };
 
-        // Doesn't get self
+        /**
+         * @brief Doesn't get self
+         *
+         */
         struct WorldObjectInRangeCheck
         {
+            /**
+             * @brief
+             *
+             * @param nearest
+             * @param obj
+             * @param range
+             * @param typeId
+             * @param entry
+             */
             WorldObjectInRangeCheck(bool nearest, WorldObject const* obj, float range,
                                     TypeID typeId = TYPEID_OBJECT, uint32 entry = 0) : i_nearest(nearest),
                 i_obj(obj), i_range(range), i_typeId(typeId), i_entry(entry) {}
+            /**
+             * @brief
+             *
+             * @return const WorldObject
+             */
             WorldObject const& GetFocusObject() const { return *i_obj; }
+            /**
+             * @brief
+             *
+             * @param u
+             * @return bool operator
+             */
             bool operator()(WorldObject* u)
             {
                 if (i_typeId && u->GetTypeId() != i_typeId)
@@ -694,23 +1203,48 @@ class Eluna
                 return true;
             }
 
-            WorldObject const* i_obj;
-            float i_range;
-            TypeID i_typeId;
-            uint32 i_entry;
-            bool i_nearest;
+            WorldObject const* i_obj; /**< TODO */
+            float i_range; /**< TODO */
+            TypeID i_typeId; /**< TODO */
+            uint32 i_entry; /**< TODO */
+            bool i_nearest; /**< TODO */
 
+            /**
+             * @brief
+             *
+             * @param
+             */
             WorldObjectInRangeCheck(WorldObjectInRangeCheck const&);
         };
 };
 #define sEluna MaNGOS::Singleton<Eluna>::Instance()
 
+/**
+ * @brief
+ *
+ */
 class LuaTaxiMgr
 {
     private:
-        static uint32 nodeId;
+        static uint32 nodeId; /**< TODO */
     public:
+        /**
+         * @brief
+         *
+         * @param player
+         * @param pathid
+         */
         static void StartTaxi(Player* player, uint32 pathid);
+        /**
+         * @brief
+         *
+         * @param nodes
+         * @param mountA
+         * @param mountH
+         * @param price
+         * @param pathId
+         * @return uint32
+         */
         static uint32 AddPath(std::list<TaxiPathNodeEntry> nodes, uint32 mountA, uint32 mountH, uint32 price = 0, uint32 pathId = 0);
 };
 #endif

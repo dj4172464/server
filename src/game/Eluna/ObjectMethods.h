@@ -31,6 +31,13 @@
 
 namespace LuaObject
 {
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int RemoveFlag(lua_State* L, Object* obj)
     {
         uint16 index = luaL_checkunsigned(L, 1);
@@ -39,6 +46,13 @@ namespace LuaObject
         obj->RemoveFlag(index, flag);
         return 0;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int SetFlag(lua_State* L, Object* obj)
     {
         uint16 index = luaL_checkunsigned(L, 1);
@@ -47,6 +61,13 @@ namespace LuaObject
         obj->SetFlag(index, flag);
         return 0;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int HasFlag(lua_State* L, Object* obj)
     {
         uint16 index = luaL_checkunsigned(L, 1);
@@ -55,24 +76,52 @@ namespace LuaObject
         sEluna.Push(L, obj->HasFlag(index, flag));
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetInt32Value(lua_State* L, Object* obj)
     {
         uint16 index = luaL_checkunsigned(L, 1);
         sEluna.Push(L, obj->GetInt32Value(index));
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetUInt32Value(lua_State* L, Object* obj)
     {
         uint16 index = luaL_checkunsigned(L, 1);
         sEluna.Push(L, obj->GetUInt32Value(index));
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetFloatValue(lua_State* L, Object* obj)
     {
         uint16 index = luaL_checkunsigned(L, 1);
         sEluna.Push(L, obj->GetFloatValue(index));
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetByteValue(lua_State* L, Object* obj)
     {
         uint16 index = luaL_checkunsigned(L, 1);
@@ -80,6 +129,13 @@ namespace LuaObject
         sEluna.Push(L, obj->GetByteValue(index, offset));
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int GetUInt16Value(lua_State* L, Object* obj)
     {
         uint16 index = luaL_checkunsigned(L, 1);
@@ -87,6 +143,13 @@ namespace LuaObject
         sEluna.Push(L, obj->GetUInt16Value(index, offset));
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int SetInt32Value(lua_State* L, Object* obj)
     {
         uint16 index = luaL_checkunsigned(L, 1);
@@ -94,6 +157,13 @@ namespace LuaObject
         obj->SetInt32Value(index, value);
         return 0;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int SetUInt32Value(lua_State* L, Object* obj)
     {
         uint16 index = luaL_checkunsigned(L, 1);
@@ -101,6 +171,13 @@ namespace LuaObject
         obj->SetUInt32Value(index, value);
         return 0;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int UpdateUInt32Value(lua_State* L, Object* obj)
     {
         uint16 index = luaL_checkunsigned(L, 1);
@@ -108,6 +185,13 @@ namespace LuaObject
         obj->UpdateUInt32Value(index, value);
         return 0;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int SetFloatValue(lua_State* L, Object* obj)
     {
         uint16 index = luaL_checkunsigned(L, 1);
@@ -116,6 +200,13 @@ namespace LuaObject
         obj->SetFloatValue(index, value);
         return 0;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int SetByteValue(lua_State* L, Object* obj)
     {
         uint16 index = luaL_checkunsigned(L, 1);
@@ -124,6 +215,13 @@ namespace LuaObject
         obj->SetByteValue(index, offset, value);
         return 0;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int SetUInt16Value(lua_State* L, Object* obj)
     {
         uint16 index = luaL_checkunsigned(L, 1);
@@ -132,6 +230,13 @@ namespace LuaObject
         obj->SetUInt16Value(index, offset, value);
         return 0;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int SetInt16Value(lua_State* L, Object* obj)
     {
         uint16 index = luaL_checkunsigned(L, 1);
@@ -140,31 +245,73 @@ namespace LuaObject
         obj->SetInt16Value(index, offset, value);
         return 0;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     static int ToCorpse(lua_State* L, Object* obj)
     {
         sEluna.Push(L, obj->ToCorpse());
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     static int ToGameObject(lua_State* L, Object* obj)
     {
         sEluna.Push(L, obj->ToGameObject());
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     static int ToUnit(lua_State* L, Object* obj)
     {
         sEluna.Push(L, obj->ToUnit());
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     static int ToCreature(lua_State* L, Object* obj)
     {
         sEluna.Push(L, obj->ToCreature());
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     static int ToPlayer(lua_State* L, Object* obj)
     {
         sEluna.Push(L, obj->ToPlayer());
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     int SetScale(lua_State* L, Object* obj)
     {
         float size = luaL_checknumber(L, 1);
@@ -172,26 +319,61 @@ namespace LuaObject
         obj->SetObjectScale(size);
         return 0;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     static int GetScale(lua_State* L, Object* obj)
     {
         sEluna.Push(L, obj->GetObjectScale());
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     static int GetEntry(lua_State* L, Object* obj)
     {
         sEluna.Push(L, obj->GetEntry());
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     static int GetGUID(lua_State* L, Object* obj)
     {
         sEluna.Push(L, obj->GetObjectGuid().GetRawValue());
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     static int GetGUIDLow(lua_State* L, Object* obj)
     {
         sEluna.Push(L, obj->GetGUIDLow());
         return 1;
     }
+    /**
+     * @brief
+     *
+     * @param L
+     * @param obj
+     * @return int
+     */
     static int IsInWorld(lua_State* L, Object* obj)
     {
         sEluna.Push(L, obj->IsInWorld());
