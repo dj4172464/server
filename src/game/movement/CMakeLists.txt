@@ -43,12 +43,17 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src/framework/
     ${CMAKE_SOURCE_DIR}/src/shared/
     ${CMAKE_SOURCE_DIR}/src/game/
-    ${CMAKE_SOURCE_DIR}/src/game/Eluna/
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}
     ${CMAKE_BINARY_DIR}
     ${CMAKE_BINARY_DIR}/src/shared/
 )
+
+if(WITH_MOD_LUA)
+    include_directories(
+        ${CMAKE_SOURCE_DIR}/src/game/Eluna/
+    )
+endif()
 
 #-----------------------------------------------------------------------------
 # Build the movement library

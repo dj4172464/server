@@ -48,6 +48,12 @@ include_directories(
     ${CMAKE_BINARY_DIR}/src/shared/
 )
 
+if(WITH_MOD_LUA)
+    include_directories(
+        ${CMAKE_SOURCE_DIR}/src/game/Eluna/
+    )
+endif()
+
 #-----------------------------------------------------------------------------
 # Build the auctionhouse-bot library
 add_library(mangos-auctionhouse-bot STATIC ${auctionhouse-bot_LIB_SRCS})

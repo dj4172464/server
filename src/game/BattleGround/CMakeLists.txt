@@ -48,6 +48,12 @@ include_directories(
     ${CMAKE_BINARY_DIR}/src/shared/
 )
 
+if(WITH_MOD_LUA)
+    include_directories(
+        ${CMAKE_SOURCE_DIR}/src/game/Eluna/
+    )
+endif()
+
 #-----------------------------------------------------------------------------
 # Build the battleground library
 add_library(mangos-battleground STATIC ${battleground_LIB_SRCS})

@@ -48,6 +48,12 @@ include_directories(
     ${CMAKE_BINARY_DIR}/src/shared/
 )
 
+if(WITH_MOD_LUA)
+    include_directories(
+        ${CMAKE_SOURCE_DIR}/src/game/Eluna/
+    )
+endif()
+
 #-----------------------------------------------------------------------------
 # Build the outdoor-pvp library
 add_library(mangos-outdoor-pvp STATIC ${outdoor-pvp_LIB_SRCS})
