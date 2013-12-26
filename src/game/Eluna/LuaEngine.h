@@ -70,31 +70,7 @@ struct ElunaRegister
 };
 
 template<typename T>
-/**
- * @brief
- *
- * @param L
- * @param methodTable
- */
-void SetMethods(lua_State* L, ElunaRegister<T>* methodTable)
-{
-    if (!methodTable)
-        return;
-    if (!lua_istable(L, 1))
-        return;
-    lua_pushstring(L, "GetObjectType");
-    lua_pushcclosure(L, ElunaTemplate<T>::type, 0);
-    lua_settable(L, 1);
-    for (; methodTable->name; ++methodTable)
-    {
-        lua_pushstring(L, methodTable->name);
-        lua_pushlightuserdata(L, (void*)methodTable);
-        lua_pushcclosure(L, ElunaTemplate<T>::thunk, 1);
-        lua_settable(L, 1);
-    }
-}
 
-template<typename T>
 /**
  * @brief
  *
@@ -330,6 +306,31 @@ class ElunaTemplate
             return 1;
         }
 };
+
+template<typename T>
+/**
+ * @brief
+ *
+ * @param L
+ * @param methodTable
+ */
+void SetMethods(lua_State* L, ElunaRegister<T>* methodTable)
+{
+    if (!methodTable)
+        return;
+    if (!lua_istable(L, 1))
+        return;
+    lua_pushstring(L, "GetObjectType");
+    lua_pushcclosure(L, ElunaTemplate<T>::type, 0);
+    lua_settable(L, 1);
+    for (; methodTable->name; ++methodTable)
+    {
+        lua_pushstring(L, methodTable->name);
+        lua_pushlightuserdata(L, (void*)methodTable);
+        lua_pushcclosure(L, ElunaTemplate<T>::thunk, 1);
+        lua_settable(L, 1);
+    }
+}
 
 /**
  * @brief
@@ -1196,7 +1197,7 @@ class Eluna
                 if (!i_obj->IsWithinDistInMap(u, i_range))
                     return false;
                 if (Unit* unit = u->ToUnit())
-                    if (!unit->isAlive())
+                    if (!unit->IsAlive())
                         return false;
                 if (i_nearest)
                     i_range = i_obj->GetDistance(u);

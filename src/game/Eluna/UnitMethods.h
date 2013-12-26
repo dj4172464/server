@@ -59,7 +59,7 @@ namespace LuaUnit
      */
     int ClearThreatList(lua_State* L, Unit* unit)
     {
-        unit->getThreatManager().clearReferences();
+        unit->GetThreatManager().clearReferences();
         return 0;
     }
 
@@ -501,7 +501,7 @@ namespace LuaUnit
      */
     int IsGuildMaster(lua_State* L, Unit* unit)
     {
-        sEluna.Push(L, unit->isGuildMaster());
+        sEluna.Push(L, unit->IsGuildMaster());
         return 1;
     }
 
@@ -514,7 +514,7 @@ namespace LuaUnit
      */
     int IsInnkeeper(lua_State* L, Unit* unit)
     {
-        sEluna.Push(L, unit->isInnkeeper());
+        sEluna.Push(L, unit->IsInnkeeper());
         return 1;
     }
 
@@ -527,7 +527,7 @@ namespace LuaUnit
      */
     int IsTrainer(lua_State* L, Unit* unit)
     {
-        sEluna.Push(L, unit->isTrainer());
+        sEluna.Push(L, unit->IsTrainer());
         return 1;
     }
 
@@ -540,7 +540,7 @@ namespace LuaUnit
      */
     int IsGossip(lua_State* L, Unit* unit)
     {
-        sEluna.Push(L, unit->isGossip());
+        sEluna.Push(L, unit->IsGossip());
         return 1;
     }
 
@@ -553,7 +553,7 @@ namespace LuaUnit
      */
     int IsTaxi(lua_State* L, Unit* unit)
     {
-        sEluna.Push(L, unit->isTaxi());
+        sEluna.Push(L, unit->IsTaxi());
         return 1;
     }
 
@@ -566,7 +566,7 @@ namespace LuaUnit
      */
     int IsSpiritHealer(lua_State* L, Unit* unit)
     {
-        sEluna.Push(L, unit->isSpiritHealer());
+        sEluna.Push(L, unit->IsSpiritHealer());
         return 1;
     }
 
@@ -579,7 +579,7 @@ namespace LuaUnit
      */
     int IsSpiritGuide(lua_State* L, Unit* unit)
     {
-        sEluna.Push(L, unit->isSpiritGuide());
+        sEluna.Push(L, unit->IsSpiritGuide());
         return 1;
     }
 
@@ -592,7 +592,7 @@ namespace LuaUnit
      */
     int IsTabardDesigner(lua_State* L, Unit* unit)
     {
-        sEluna.Push(L, unit->isTabardDesigner());
+        sEluna.Push(L, unit->IsTabardDesigner());
         return 1;
     }
 
@@ -605,7 +605,7 @@ namespace LuaUnit
      */
     int IsServiceProvider(lua_State* L, Unit* unit)
     {
-        sEluna.Push(L, unit->isServiceProvider());
+        sEluna.Push(L, unit->IsServiceProvider());
         return 1;
     }
 
@@ -618,7 +618,7 @@ namespace LuaUnit
      */
     int IsSpiritService(lua_State* L, Unit* unit)
     {
-        sEluna.Push(L, unit->isSpiritService());
+        sEluna.Push(L, unit->IsSpiritService());
         return 1;
     }
 
@@ -1676,7 +1676,7 @@ namespace LuaUnit
      */
     int IsAlive(lua_State* L, Unit* unit)
     {
-        sEluna.Push(L, unit->isAlive());
+        sEluna.Push(L, unit->IsAlive());
         return 1;
     }
 
@@ -1689,7 +1689,7 @@ namespace LuaUnit
      */
     int IsDead(lua_State* L, Unit* unit)
     {
-        sEluna.Push(L, unit->isDead());
+        sEluna.Push(L, unit->IsDead());
         return 1;
     }
 
@@ -1715,7 +1715,7 @@ namespace LuaUnit
      */
     int IsBanker(lua_State* L, Unit* unit)
     {
-        sEluna.Push(L, unit->isBanker());
+        sEluna.Push(L, unit->IsBanker());
         return 1;
     }
 
@@ -1728,7 +1728,7 @@ namespace LuaUnit
      */
     int IsVendor(lua_State* L, Unit* unit)
     {
-        sEluna.Push(L, unit->isVendor());
+        sEluna.Push(L, unit->IsVendor());
         return 1;
     }
 
@@ -1741,7 +1741,7 @@ namespace LuaUnit
      */
     int IsBattleMaster(lua_State* L, Unit* unit)
     {
-        sEluna.Push(L, unit->isBattleMaster());
+        sEluna.Push(L, unit->IsBattleMaster());
         return 1;
     }
 
@@ -1754,7 +1754,7 @@ namespace LuaUnit
      */
     int IsCharmed(lua_State* L, Unit* unit)
     {
-        sEluna.Push(L, unit->isCharmed());
+        sEluna.Push(L, unit->IsCharmed());
         return 1;
     }
 
@@ -1767,7 +1767,7 @@ namespace LuaUnit
      */
     int IsArmorer(lua_State* L, Unit* unit)
     {
-        sEluna.Push(L, unit->isArmorer());
+        sEluna.Push(L, unit->IsArmorer());
         return 1;
     }
 
@@ -1819,7 +1819,7 @@ namespace LuaUnit
      */
     int IsInCombat(lua_State* L, Unit* unit)
     {
-        sEluna.Push(L, unit->isInCombat());
+        sEluna.Push(L, unit->IsInCombat());
         return 1;
     }
 
@@ -2406,7 +2406,7 @@ namespace LuaUnit
      */
     int IsQuestGiver(lua_State* L, Unit* unit)
     {
-        sEluna.Push(L, unit->isQuestGiver());
+        sEluna.Push(L, unit->IsQuestGiver());
         return 1;
     }
 

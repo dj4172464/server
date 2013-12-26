@@ -1835,7 +1835,7 @@ void HookMgr::OnDisband(Group* group)
     }
 }
 
-void HookMgr::OnCreate(Group* group, uint64 leaderGuid, GroupType groupType)
+/*void HookMgr::OnCreate(Group* group, uint64 leaderGuid, GroupType groupType)
 {
     for (std::vector<int>::const_iterator itr = sEluna.GroupEventBindings[GROUP_EVENT_ON_CREATE].begin();
         itr != sEluna.GroupEventBindings[GROUP_EVENT_ON_CREATE].end(); ++itr)
@@ -1847,7 +1847,7 @@ void HookMgr::OnCreate(Group* group, uint64 leaderGuid, GroupType groupType)
         sEluna.Push(sEluna.L, groupType);
         sEluna.ExecuteCall(4, 0);
     }
-}
+}*/
 
 CreatureAI* HookMgr::GetAI(Creature* creature)
 {

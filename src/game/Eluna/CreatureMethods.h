@@ -269,7 +269,7 @@ namespace LuaCreature
         if (!target)
             sEluna.Push(L, false);
         else
-            sEluna.Push(L, creature->isTargetableForAttack(target));
+            sEluna.Push(L, creature->IsTargetableForAttack(target));
         return 1;
     }
 
@@ -890,7 +890,7 @@ namespace LuaCreature
         float dist = luaL_optnumber(L, 4, 0.0f);
         int32 aura = luaL_optint(L, 5, 0);
 
-        ThreatList const&  threatlist = creature->getThreatManager().getThreatList();
+        ThreatList const&  threatlist = creature->GetThreatManager().getThreatList();
         if (position >= threatlist.size())
         {
             sEluna.Push(L);
@@ -969,7 +969,7 @@ namespace LuaCreature
         int tbl = lua_gettop(L);
         uint32 i = 0;
 
-        ThreatList const& threatList = creature->getThreatManager().getThreatList();
+        ThreatList const& threatList = creature->GetThreatManager().getThreatList();
         ThreatList::const_iterator itr;
         for (itr = threatList.begin(); itr != threatList.end(); ++itr)
         {
@@ -995,7 +995,7 @@ namespace LuaCreature
      */
     int GetAITargetsCount(lua_State* L, Creature* creature)
     {
-        sEluna.Push(L, creature->getThreatManager().getThreatList().size());
+        sEluna.Push(L, creature->GetThreatManager().getThreatList().size());
         return 1;
     }
 

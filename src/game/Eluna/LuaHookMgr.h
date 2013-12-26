@@ -374,7 +374,7 @@ struct HookMgr
      * @param itemEntry
      * @return InventoryResult
      */
-    InventoryResult OnCanUseItem(const Player* pPlayer, uint32 itemEntry);
+    /* InventoryResult OnCanUseItem(const Player* pPlayer, uint32 itemEntry); // TODO */
     /**
      * @brief
      *
@@ -724,7 +724,7 @@ struct HookMgr
      * @param pLoser
      * @param type
      */
-    void OnDuelEnd(Player* pWinner, Player* pLoser, DuelCompleteType type);
+    /*void OnDuelEnd(Player* pWinner, Player* pLoser, DuelCompleteType type); // TODO */
     /**
      * @brief
      *
@@ -840,7 +840,7 @@ struct HookMgr
      * @param mapid
      * @param permanent
      */
-    void OnBindToInstance(Player* pPlayer, Difficulty difficulty, uint32 mapid, bool permanent);
+    /*void OnBindToInstance(Player* pPlayer, Difficulty difficulty, uint32 mapid, bool permanent); // TODO*/
     /**
      * @brief
      *
@@ -882,9 +882,16 @@ struct HookMgr
      * @param state
      * @param grade
      */
-    void OnChange(Weather* weather, WeatherState state, float grade); // TODO
+    /*void OnChange(Weather* weather, WeatherState state, float grade); // TODO*/
     // condition
-    // bool OnConditionCheck(Condition* condition, ConditionSourceInfo& sourceInfo); // TODO ?
+    /**
+     * @brief
+     *
+     * @param condition
+     * @param sourceInfo
+     * @return bool
+     */
+    /*bool OnConditionCheck(Condition* condition, ConditionSourceInfo& sourceInfo); // TODO*/
     // transport
     /**
      * @brief
@@ -1063,7 +1070,7 @@ struct HookMgr
      * @param leaderGuid
      * @param groupType
      */
-    void OnCreate(Group* group, uint64 leaderGuid, GroupType groupType);
+    /* void OnCreate(Group* group, uint64 leaderGuid, GroupType groupType); // TODO */
 };
 #define sHookMgr MaNGOS::Singleton<HookMgr>::Instance()
 

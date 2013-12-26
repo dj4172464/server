@@ -2122,7 +2122,7 @@ namespace LuaPlayer
         if (xp < 1)
             return 0;
 
-        if (!player->isAlive())
+        if (!player->IsAlive())
             return 0;
 
         /*if (player->HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_XP_USER_DISABLED))
@@ -2201,7 +2201,7 @@ namespace LuaPlayer
      */
     int IsTaxiCheater(lua_State* L, Player* player)
     {
-        sEluna.Push(L, player->isTaxiCheater());
+        sEluna.Push(L, player->IsTaxiCheater());
         return 1;
     }
 
