@@ -1,8 +1,5 @@
-/**
- * mangos-zero is a full featured server for World of Warcraft in its vanilla
- * version, supporting clients for patch 1.12.x.
- *
- * Copyright (C) 2005-2013  MaNGOS project <http://getmangos.com>
+/*
+ * This file is part of the CMaNGOS Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -11,15 +8,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * World of Warcraft, and all World of Warcraft or Warcraft art, images,
- * and lore are copyrighted by Blizzard Entertainment, Inc.
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "OutdoorPvPMgr.h"
@@ -41,7 +35,7 @@ OutdoorPvPMgr::OutdoorPvPMgr()
 OutdoorPvPMgr::~OutdoorPvPMgr()
 {
     for (uint8 i = 0; i < MAX_OPVP_ID; ++i)
-        { delete m_scripts[i]; }
+        delete m_scripts[i];
 }
 
 #define LOAD_OPVP_ZONE(a)                                           \
@@ -102,9 +96,9 @@ OutdoorPvP* OutdoorPvPMgr::GetScriptOfAffectedZone(uint32 zoneId)
 void OutdoorPvPMgr::HandlePlayerEnterZone(Player* player, uint32 zoneId)
 {
     if (OutdoorPvP* script = GetScript(zoneId))
-        { script->HandlePlayerEnterZone(player, true); }
+        script->HandlePlayerEnterZone(player, true);
     else if (OutdoorPvP* script = GetScriptOfAffectedZone(zoneId))
-        { script->HandlePlayerEnterZone(player, false); }
+        script->HandlePlayerEnterZone(player, false);
 }
 
 /**
@@ -117,36 +111,20 @@ void OutdoorPvPMgr::HandlePlayerLeaveZone(Player* player, uint32 zoneId)
 {
     // teleport: called once from Player::CleanupsBeforeDelete, once from Player::UpdateZone
     if (OutdoorPvP* script = GetScript(zoneId))
-        { script->HandlePlayerLeaveZone(player, true); }
+        script->HandlePlayerLeaveZone(player, true);
     else if (OutdoorPvP* script = GetScriptOfAffectedZone(zoneId))
-        { script->HandlePlayerLeaveZone(player, false); }
+        script->HandlePlayerLeaveZone(player, false);
 }
 
 void OutdoorPvPMgr::Update(uint32 diff)
 {
     m_updateTimer.Update(diff);
     if (!m_updateTimer.Passed())
-        { return; }
+        return;
 
     for (uint8 i = 0; i < MAX_OPVP_ID; ++i)
         if (m_scripts[i])
-            { m_scripts[i]->Update(m_updateTimer.GetCurrent()); }
+            m_scripts[i]->Update(m_updateTimer.GetCurrent());
 
     m_updateTimer.Reset();
-}
-
-/**
-   Function that gets the capture point slider value
-
-   @param   capture point entry
-   @param   default value being returned if no saved value for the capture point was found
- */
-float OutdoorPvPMgr::GetCapturePointSliderValue(uint32 entry, float defaultValue)
-{
-    CapturePointSliderMap::const_iterator itr = m_capturePointSlider.find(entry);
-    if (itr != m_capturePointSlider.end())
-        { return itr->second; }
-
-    // return default value if we can't find any
-    return defaultValue;
 }

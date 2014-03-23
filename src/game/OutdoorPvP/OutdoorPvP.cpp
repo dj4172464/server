@@ -1,8 +1,5 @@
-/**
- * mangos-zero is a full featured server for World of Warcraft in its vanilla
- * version, supporting clients for patch 1.12.x.
- *
- * Copyright (C) 2005-2013  MaNGOS project <http://getmangos.com>
+/*
+ * This file is part of the CMaNGOS Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -11,15 +8,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * World of Warcraft, and all World of Warcraft or Warcraft art, images,
- * and lore are copyrighted by Blizzard Entertainment, Inc.
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "OutdoorPvP.h"
@@ -53,7 +47,7 @@ void OutdoorPvP::HandlePlayerLeaveZone(Player* player, bool isMainZone)
     {
         // remove the world state information from the player
         if (isMainZone && !player->GetSession()->PlayerLogout())
-            { SendRemoveWorldStates(player); }
+            SendRemoveWorldStates(player);
 
         sLog.outDebug("Player %s left an Outdoor PvP zone", player->GetName());
     }
@@ -71,10 +65,10 @@ void OutdoorPvP::SendUpdateWorldState(uint32 field, uint32 value)
     {
         // only send world state update to main zone
         if (!itr->second)
-            { continue; }
+            continue;
 
         if (Player* player = sObjectMgr.GetPlayer(itr->first))
-            { player->SendUpdateWorldState(field, value); }
+            player->SendUpdateWorldState(field, value);
     }
 }
 
@@ -82,14 +76,24 @@ void OutdoorPvP::HandleGameObjectCreate(GameObject* go)
 {
     // set initial data and activate capture points
     if (go->GetGOInfo()->type == GAMEOBJECT_TYPE_CAPTURE_POINT)
-        { go->SetCapturePointSlider(sOutdoorPvPMgr.GetCapturePointSliderValue(go->GetEntry(), CAPTURE_SLIDER_MIDDLE)); }
+    {
+        CapturePointSliderMap const* capturePoints = sOutdoorPvPMgr.GetCapturePointSliderMap();
+        CapturePointSliderMap::const_iterator itr = capturePoints->find(go->GetEntry());
+        if (itr != capturePoints->end())
+            go->SetCapturePointSlider(itr->second.Value, itr->second.IsLocked);
+        else
+            go->SetCapturePointSlider(CAPTURE_SLIDER_MIDDLE, false);
+    }
 }
 
 void OutdoorPvP::HandleGameObjectRemove(GameObject* go)
 {
     // save capture point slider value (negative value if locked)
     if (go->GetGOInfo()->type == GAMEOBJECT_TYPE_CAPTURE_POINT)
-        { sOutdoorPvPMgr.SetCapturePointSlider(go->GetEntry(), go->getLootState() == GO_ACTIVATED ? go->GetCapturePointSlider() : -go->GetCapturePointSlider()); }
+    {
+        CapturePointSlider value(go->GetCapturePointSliderValue(), go->getLootState() != GO_ACTIVATED);
+        sOutdoorPvPMgr.SetCapturePointSlider(go->GetEntry(), value);
+    }
 }
 
 /**
@@ -107,23 +111,23 @@ void OutdoorPvP::HandlePlayerKill(Player* killer, Player* victim)
             Player* groupMember = itr->getSource();
 
             if (!groupMember)
-                { continue; }
+                continue;
 
             // skip if too far away
             if (!groupMember->IsAtGroupRewardDistance(victim))
-                { continue; }
+                continue;
 
             // creature kills must be notified, even if not inside objective / not outdoor pvp active
             // player kills only count if active and inside objective
             if (groupMember->CanUseCapturePoint())
-                { HandlePlayerKillInsideArea(groupMember); }
+                HandlePlayerKillInsideArea(groupMember);
         }
     }
     else
     {
         // creature kills must be notified, even if not inside objective / not outdoor pvp active
         if (killer && killer->CanUseCapturePoint())
-            { HandlePlayerKillInsideArea(killer); }
+            HandlePlayerKillInsideArea(killer);
     }
 }
 
@@ -136,9 +140,9 @@ void OutdoorPvP::BuffTeam(Team team, uint32 spellId, bool remove /*= false*/)
         if (player && player->GetTeam() == team)
         {
             if (remove)
-                { player->RemoveAurasDueToSpell(spellId); }
+                player->RemoveAurasDueToSpell(spellId);
             else
-                { player->CastSpell(player, spellId, true); }
+                player->CastSpell(player, spellId, true);
         }
     }
 }
@@ -159,7 +163,7 @@ uint32 OutdoorPvP::GetBannerArtKit(Team team, uint32 artKitAlliance /*= CAPTURE_
 void OutdoorPvP::SetBannerVisual(const WorldObject* objRef, ObjectGuid goGuid, uint32 artKit, uint32 animId)
 {
     if (GameObject* go = objRef->GetMap()->GetGameObject(goGuid))
-        { SetBannerVisual(go, artKit, animId); }
+        SetBannerVisual(go, artKit, animId);
 }
 
 void OutdoorPvP::SetBannerVisual(GameObject* go, uint32 artKit, uint32 animId)
@@ -176,8 +180,8 @@ void OutdoorPvP::RespawnGO(const WorldObject* objRef, ObjectGuid goGuid, bool re
         go->SetRespawnTime(7 * DAY);
 
         if (respawn)
-            { go->Refresh(); }
+            go->Refresh();
         else if (go->isSpawned())
-            { go->SetLootState(GO_JUST_DEACTIVATED); }
+            go->SetLootState(GO_JUST_DEACTIVATED);
     }
 }

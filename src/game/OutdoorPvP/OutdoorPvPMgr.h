@@ -1,8 +1,5 @@
-/**
- * mangos-zero is a full featured server for World of Warcraft in its vanilla
- * version, supporting clients for patch 1.12.x.
- *
- * Copyright (C) 2005-2013  MaNGOS project <http://getmangos.com>
+/*
+ * This file is part of the CMaNGOS Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -11,15 +8,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * World of Warcraft, and all World of Warcraft or Warcraft art, images,
- * and lore are copyrighted by Blizzard Entertainment, Inc.
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef WORLD_PVP_MGR_H
@@ -29,19 +23,11 @@
 #include "Policies/Singleton.h"
 #include "Timer.h"
 
-/**
- * @brief
- *
- */
 enum
 {
     TIMER_OPVP_MGR_UPDATE           = MINUTE * IN_MILLISECONDS // 1 minute is enough for us but this might change with wintergrasp support
 };
 
-/**
- * @brief
- *
- */
 enum OutdoorPvPTypes
 {
     OPVP_ID_SI = 0,
@@ -50,10 +36,6 @@ enum OutdoorPvPTypes
     MAX_OPVP_ID
 };
 
-/**
- * @brief
- *
- */
 enum OutdoorPvPZones
 {
     ZONE_ID_SILITHUS                = 1377,
@@ -63,105 +45,61 @@ enum OutdoorPvPZones
 
     ZONE_ID_EASTERN_PLAGUELANDS     = 139,
     ZONE_ID_STRATHOLME              = 2017,
-    ZONE_ID_SCHOLOMANCE             = 2057
+    ZONE_ID_SCHOLOMANCE             = 2057,
 };
 
+struct CapturePointSlider
+{
+    CapturePointSlider() : Value(0.0f), IsLocked(false) {}
+    CapturePointSlider(float value, bool isLocked) : Value(value), IsLocked(isLocked) {}
+
+    float Value;
+    bool IsLocked;
+};
+
+// forward declaration
 class Player;
 class GameObject;
 class Creature;
 class OutdoorPvP;
 
-/**
- * @brief
- *
- */
+typedef std::map<uint32 /*capture point entry*/, CapturePointSlider /*slider value and lock state*/> CapturePointSliderMap;
+
 class OutdoorPvPMgr
 {
     public:
-        /**
-         * @brief
-         *
-         */
         OutdoorPvPMgr();
-        /**
-         * @brief
-         *
-         */
         ~OutdoorPvPMgr();
 
-        /**
-         * @brief load all outdoor pvp scripts
-         *
-         */
+        // load all outdoor pvp scripts
         void InitOutdoorPvP();
 
-        /**
-         * @brief called when a player enters an outdoor pvp area
-         *
-         * @param player
-         * @param zoneId
-         */
+        // called when a player enters an outdoor pvp area
         void HandlePlayerEnterZone(Player* player, uint32 zoneId);
 
-        /**
-         * @brief called when player leaves an outdoor pvp area
-         *
-         * @param player
-         * @param zoneId
-         */
+        // called when player leaves an outdoor pvp area
         void HandlePlayerLeaveZone(Player* player, uint32 zoneId);
 
-        /**
-         * @brief return assigned outdoor pvp script
-         *
-         * @param zoneId
-         * @return OutdoorPvP
-         */
+        // return assigned outdoor pvp script
         OutdoorPvP* GetScript(uint32 zoneId);
 
-        /**
-         * @brief
-         *
-         * @param diff
-         */
         void Update(uint32 diff);
 
-        /**
-         * @brief Save and load capture point slider values
-         *
-         * @param entry
-         * @param defaultValue
-         * @return float
-         */
-        float GetCapturePointSliderValue(uint32 entry, float defaultValue);
-        /**
-         * @brief
-         *
-         * @param entry
-         * @param value
-         */
-        void SetCapturePointSlider(uint32 entry, float value) { m_capturePointSlider[entry] = value; }
+        // Save and load capture point slider
+        CapturePointSliderMap const* GetCapturePointSliderMap() const { return &m_capturePointSlider; }
+        void SetCapturePointSlider(uint32 entry, CapturePointSlider value) { m_capturePointSlider[entry] = value; }
 
     private:
-        /**
-         * @brief return assigned outdoor pvp script
-         *
-         * @param zoneId
-         * @return OutdoorPvP
-         */
+        // return assigned outdoor pvp script
         OutdoorPvP* GetScriptOfAffectedZone(uint32 zoneId);
 
-        OutdoorPvP* m_scripts[MAX_OPVP_ID]; /**< contains all outdoor pvp scripts */
+        // contains all outdoor pvp scripts
+        OutdoorPvP* m_scripts[MAX_OPVP_ID];
 
-        /**
-         * @brief
-         *
-         */
-        typedef std::map < uint32 /*capture point entry*/, float /*slider value*/ > CapturePointSliderMap;
+        CapturePointSliderMap m_capturePointSlider;
 
-        CapturePointSliderMap m_capturePointSlider; /**< TODO */
-
-        ShortIntervalTimer m_updateTimer; /**< update interval */
+        // update interval
+        ShortIntervalTimer m_updateTimer;
 };
 
 #define sOutdoorPvPMgr MaNGOS::Singleton<OutdoorPvPMgr>::Instance()

@@ -528,7 +528,7 @@ enum CapturePointState
     CAPTURE_STATE_WIN_HORDE
 };
 
-enum CapturePointSlider
+enum CapturePointSliderValue
 {
     CAPTURE_SLIDER_ALLIANCE         = 100,                  // full alliance
     CAPTURE_SLIDER_HORDE            = 0,                    // full horde
